@@ -97,7 +97,7 @@ export function SellerCard({
 
   if (variant === "detailed") {
     return (
-      <Card variant="elevated" className={cn("overflow-hidden", className)}>
+      <Card className={cn("overflow-hidden", className)}>
         <CardHeader>
           <div className="flex items-start justify-between">
             <div>
@@ -240,7 +240,7 @@ export function SellerCard({
 
   // Default variant
   return (
-    <Card variant="elevated" className={cn("overflow-hidden", className)}>
+    <Card className={cn("overflow-hidden", className)}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">{seller.name}</CardTitle>

@@ -38,7 +38,7 @@ export function AlertsDemo() {
           </AlertDescription>
         </Alert>
 
-        <Alert variant="warning">
+        <Alert variant="default">
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Warning</AlertTitle>
           <AlertDescription>
@@ -54,7 +54,7 @@ export function AlertsDemo() {
           </AlertDescription>
         </Alert>
 
-        <Alert variant="info">
+        <Alert variant="default">
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Info</AlertTitle>
           <AlertDescription>

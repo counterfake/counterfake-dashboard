@@ -26,9 +26,9 @@ export function Pagination({
 
   const delta = 2; // Her iki yanda gösterilecek sayfa sayısı
 
-  const generatePageNumbers = () => {
-    const range = [];
-    const rangeWithDots = [];
+  const generatePageNumbers = (): (number | string)[] => {
+    const range: number[] = [];
+    const rangeWithDots: (number | string)[] = [];
 
     // Basit durumlar için (7 veya daha az sayfa)
     if (totalPages <= 7) {
