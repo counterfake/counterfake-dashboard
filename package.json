@@ -84,7 +84,7 @@
     "@types/react-dom": "19.1.6",
     "eslint": "8.49.0",
     "eslint-config-next": "15.3.5",
-    "postcss": "8.4.30",
+    "postcss": "8.4.31",
     "semantic-release": "^24.2.6",
     "tailwindcss": "4.1.11",
     "typescript": "5.2.2"
