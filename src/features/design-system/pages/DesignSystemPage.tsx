@@ -64,7 +64,7 @@ export default function DesignSystemPage() {
         </Card>
 
         {/* Typography */}
-        <Card variant="elevated">
+        <Card>
           <CardHeader>
             <CardTitle>Typography Scale</CardTitle>
             <CardDescription>
@@ -95,7 +95,7 @@ export default function DesignSystemPage() {
         </Card>
 
         {/* Spacing */}
-        <Card variant="elevated">
+        <Card>
           <CardHeader>
             <CardTitle>Spacing System</CardTitle>
             <CardDescription>8px base unit spacing system</CardDescription>

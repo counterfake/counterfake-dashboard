@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils/ui";
 
 interface DashboardSidebarNavigationProps {
   currentPage: string;
-  navigations: SidebarConfig["navigations"];
+  // navigations: SidebarConfig["NAVIGATIONS"];
+  navigations: SidebarConfig["NAVIGATIONS"];
 }
 
 export function DashboardSidebarNavigation({

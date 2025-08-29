@@ -51,28 +51,22 @@ export class ProductCategoryService {
   }
 
   getById(id: (typeof productCategoriesData)[number]["id"]) {
-    return this.dataMapper.values().find((item) => item.id === id);
+    return Array.from(this.dataMapper.values()).find((item) => item.id === id);
   }
 
   getAll() {
-    return this.dataMapper.values().toArray();
+    return Array.from(this.dataMapper.values());
   }
 
   get keys() {
-    return this.dataMapper.keys().toArray();
+    return Array.from(this.dataMapper.keys());
   }
 
   get ids() {
-    return this.dataMapper
-      .values()
-      .map((item) => item.id)
-      .toArray();
+    return Array.from(this.dataMapper.values()).map((item) => item.id);
   }
 
   get labels() {
-    return this.dataMapper
-      .values()
-      .map((item) => item.label)
-      .toArray();
+    return Array.from(this.dataMapper.values()).map((item) => item.label);
   }
 }

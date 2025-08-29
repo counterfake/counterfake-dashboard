@@ -64,7 +64,7 @@ export class ProductReportStatusService {
   }
 
   getAll() {
-    return this.dataMapper.values().toArray();
+    return Array.from(this.dataMapper.values());
   }
 
   filterByKeys(
@@ -79,20 +79,14 @@ export class ProductReportStatusService {
   }
 
   get keys() {
-    return this.dataMapper.keys().toArray();
+    return Array.from(this.dataMapper.keys());
   }
 
   get ids() {
-    return this.dataMapper
-      .values()
-      .map((item) => item.id)
-      .toArray();
+    return Array.from(this.dataMapper.values()).map((item) => item.id);
   }
 
   get labels() {
-    return this.dataMapper
-      .values()
-      .map((item) => item.label)
-      .toArray();
+    return Array.from(this.dataMapper.values()).map((item) => item.label);
   }
 }

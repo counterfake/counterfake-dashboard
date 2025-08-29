@@ -13,5 +13,5 @@ export const DASHBOARD_CONFIG = {
   },
 } as const satisfies Record<
   DashboardType,
-  { ROOT_PATH: string; ALLOWED_ROLES: string[] }
+  { ROOT_PATH: string; ALLOWED_ROLES: readonly string[] }
 >;

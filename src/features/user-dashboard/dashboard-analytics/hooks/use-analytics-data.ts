@@ -112,7 +112,13 @@ export function useAnalyticsData({
   );
 
   const riskyPlatformChartData = useMemo(
-    () => formatPlatformsChartData(riskyPlatformAnalysis),
+    () =>
+      formatPlatformsChartData(
+        riskyPlatformAnalysis.map((item) => ({
+          name: item.name,
+          value: item.value,
+        }))
+      ),
     [riskyPlatformAnalysis]
   );
 

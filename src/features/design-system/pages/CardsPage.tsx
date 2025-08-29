@@ -38,7 +38,7 @@ export default function CardsPage() {
   return (
     <PageWrapper className="space-y-8">
       {/* Product Cards */}
-      <Card variant="elevated">
+      <Card>
         <CardHeader>
           <CardTitle>Product Cards</CardTitle>
           <CardDescription>
@@ -49,10 +49,10 @@ export default function CardsPage() {
           <div className="space-y-4">
             <h4 className="font-semibold">Default Product Card</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <DefaultBrandProductCard product={mockBrandProducts[0]} />
+              {/* <DefaultBrandProductCard product={mockBrandProducts[0]} />
               <DefaultBrandProductCard product={mockBrandProducts[1]} />
               <DefaultBrandProductCard product={mockBrandProducts[2]} />
-              <DefaultBrandProductCard product={mockBrandProducts[3]} />
+              <DefaultBrandProductCard product={mockBrandProducts[3]} /> */}
             </div>
           </div>
 
@@ -61,8 +61,8 @@ export default function CardsPage() {
           <div className="space-y-4">
             <h4 className="font-semibold">Compact Product Cards</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <CompactBrandProductCard product={mockBrandProducts[0]} />
-              <CompactBrandProductCard product={mockBrandProducts[1]} />
+              {/* <CompactBrandProductCard product={mockBrandProducts[0]} />
+              <CompactBrandProductCard product={mockBrandProducts[1]} /> */}
             </div>
           </div>
 
@@ -80,7 +80,7 @@ export default function CardsPage() {
       </Card>
 
       {/* Seller Cards */}
-      <Card variant="elevated">
+      <Card>
         <CardHeader>
           <CardTitle>Seller Cards</CardTitle>
           <CardDescription>

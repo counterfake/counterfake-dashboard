@@ -23,12 +23,12 @@ export function ChatCompact({
   showTimestamps = false,
   autoScroll = true,
 }: ChatProps) {
-  const { messages, isLoading, sendMessage, clearMessages } =
+  const { messages, isLoading, testSendMessage, clearMessages } =
     useChat(initialMessages);
 
   const handleSendMessage = async (content: string, type: any, file?: File) => {
     // Önce kendi hook'umuza gönder
-    const userMessage = await sendMessage(content, type, file);
+    const userMessage = await testSendMessage(content, type, file);
 
     // Sonra parent component'e bildir
     if (onSendMessage) {
@@ -78,8 +78,6 @@ export function ChatCompact({
           showTimestamps={showTimestamps}
           autoScroll={autoScroll}
           onClearMessages={clearMessages}
-          onCopyMessage={handleCopyMessage}
-          onDownloadMessage={handleDownloadMessage}
           className="flex-1 h-full"
         />
       </div>

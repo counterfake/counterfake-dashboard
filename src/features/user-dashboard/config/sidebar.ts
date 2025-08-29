@@ -4,11 +4,11 @@ export interface SidebarConfig {
   WIDTH: string;
   WIDTH_MOBILE: string;
   WIDTH_ICON: string;
-  NAVIGATIONS: {
-    id: string;
-    label: string;
-    icon: React.ElementType;
-    href: string;
+  NAVIGATIONS: readonly {
+    readonly id: string;
+    readonly label: string;
+    readonly icon: React.ElementType;
+    readonly href: string;
   }[];
 }
 
