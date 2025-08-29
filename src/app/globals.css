@@ -1,0 +1,262 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap")
+layer(base);
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap")
+layer(base);
+
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+
+  /* COLORS */
+  --color-background: oklch(var(--background));
+  --color-foreground: oklch(var(--foreground));
+
+  --color-primary: oklch(var(--primary));
+  --color-primary-foreground: oklch(var(--primary-foreground));
+  --color-primary-light: oklch(var(--primary-light));
+  --color-primary-dark: oklch(var(--primary-dark));
+
+  --color-secondary: oklch(var(--secondary));
+  --color-secondary-foreground: oklch(var(--secondary-foreground));
+
+  --color-card: oklch(var(--card));
+  --color-card-foreground: oklch(var(--card-foreground));
+
+  --color-popover: oklch(var(--popover));
+  --color-popover-foreground: oklch(var(--popover-foreground));
+
+  --color-muted: oklch(var(--muted));
+  --color-muted-foreground: oklch(var(--muted-foreground));
+
+  --color-accent: oklch(var(--accent));
+  --color-accent-foreground: oklch(var(--accent-foreground));
+
+  --color-destructive: oklch(var(--destructive));
+  --color-destructive-foreground: oklch(var(--destructive-foreground));
+
+  --color-success: oklch(var(--success));
+  --color-success-foreground: oklch(var(--success-foreground));
+
+  --color-warning: oklch(var(--warning));
+  --color-warning-foreground: oklch(var(--warning-foreground));
+
+  --color-info: oklch(var(--info));
+  --color-info-foreground: oklch(var(--info-foreground));
+
+  --color-border: oklch(var(--border));
+  --color-input: oklch(var(--input));
+  --color-ring: oklch(var(--ring));
+
+  --color-chart-1: oklch(var(--chart-1));
+  --color-chart-2: oklch(var(--chart-2));
+  --color-chart-3: oklch(var(--chart-3));
+  --color-chart-4: oklch(var(--chart-4));
+  --color-chart-5: oklch(var(--chart-5));
+
+  --color-sidebar: oklch(var(--sidebar));
+  --color-sidebar-foreground: oklch(var(--sidebar-foreground));
+  --color-sidebar-primary: oklch(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: oklch(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: oklch(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: oklch(var(--sidebar-accent-foreground));
+  --color-sidebar-border: oklch(var(--sidebar-border));
+  --color-sidebar-ring: oklch(var(--sidebar-ring));
+  /* END - COLORS */
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+:root {
+  /* COLORS */
+  --primary: 0.4713 0.1085 308.93;
+  --primary-foreground: 0.985 0 0;
+  --primary-light: 0.5713 0.1085 308.93;
+  --primary-dark: 0.3713 0.1085 308.93;
+
+  --secondary: 0.8956 0.1973 131.8;
+  --secondary-foreground: 0.3956 0.1298 254.9;
+
+  --accent: 0.9656 0.0223 311.54;
+  --accent-foreground: 0.3542 0.187 301.99;
+  --background: 1 0 0;
+  --foreground: 0 0 0;
+  --card: 1 0 0;
+  --card-foreground: 0.2692 0.082 252.59;
+  --popover: 1 0 0;
+  --popover-foreground: 0.2692 0.082 252.59;
+  --muted: 0.9848 0 0;
+  --muted-foreground: 0.5722 0 0;
+  --border: 0.9079 0.0302 311.46;
+  --input: 0.9542 0 0;
+  --ring: 0.3574 0.1874 303.24;
+
+  --destructive: 0.6356 0.2082 25.38;
+  --destructive-foreground: 0.9848 0 0;
+  --warning: 0.6846 0.1449 71.38;
+  --warning-foreground: 0.9848 0 0;
+  --success: 0.623 0.1688 149.18;
+  --success-foreground: 0.9848 0 0;
+  --info: 0.6141 0.21139 256.2152;
+  --info-foreground: 0.9848 0 0;
+
+  --sidebar: 0.985 0 0;
+  --sidebar-foreground: 0.145 0 0;
+  --sidebar-primary: 0.205 0 0;
+  --sidebar-primary-foreground: 0.985 0 0;
+  --sidebar-accent: 0.97 0 0;
+  --sidebar-accent-foreground: 0.205 0 0;
+  --sidebar-border: 0.922 0 0;
+  --sidebar-ring: 0.708 0 0;
+
+  --chart-1: 0.4713 0.1085 278.93;
+  --chart-2: 0.4713 0.1085 288.93;
+  --chart-3: 0.4713 0.1085 298.93;
+  --chart-4: 0.4713 0.1085 308.93;
+  --chart-5: 0.4713 0.1085 318.93;
+  --chart-6: 0.4713 0.1085 328.93;
+  --chart-8: 0.4713 0.1085 338.93;
+  --chart-9: 0.4713 0.1085 348.93;
+  --chart-10: 0.4713 0.1085 358.93;
+  /* END - COLORS */
+
+  --radius: 0.5rem;
+
+  --font-primary: "Inter", sans-serif;
+  --font-secondary: "Albert Sans", sans-serif;
+
+  --text-xs: 0.70875rem;
+  --text-sm: 0.826875rem;
+  --text-base: 0.945rem;
+  --text-lg: 1.063125rem;
+  --text-xl: 1.18125rem;
+  --text-2xl: 1.4175rem;
+  --text-3xl: 1.771875rem;
+  --text-4xl: 2.12625rem;
+}
+
+@utility animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+
+@utility animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
+}
+
+/* Enhanced animations */
+@utility fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    font-family: var(--font-primary);
+    letter-spacing: -0.02em;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/*
+  ---break---
+*/
+@theme inline {
+  --animate-shine: shine var(--duration) infinite linear;
+
+  @keyframes shine {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    to {
+      background-position: 0% 0%;
+    }
+  }
+
+  --animate-background-position-spin: background-position-spin 3000ms infinite
+    alternate;
+
+  @keyframes background-position-spin {
+    0% {
+      background-position: top center;
+    }
+    100% {
+      background-position: bottom center;
+    }
+  }
+}
+/*
+  ---break---
+*/
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
