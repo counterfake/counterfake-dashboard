@@ -128,9 +128,12 @@ export function MonthlyRiskyClosedProducts({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="h-72 w-full">
+        <div>
           {isDataExists ? (
-            <ChartContainer config={chartConfig} className="h-full w-full">
+            <ChartContainer
+              config={chartConfig}
+              className="lg:max-h-72 lg:w-full"
+            >
               <AreaChart data={monthlyChartData}>
                 <defs>
                   <linearGradient

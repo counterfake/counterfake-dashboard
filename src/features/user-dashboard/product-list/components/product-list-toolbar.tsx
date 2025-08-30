@@ -87,8 +87,8 @@ export default function ProductListToolbar({
 
   return (
     <div>
-      <div className="flex items-end gap-4 mb-4">
-        <div className="flex-1">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+        <div>
           <Label className="mb-2">Search Products by Name</Label>
           <SearchInput
             placeholder="Search products by name..."
@@ -104,7 +104,7 @@ export default function ProductListToolbar({
           />
         </div>
 
-        <div className="flex-1">
+        <div>
           <Label className="mb-2">Search Products by URL</Label>
           <SearchInput
             placeholder="Search products by URL..."
@@ -119,7 +119,7 @@ export default function ProductListToolbar({
         </div>
       </div>
 
-      <div className="flex justify-between gap-4 mb-4">
+      <div className="flex flex-wrap justify-between gap-4 mb-4">
         {/* Card Layout Toggle */}
         <div>
           <div className="flex gap-1 bg-muted p-1 rounded-lg">
@@ -150,7 +150,7 @@ export default function ProductListToolbar({
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <Label className="whitespace-nowrap">Per page</Label>
             <Select
