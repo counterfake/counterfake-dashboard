@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils/ui";
 
 import AppLogo from "@/components/ui/data-display/app-logo";
 
-import { ChatMessage as ChatMessageType } from "../../types/chat";
-import { TextReveal } from "../ui/animation/text-reveal";
+import { ChatMessage as ChatMessageType } from "../types/chat";
+import { TextReveal } from "@/components/ui/animation/text-reveal";
 
 interface ChatMessageProps {
   message: ChatMessageType;

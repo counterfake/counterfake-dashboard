@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { ScrollArea } from "@/components/ui/primitives/scroll-area";
 
 import { ThinkingMessage } from "./thinking-message";
-import { ChatMessage as ChatMessageType } from "../../types/chat";
+import { ChatMessage as ChatMessageType } from "../types/chat";
 import { ChatUserMessage } from "./chat-user-message";
 import { ChatAiMessage } from "./chat-ai-message";
 

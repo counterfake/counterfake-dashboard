@@ -7,8 +7,8 @@ import BeamsBackground from "@/components/ui/layouts/beams-background";
 import { ChatContainer } from "./chat-container";
 import { ChatInput } from "./chat-input";
 
-import { useChat } from "../../hooks/use-chat";
-import { ChatProps } from "../../types/chat";
+import { useChat } from "../hooks/use-chat";
+import { ChatProps } from "../types/chat";
 
 export function Chat({
   placeholder,

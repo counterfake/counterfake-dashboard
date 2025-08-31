@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 
 import { ROUTES } from "@/lib/config/routes";
 
@@ -20,7 +20,7 @@ import AppliedFilters from "@/features/products/product-list/components/applied-
 
 import Pagination from "@/components/ui/navigation/pagination";
 
-export default function ProductsPage() {
+function ProductsPage() {
   const paginationLogic = useProductsListPagination();
   const filterLogic = useProductsListFilters();
   const dataLogic = useProductsListData({
@@ -92,5 +92,17 @@ export default function ProductsPage() {
         />
       </div>
     </DashboardPageWrapper>
+  );
+}
+
+/**
+ * Please wrap ProductsPage with Suspense to prevent suspense build error
+ * ref: https://github.com/vercel/next.js/discussions/61654
+ */
+export default function ProductsPageWithSuspense() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ProductsPage />
+    </Suspense>
   );
 }

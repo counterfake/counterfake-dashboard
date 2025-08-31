@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils/ui";
 import { Avatar, AvatarFallback } from "@/components/ui/primitives/avatar";
 import AppLogo from "@/components/ui/data-display/app-logo";
 
-import { ChatMessage as ChatMessageType } from "../../types/chat";
+import { ChatMessage as ChatMessageType } from "../types/chat";
 
 interface ChatMessageProps {
   message: ChatMessageType;
