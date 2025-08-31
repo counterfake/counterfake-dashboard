@@ -54,9 +54,7 @@ export function DashboardSidebar({
       <SidebarFooter>
         <DashboardSidebarFooter
           appVersion={appVersion}
-          currentLanguage={"English"}
           onLogout={handleLogout}
-          onLanguageChange={() => {}}
         />
       </SidebarFooter>
     </Sidebar>
