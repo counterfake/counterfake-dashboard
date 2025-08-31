@@ -48,6 +48,10 @@ export default function UserSignInForm() {
     setShowPassword((prev) => !prev);
   };
 
+  const handleComingSoon = () => {
+    toast.info("Coming Soon", "This feature is coming soon...");
+  };
+
   return (
     <div className="flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md">
@@ -134,7 +138,8 @@ export default function UserSignInForm() {
               {/* Forgot Password Link */}
               <div className="flex justify-end">
                 <Link
-                  href="/auth/forgot-password"
+                  href="#"
+                  onClick={handleComingSoon}
                   className="text-sm text-primary hover:text-primary/80 transition-colors underline-offset-4 hover:underline"
                 >
                   Forgot your password?
@@ -188,6 +193,7 @@ export default function UserSignInForm() {
                 variant="outline"
                 disabled={login.isPending || login.data?.success}
                 className="w-full h-11 flex items-center justify-center space-x-2 border-border hover:bg-accent transition-all duration-200"
+                onClick={handleComingSoon}
               >
                 <FcGoogle className="w-5 h-5" />
                 <span>Continue with Google</span>
@@ -199,6 +205,7 @@ export default function UserSignInForm() {
                 variant="outline"
                 disabled={login.isPending || login.data?.success}
                 className="w-full h-11 flex items-center justify-center space-x-2 border-border hover:bg-accent transition-all duration-200"
+                onClick={handleComingSoon}
               >
                 <FaFacebook className="w-5 h-5 text-[#1877F2]" />
                 <span>Continue with Facebook</span>
@@ -210,7 +217,8 @@ export default function UserSignInForm() {
               <p className="text-center text-sm text-muted-foreground">
                 Don&apos;t have an account?{" "}
                 <Link
-                  href="/auth/sign-up"
+                  href="#"
+                  onClick={handleComingSoon}
                   className="text-primary hover:text-primary/80 transition-colors underline-offset-4 hover:underline font-medium"
                 >
                   Sign up
