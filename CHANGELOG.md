@@ -1,3 +1,10 @@
+# [0.2.0-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.2.0-beta.1...v0.2.0-beta.2) (2025-08-31)
+
+
+### Bug Fixes
+
+* fix build & type errros ([c5542e0](https://github.com/counterfake/counterfake-dashboard/commit/c5542e07d52e7df1bcaccf0e34a79c11ee034141))
+
 # [0.2.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.1.1...v0.2.0-beta.1) (2025-08-31)
 
 
