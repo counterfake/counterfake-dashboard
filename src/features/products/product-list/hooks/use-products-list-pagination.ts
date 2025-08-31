@@ -1,0 +1,31 @@
+import { scrollIntoView } from "@/lib/utils/scroll-into-view";
+
+import { useSearchParams } from "@/hooks/use-search-params";
+
+export function useProductsListPagination() {
+  const searchParams = useSearchParams();
+
+  // Pagination parameters
+  const currentPage = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "12");
+
+  // Event handlers for pagination
+  const handleLimitChange = (newLimit: number) => {
+    searchParams.set("limit", newLimit.toString());
+  };
+
+  const setCurrentPage = (page: number) => {
+    scrollIntoView("products-grid");
+    searchParams.set("page", page.toString());
+  };
+
+  return {
+    // State
+    currentPage,
+    limit,
+
+    // Actions
+    handleLimitChange,
+    setCurrentPage,
+  };
+}
