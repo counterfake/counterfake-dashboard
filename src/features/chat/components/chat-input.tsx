@@ -16,10 +16,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/primitives/dropdown-menu";
 
-import { MessageType } from "../../types/chat";
+import { MessageType } from "../types/chat";
 
 import AppLogo from "@/components/ui/data-display/app-logo";
-import { ShineBorder } from "@/components/ui/layouts/shine-border";
 
 interface ChatInputProps {
   onSendMessage?: (content: string, type: MessageType, file?: File) => void;
