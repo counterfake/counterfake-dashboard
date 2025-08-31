@@ -1,6 +1,6 @@
 import React from "react";
 
-export function useAnalyticsMonths() {
+export function useDashboardPageMonths() {
   const [selectedMonth, setSelectedMonth] = React.useState<number>(12);
 
   const monthOptions = [

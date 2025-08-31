@@ -28,13 +28,13 @@ import { sortByRiskyCount } from "../utils/product-category-utils";
 
 const reportStatusService = bpApiClient.productReportStatusService;
 
-interface UseAnalyticsDataProps {
+interface UseDashboardPageDataProps {
   selectedMonth: number;
 }
 
-export function useAnalyticsData({
+export function useDashboardPageData({
   selectedMonth = 12,
-}: UseAnalyticsDataProps) {
+}: UseDashboardPageDataProps) {
   const { user } = useAuthStore();
 
   const riskyCategory = useCategoryByKey("risky");
