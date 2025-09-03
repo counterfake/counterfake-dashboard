@@ -26,7 +26,7 @@ export function useProductResults(
   });
 }
 
-export function useResultsAnalysis(
+export function useProductResultsAnalysis(
   params: GetProductResultsAnalysisParams,
   options?: {
     enabled?: boolean;
@@ -42,7 +42,7 @@ export function useResultsAnalysis(
   });
 }
 
-export function useResultAnalysisMonthly(
+export function useProductResultsAnalysisMonthly(
   params: GetProductResultsAnalysisMonthlyParams,
   options?: {
     enabled?: boolean;
