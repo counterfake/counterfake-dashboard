@@ -1,7 +1,7 @@
 import React from "react";
 import { BarChart3 } from "lucide-react";
 
-import { StatsCard } from "@/components/ui/data-display/cards/stats-card";
+import { StatsCard } from "@/common/components/ui/data-display/cards/stats-card";
 
 export interface ProductAnalysisProps {
   totalProduct: number;

@@ -7,42 +7,35 @@ import { Eye, EyeOff, User, Lock, Check } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
-import { cn } from "@/lib/utils/ui";
+import { cn } from "@/common/lib/utils/ui";
 
-import { useUserLogin } from "@/hooks/use-user-dashboard";
-import useToast from "@/hooks/use-toast";
+import useToast from "@/common/hooks/use-toast";
+import { useZodForm } from "@/common/hooks/use-zod-form";
 
-import { Button } from "@/components/ui/primitives/button";
-import { Input } from "@/components/ui/primitives/input";
-import { Label } from "@/components/ui/primitives/label";
+import { Button } from "@/common/components/ui/primitives/button";
+import { Input } from "@/common/components/ui/primitives/input";
+import { Label } from "@/common/components/ui/primitives/label";
 
-export default function UserSignInForm() {
-  const login = useUserLogin();
+import {
+  type SignInFormData,
+  signInFormSchema,
+} from "../../../validation/form.schemas";
+
+interface UserSignInFormProps {
+  onSubmit: (data: SignInFormData) => void;
+  isLoading: boolean;
+  isSuccess: boolean;
+}
+
+export default function UserSignInForm({
+  onSubmit,
+  isLoading,
+  isSuccess,
+}: UserSignInFormProps) {
   const toast = useToast();
+  const form = useZodForm(signInFormSchema);
 
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const response = await login.mutateAsync(formData);
-
-    if (response.error) {
-      toast.error("Error", response.error?.message);
-    }
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -51,6 +44,9 @@ export default function UserSignInForm() {
   const handleComingSoon = () => {
     toast.info("Coming Soon", "This feature is coming soon...");
   };
+
+  const isDisabled =
+    isLoading || !form.watch("email") || !form.watch("password");
 
   return (
     <div className="flex items-center justify-center bg-background p-4">
@@ -73,7 +69,7 @@ export default function UserSignInForm() {
 
         <div className="fade-in">
           <div className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               {/* Username Field */}
               <div className="space-y-2">
                 <Label
@@ -88,15 +84,19 @@ export default function UserSignInForm() {
                   </div>
                   <Input
                     id="username"
-                    name="username"
+                    name="email"
                     type="text"
-                    value={formData.username}
-                    onChange={handleInputChange}
                     placeholder="Enter your username"
                     className="pl-10 transition-all duration-200 focus:ring-primary/20 focus:border-primary"
                     required
+                    {...form.register("email")}
                   />
                 </div>
+                {form.formState.errors.email && (
+                  <p className="text-destructive text-xs mt-1">
+                    {form.formState.errors.email.message}
+                  </p>
+                )}
               </div>
 
               {/* Password Field */}
@@ -115,11 +115,10 @@ export default function UserSignInForm() {
                     id="password"
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    value={formData.password}
-                    onChange={handleInputChange}
                     placeholder="Enter your password"
                     className="pl-10 pr-10 transition-all duration-200 focus:ring-primary/20 focus:border-primary"
                     required
+                    {...form.register("password")}
                   />
                   <button
                     type="button"
@@ -133,6 +132,11 @@ export default function UserSignInForm() {
                     )}
                   </button>
                 </div>
+                {form.formState.errors.password && (
+                  <p className="text-destructive text-xs mt-1">
+                    {form.formState.errors.password.message}
+                  </p>
+                )}
               </div>
 
               {/* Forgot Password Link */}
@@ -149,20 +153,15 @@ export default function UserSignInForm() {
               {/* Sign In Button */}
               <Button
                 type="submit"
-                disabled={
-                  login.isPending ||
-                  !formData.username ||
-                  !formData.password ||
-                  login.data?.success
-                }
+                disabled={isDisabled}
                 className={cn(
                   "w-full h-11 text-base font-medium transition-all duration-200",
                   "disabled:opacity-60 disabled:cursor-not-allowed",
                   "hover:shadow-md focus:ring-2 focus:ring-primary/20 focus:ring-offset-2"
                 )}
               >
-                {login.data?.success && <Check className="w-4 h-4 mr-2" />}
-                {login.isPending ? (
+                {isSuccess && <Check className="w-4 h-4 mr-2" />}
+                {isLoading ? (
                   <div className="flex items-center space-x-2">
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     <span>Signing in...</span>
@@ -191,7 +190,7 @@ export default function UserSignInForm() {
               <Button
                 type="button"
                 variant="outline"
-                disabled={login.isPending || login.data?.success}
+                disabled={isLoading}
                 className="w-full h-11 flex items-center justify-center space-x-2 border-border hover:bg-accent transition-all duration-200"
                 onClick={handleComingSoon}
               >
@@ -203,7 +202,7 @@ export default function UserSignInForm() {
               <Button
                 type="button"
                 variant="outline"
-                disabled={login.isPending || login.data?.success}
+                disabled={isLoading}
                 className="w-full h-11 flex items-center justify-center space-x-2 border-border hover:bg-accent transition-all duration-200"
                 onClick={handleComingSoon}
               >

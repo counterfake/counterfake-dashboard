@@ -2,13 +2,13 @@
 
 import { useMemo } from "react";
 
-import { convertRatingTo5Based } from "@/lib/utils/convert-rating-5-based";
-import { absoluteImageUrl } from "@/lib/utils/absolute-image-url";
+import { convertRatingTo5Based } from "@/common/lib/utils/convert-rating-5-based";
+import { absoluteImageUrl } from "@/common/lib/utils/absolute-image-url";
 
-import { useProductById } from "@/hooks/brand-protection/use-products";
-import { useCategoryById } from "@/hooks/brand-protection/use-categories";
-import { useProductReportStatusById } from "@/hooks/brand-protection/use-product-report-status";
-import { useProfileById } from "@/hooks/brand-protection/use-profiles";
+import { useProductById } from "@/common/hooks/brand-protection/use-products";
+import { useCategoryById } from "@/common/hooks/brand-protection/use-categories";
+import { useProductReportStatusById } from "@/common/hooks/brand-protection/use-product-report-status";
+import { useProfileById } from "@/common/hooks/brand-protection/use-profiles";
 
 // Mock product type
 export interface Product {

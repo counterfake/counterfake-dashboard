@@ -11,20 +11,20 @@ import {
   GalleryHorizontal,
 } from "lucide-react";
 
-import { type UserConfigState } from "@/lib/stores/user-config-store";
+import { type UserConfigState } from "@/common/lib/stores/user-config-store";
 
-import { Button } from "@/components/ui/primitives/button";
+import { Button } from "@/common/components/ui/primitives/button";
 import {
   Select,
   SelectContent,
   SelectTrigger,
   SelectValue,
   SelectItem,
-} from "@/components/ui/primitives/select";
-import { Label } from "@/components/ui/primitives/label";
+} from "@/common/components/ui/primitives/select";
+import { Label } from "@/common/components/ui/primitives/label";
 
-import RefreshButton from "@/components/ui/inputs/refresh-button";
-import SearchInput from "@/components/ui/inputs/search-input";
+import RefreshButton from "@/common/components/ui/inputs/refresh-button";
+import SearchInput from "@/common/components/ui/inputs/search-input";
 
 interface ProductFiltersProps {
   onSearchApply: (

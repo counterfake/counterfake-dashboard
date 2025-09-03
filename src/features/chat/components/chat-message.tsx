@@ -3,10 +3,13 @@
 import { User } from "lucide-react";
 import Image from "next/image";
 
-import { cn } from "@/lib/utils/ui";
+import { cn } from "@/common/lib/utils/ui";
 
-import { Avatar, AvatarFallback } from "@/components/ui/primitives/avatar";
-import AppLogo from "@/components/ui/data-display/app-logo";
+import {
+  Avatar,
+  AvatarFallback,
+} from "@/common/components/ui/primitives/avatar";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
 
 import { ChatMessage as ChatMessageType } from "../types/chat";
 

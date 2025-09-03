@@ -3,10 +3,10 @@
 import Link from "next/link";
 import React from "react";
 
-import { Button } from "@/components/ui/primitives/button";
+import { Button } from "@/common/components/ui/primitives/button";
 
 import { SidebarConfig } from "../../config/sidebar";
-import { cn } from "@/lib/utils/ui";
+import { cn } from "@/common/lib/utils/ui";
 
 interface DashboardSidebarNavigationProps {
   currentPage: string;

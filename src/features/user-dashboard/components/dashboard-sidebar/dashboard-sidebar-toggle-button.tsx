@@ -2,8 +2,8 @@
 
 import { AlignJustify, ChevronLeft, ChevronRight } from "lucide-react";
 
-import { useSidebar } from "@/components/ui/primitives/sidebar";
-import { Button } from "@/components/ui/primitives/button";
+import { useSidebar } from "@/common/components/ui/primitives/sidebar";
+import { Button } from "@/common/components/ui/primitives/button";
 
 export function DashboardSidebarToggleButton() {
   const { toggleSidebar, open } = useSidebar();

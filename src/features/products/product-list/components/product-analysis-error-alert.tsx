@@ -5,7 +5,7 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/primitives/alert";
+} from "@/common/components/ui/primitives/alert";
 
 export default function ProductAnalysisErrorAlert() {
   return (

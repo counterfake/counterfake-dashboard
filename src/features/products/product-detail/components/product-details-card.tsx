@@ -15,20 +15,20 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
+} from "@/common/components/ui/primitives/card";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/primitives/tabs";
-import { Skeleton } from "@/components/ui/primitives/skeleton";
+} from "@/common/components/ui/primitives/tabs";
+import { Skeleton } from "@/common/components/ui/primitives/skeleton";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/primitives/alert";
-import AppLogo from "@/components/ui/data-display/app-logo";
+} from "@/common/components/ui/primitives/alert";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
 
 interface ProductDetailsCardProps {
   productDescription: string;

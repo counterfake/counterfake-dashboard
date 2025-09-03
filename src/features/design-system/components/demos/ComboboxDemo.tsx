@@ -7,14 +7,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Button } from "@/components/ui/primitives/button";
-import { Label } from "@/components/ui/primitives/label";
+} from "@/common/components/ui/primitives/card";
+import { Button } from "@/common/components/ui/primitives/button";
+import { Label } from "@/common/components/ui/primitives/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/primitives/popover";
+} from "@/common/components/ui/primitives/popover";
 import {
   Command,
   CommandEmpty,
@@ -22,8 +22,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/primitives/command";
-import { cn } from "@/lib/utils/ui";
+} from "@/common/components/ui/primitives/command";
+import { cn } from "@/common/lib/utils/ui";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 const frameworks = [

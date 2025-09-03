@@ -1,6 +1,6 @@
 "use client";
 
-import BeamsBackground from "@/components/ui/layouts/beams-background";
+import BeamsBackground from "@/common/components/ui/layouts/beams-background";
 
 import { ChatContainer } from "@/features/chat/components/chat-container";
 import { ChatInput } from "@/features/chat/components/chat-input";

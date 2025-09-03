@@ -4,10 +4,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Expand } from "lucide-react";
 
-import { Card } from "@/components/ui/primitives/card";
-import { Button } from "@/components/ui/primitives/button";
-import { Dialog, DialogContent } from "@/components/ui/primitives/dialog";
-import { Skeleton } from "@/components/ui/primitives/skeleton";
+import { Card } from "@/common/components/ui/primitives/card";
+import { Button } from "@/common/components/ui/primitives/button";
+import {
+  Dialog,
+  DialogContent,
+} from "@/common/components/ui/primitives/dialog";
+import { Skeleton } from "@/common/components/ui/primitives/skeleton";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
 interface ProductImageGalleryProps {

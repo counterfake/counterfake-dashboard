@@ -6,21 +6,21 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Label } from "@/components/ui/primitives/label";
+} from "@/common/components/ui/primitives/card";
+import { Label } from "@/common/components/ui/primitives/label";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/primitives/tabs";
+} from "@/common/components/ui/primitives/tabs";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/primitives/accordion";
-import { Separator } from "@/components/ui/primitives/separator";
+} from "@/common/components/ui/primitives/accordion";
+import { Separator } from "@/common/components/ui/primitives/separator";
 
 export function NavigationComponentsDemo() {
   return (

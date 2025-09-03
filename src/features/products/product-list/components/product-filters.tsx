@@ -3,17 +3,17 @@
 import { Check, Filter, X } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/primitives/button";
+import { Button } from "@/common/components/ui/primitives/button";
 import {
   Select,
   SelectContent,
   SelectTrigger,
   SelectValue,
   SelectItem,
-} from "@/components/ui/primitives/select";
-import { Label } from "@/components/ui/primitives/label";
+} from "@/common/components/ui/primitives/select";
+import { Label } from "@/common/components/ui/primitives/label";
 
-import MultipleSelector from "@/components/ui/inputs/multiselect";
+import MultipleSelector from "@/common/components/ui/inputs/multiselect";
 
 interface FilterOption {
   value: string;

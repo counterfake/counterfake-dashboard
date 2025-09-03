@@ -1,7 +1,7 @@
 import { ExternalLink } from "lucide-react";
 
-import { Badge } from "@/components/ui/primitives/badge";
-import { Button } from "@/components/ui/primitives/button";
+import { Badge } from "@/common/components/ui/primitives/badge";
+import { Button } from "@/common/components/ui/primitives/button";
 
 interface InfoBarProps {
   onFeedbackClick: () => void;

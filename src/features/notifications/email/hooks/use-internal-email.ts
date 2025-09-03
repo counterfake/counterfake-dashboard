@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { useAuthStore } from "@/lib/stores/auth-store";
-import { useUserConfigStore } from "@/lib/stores/user-config-store";
+import { useAuthStore } from "@/common/lib/stores/auth-store";
+import { useUserConfigStore } from "@/common/lib/stores/user-config-store";
 
 import { internalEmailService } from "../services/internal-email-service";
 

@@ -5,20 +5,20 @@ import { motion, AnimatePresence } from "motion/react";
 import { IoMdSend } from "react-icons/io";
 import { Paperclip, X, Check, ChevronDown } from "lucide-react";
 
-import { cn } from "@/lib/utils/ui";
+import { cn } from "@/common/lib/utils/ui";
 
-import { Button } from "@/components/ui/primitives/button";
-import { Textarea } from "@/components/ui/primitives/textarea";
+import { Button } from "@/common/components/ui/primitives/button";
+import { Textarea } from "@/common/components/ui/primitives/textarea";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/primitives/dropdown-menu";
+} from "@/common/components/ui/primitives/dropdown-menu";
 
 import { MessageType } from "../types/chat";
 
-import AppLogo from "@/components/ui/data-display/app-logo";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
 
 interface ChatInputProps {
   onSendMessage?: (content: string, type: MessageType, file?: File) => void;

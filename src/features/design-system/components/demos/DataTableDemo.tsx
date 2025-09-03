@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
+} from "@/common/components/ui/primitives/card";
 import {
   Table,
   TableBody,
@@ -14,8 +14,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/primitives/table";
-import { Badge } from "@/components/ui/primitives/badge";
+} from "@/common/components/ui/primitives/table";
+import { Badge } from "@/common/components/ui/primitives/badge";
 
 const tableData = [
   {

@@ -1,6 +1,6 @@
-import { scrollIntoView } from "@/lib/utils/scroll-into-view";
+import { scrollIntoView } from "@/common/lib/utils/scroll-into-view";
 
-import { useSearchParams } from "@/hooks/use-search-params";
+import { useSearchParams } from "@/common/hooks/use-search-params";
 
 export function useProductsListPagination() {
   const searchParams = useSearchParams();

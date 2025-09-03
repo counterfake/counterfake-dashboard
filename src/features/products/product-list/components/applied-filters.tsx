@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Badge } from "@/components/ui/primitives/badge";
+import { Badge } from "@/common/components/ui/primitives/badge";
 
 interface AppliedFilter {
   key: string;

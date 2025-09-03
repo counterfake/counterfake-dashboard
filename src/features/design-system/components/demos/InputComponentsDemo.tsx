@@ -6,10 +6,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Input } from "@/components/ui/primitives/input";
-import { Label } from "@/components/ui/primitives/label";
-import { Textarea } from "@/components/ui/primitives/textarea";
+} from "@/common/components/ui/primitives/card";
+import { Input } from "@/common/components/ui/primitives/input";
+import { Label } from "@/common/components/ui/primitives/label";
+import { Textarea } from "@/common/components/ui/primitives/textarea";
 
 export function InputComponentsDemo() {
   return (

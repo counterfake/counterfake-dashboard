@@ -3,7 +3,7 @@
 import React from "react";
 import { LogOut } from "lucide-react";
 
-import { Button } from "@/components/ui/primitives/button";
+import { Button } from "@/common/components/ui/primitives/button";
 
 export interface DashboardSidebarFooterProps {
   appVersion: string;

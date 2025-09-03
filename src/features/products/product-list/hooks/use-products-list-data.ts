@@ -1,13 +1,13 @@
-import { useAuthStore } from "@/lib/stores/auth-store";
+import { useAuthStore } from "@/common/lib/stores/auth-store";
 
 import {
   useResults,
   useResultsAnalysis,
-} from "@/hooks/brand-protection/use-results";
-import { useCategoryReasons } from "@/hooks/brand-protection/use-category-reasons";
-import { useParentClasses } from "@/hooks/brand-protection/use-classifications";
+} from "@/common/hooks/brand-protection/use-results";
+import { useCategoryReasons } from "@/common/hooks/brand-protection/use-category-reasons";
+import { useParentClasses } from "@/common/hooks/brand-protection/use-classifications";
 
-import { bpApiClient } from "@/lib/api/clients/brand-protection";
+import { bpApiClient } from "@/common/lib/api/clients/brand-protection";
 
 import type { ProductFilters } from "./use-products-list-filters";
 

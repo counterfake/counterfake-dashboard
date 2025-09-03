@@ -3,21 +3,21 @@
 import React from "react";
 import { AlertTriangle } from "lucide-react";
 
-import { formatRatingDisplay } from "@/lib/utils/convert-rating-5-based";
+import { formatRatingDisplay } from "@/common/lib/utils/convert-rating-5-based";
 
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Skeleton } from "@/components/ui/primitives/skeleton";
-import Rating from "@/components/ui/data-display/rating";
+} from "@/common/components/ui/primitives/card";
+import { Skeleton } from "@/common/components/ui/primitives/skeleton";
+import Rating from "@/common/components/ui/data-display/rating";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/primitives/alert";
+} from "@/common/components/ui/primitives/alert";
 
 interface ProductRatingProps {
   rating: number | null;

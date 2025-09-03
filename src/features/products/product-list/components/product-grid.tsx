@@ -1,18 +1,18 @@
 import { Fragment } from "react";
 
-import { UserConfigState } from "@/lib/stores/user-config-store";
+import { UserConfigState } from "@/common/lib/stores/user-config-store";
 
-import { ROUTES } from "@/lib/config/routes";
+import { ROUTES } from "@/common/lib/config/routes";
 
-import { cn } from "@/lib/utils/ui";
-import { absoluteImageUrl } from "@/lib/utils/absolute-image-url";
+import { cn } from "@/common/lib/utils/ui";
+import { absoluteImageUrl } from "@/common/lib/utils/absolute-image-url";
 
-import { type Product } from "@/types/brand-protection/product";
+import { type Product } from "@/common/types/brand-protection/product";
 
-import { DefaultBrandProductCard } from "@/components/ui/data-display/cards/default-brand-product-card";
-import { CompactBrandProductCard } from "@/components/ui/data-display/cards/compact-brand-product-card";
-import { MinimalBrandProductCard } from "@/components/ui/data-display/cards/minimal-brand-product-card";
-import { convertRatingTo5Based } from "@/lib/utils/convert-rating-5-based";
+import { DefaultBrandProductCard } from "@/common/components/ui/data-display/cards/default-brand-product-card";
+import { CompactBrandProductCard } from "@/common/components/ui/data-display/cards/compact-brand-product-card";
+import { MinimalBrandProductCard } from "@/common/components/ui/data-display/cards/minimal-brand-product-card";
+import { convertRatingTo5Based } from "@/common/lib/utils/convert-rating-5-based";
 
 interface ProductsGridProps {
   products: Product[];

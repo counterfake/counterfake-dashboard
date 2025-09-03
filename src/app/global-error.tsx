@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import ErrorPage from "@/features/authentication/pages/error-page";
+import ErrorPage from "@/common/components/pages/error-page";
 
 interface ErrorPageProps {
   error: Error & { digest?: string };

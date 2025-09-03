@@ -6,14 +6,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Label } from "@/components/ui/primitives/label";
-import { Badge } from "@/components/ui/primitives/badge";
+} from "@/common/components/ui/primitives/card";
+import { Label } from "@/common/components/ui/primitives/label";
+import { Badge } from "@/common/components/ui/primitives/badge";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/primitives/avatar";
+} from "@/common/components/ui/primitives/avatar";
 import { AlertTriangle, CheckCircle, Info } from "lucide-react";
 
 export function BadgesAndAvatarsDemo() {

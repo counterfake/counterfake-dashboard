@@ -2,14 +2,14 @@
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { ROUTES } from "@/lib/config/routes";
+import { ROUTES } from "@/common/lib/config/routes";
 
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-} from "@/components/ui/primitives/sidebar";
+} from "@/common/components/ui/primitives/sidebar";
 
 import { DashboardSidebarHeader } from "./dashboard-sidebar-header";
 import { DashboardSidebarNavigation } from "./dashboard-sidebar-navigation";

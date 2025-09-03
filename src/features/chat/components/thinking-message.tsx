@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "motion/react";
-import { cn } from "@/lib/utils/ui";
-import AppLogo from "@/components/ui/data-display/app-logo";
+import { cn } from "@/common/lib/utils/ui";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
 
 interface ThinkingMessageProps {
   className?: string;

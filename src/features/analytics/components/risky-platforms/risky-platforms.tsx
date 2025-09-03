@@ -1,5 +1,5 @@
 import React from "react";
-import { cn } from "@/lib/utils/ui";
+import { cn } from "@/common/lib/utils/ui";
 
 import {
   Card,
@@ -7,15 +7,15 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { InteractivePieChart } from "@/components/ui/data-display/charts/interactive-pie-chart";
-import { Button } from "@/components/ui/primitives/button";
+} from "@/common/components/ui/primitives/card";
+import { InteractivePieChart } from "@/common/components/ui/data-display/charts/interactive-pie-chart";
+import { Button } from "@/common/components/ui/primitives/button";
 
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/primitives/tooltip";
+} from "@/common/components/ui/primitives/tooltip";
 
 import { RiskyPlatformsSkeleton } from "./risky-platforms-skeleton";
 import RiskyPlatformsError from "./risky-platforms-error";

@@ -1,4 +1,4 @@
-import { useUserConfigStore } from "@/lib/stores/user-config-store";
+import { useUserConfigStore } from "@/common/lib/stores/user-config-store";
 
 export function useProductListLayout() {
   const { productGridLayout, updateProductGridLayout } = useUserConfigStore();

@@ -1,8 +1,8 @@
-import { bpApiClient } from "@/lib/api/clients/brand-protection";
+import { bpApiClient } from "@/common/lib/api/clients/brand-protection";
 
-import { GetCategoryReasonsResponse } from "@/types/brand-protection/category-reasons";
-import { GetParentClassesResponse } from "@/types/brand-protection/classification";
-import { GetResultsAnalysisResponse } from "@/types/brand-protection/results";
+import { GetCategoryReasonsResponse } from "@/common/types/brand-protection/category-reasons";
+import { GetParentClassesResponse } from "@/common/types/brand-protection/classification";
+import { GetResultsAnalysisResponse } from "@/common/types/brand-protection/results";
 
 // Generate filter options
 const reportStatusService = bpApiClient.productReportStatusService;

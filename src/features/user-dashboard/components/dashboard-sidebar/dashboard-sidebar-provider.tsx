@@ -1,4 +1,4 @@
-import { SidebarProvider } from "@/components/ui/primitives/sidebar";
+import { SidebarProvider } from "@/common/components/ui/primitives/sidebar";
 
 import { SIDEBAR_CONFIG } from "../../config/sidebar";
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useSearchParams } from "@/hooks/use-search-params";
-import { bpApiClient } from "@/lib/api/clients/brand-protection";
+import { useSearchParams } from "@/common/hooks/use-search-params";
+import { bpApiClient } from "@/common/lib/api/clients/brand-protection";
 
 const reportStatusService = bpApiClient.productReportStatusService;
 

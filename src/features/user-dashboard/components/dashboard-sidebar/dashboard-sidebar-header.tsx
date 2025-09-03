@@ -2,7 +2,7 @@ import { ArrowRight, X } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-import AppLogo from "@/components/ui/data-display/app-logo";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
 
 interface DashboardSidebarHeaderProps {
   appName: string;

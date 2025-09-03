@@ -1,11 +1,11 @@
 "use client";
 
-import { cn } from "@/lib/utils/ui";
+import { cn } from "@/common/lib/utils/ui";
 import { ChatContainer } from "./chat-container";
 import { ChatInput } from "./chat-input";
 
-import BeamsBackground from "@/components/ui/layouts/beams-background";
-import AppLogo from "@/components/ui/data-display/app-logo";
+import BeamsBackground from "@/common/components/ui/layouts/beams-background";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
 
 import { useChat } from "../hooks/use-chat";
 

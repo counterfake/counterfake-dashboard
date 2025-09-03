@@ -7,12 +7,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Button } from "@/components/ui/primitives/button";
-import { Label } from "@/components/ui/primitives/label";
-import { Switch } from "@/components/ui/primitives/switch";
-import { Slider } from "@/components/ui/primitives/slider";
-import { Progress } from "@/components/ui/primitives/progress";
+} from "@/common/components/ui/primitives/card";
+import { Button } from "@/common/components/ui/primitives/button";
+import { Label } from "@/common/components/ui/primitives/label";
+import { Switch } from "@/common/components/ui/primitives/switch";
+import { Slider } from "@/common/components/ui/primitives/slider";
+import { Progress } from "@/common/components/ui/primitives/progress";
 
 export function InteractiveControlsDemo() {
   const [switchValue, setSwitchValue] = useState(false);

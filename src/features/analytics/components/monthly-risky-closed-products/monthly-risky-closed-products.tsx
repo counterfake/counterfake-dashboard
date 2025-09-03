@@ -9,7 +9,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
+} from "@/common/components/ui/primitives/card";
 
 import {
   Select,
@@ -17,14 +17,14 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/primitives/select";
+} from "@/common/components/ui/primitives/select";
 
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/primitives/chart";
+} from "@/common/components/ui/primitives/chart";
 import MonthlyRiskyClosedProductsSkeleton from "./monthly-risky-closed-products-skeleton";
 import MonthlyRiskyClosedProductsError from "./monthly-risky-closed-products-error";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import SimpleErrorCard from "@/components/ui/data-display/cards/simple-error-card";
+import SimpleErrorCard from "@/common/components/ui/data-display/cards/simple-error-card";
 
 export default function MonthlyAnalysisStatsError() {
   return (

@@ -19,10 +19,10 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Badge } from "@/components/ui/primitives/badge";
-import { Button } from "@/components/ui/primitives/button";
-import { Skeleton } from "@/components/ui/primitives/skeleton";
+} from "@/common/components/ui/primitives/card";
+import { Badge } from "@/common/components/ui/primitives/badge";
+import { Button } from "@/common/components/ui/primitives/button";
+import { Skeleton } from "@/common/components/ui/primitives/skeleton";
 
 interface ProductInfoCardProps {
   product: {

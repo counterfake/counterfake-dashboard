@@ -1,19 +1,19 @@
 import { useMemo } from "react";
 
-import { bpApiClient } from "@/lib/api/clients/brand-protection";
+import { bpApiClient } from "@/common/lib/api/clients/brand-protection";
 
-import { useAuthStore } from "@/lib/stores/auth-store";
+import { useAuthStore } from "@/common/lib/stores/auth-store";
 
 // --------------------------
 // Hooks
 // --------------------------
-import { useCategoryByKey } from "@/hooks/brand-protection/use-categories";
+import { useCategoryByKey } from "@/common/hooks/brand-protection/use-categories";
 import {
   useResultAnalysisMonthly,
   useResultsAnalysis,
-} from "@/hooks/brand-protection/use-results";
-import { useSellersTopFakes } from "@/hooks/brand-protection/use-sellers";
-import { useParentClasses } from "@/hooks/brand-protection/use-classifications";
+} from "@/common/hooks/brand-protection/use-results";
+import { useSellersTopFakes } from "@/common/hooks/brand-protection/use-sellers";
+import { useParentClasses } from "@/common/hooks/brand-protection/use-classifications";
 
 // --------------------------
 // Utils

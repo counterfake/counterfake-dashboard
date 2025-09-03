@@ -7,16 +7,16 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Separator } from "@/components/ui/primitives/separator";
-import { SellerCard } from "@/components/ui/enhanced-seller-card";
-import { DefaultBrandProductCard } from "@/components/ui/data-display/cards/default-brand-product-card";
+} from "@/common/components/ui/primitives/card";
+import { Separator } from "@/common/components/ui/primitives/separator";
+import { SellerCard } from "@/common/components/ui/enhanced-seller-card";
+import { DefaultBrandProductCard } from "@/common/components/ui/data-display/cards/default-brand-product-card";
 
-import { mockBrandProducts } from "@/lib/mock-data";
+import { mockBrandProducts } from "@/common/lib/mock-data";
 
 import PageWrapper from "../components/PageWrapper";
-import { CompactBrandProductCard } from "@/components/ui/data-display/cards/compact-brand-product-card";
-import { MinimalBrandProductCard } from "@/components/ui/data-display/cards/minimal-brand-product-card";
+import { CompactBrandProductCard } from "@/common/components/ui/data-display/cards/compact-brand-product-card";
+import { MinimalBrandProductCard } from "@/common/components/ui/data-display/cards/minimal-brand-product-card";
 
 const sampleSeller = {
   id: "1",

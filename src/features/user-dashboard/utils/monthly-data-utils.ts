@@ -1,4 +1,4 @@
-import { type GetResultsAnalysisMonthlyResponse } from "@/types/brand-protection/results";
+import { type GetResultsAnalysisMonthlyResponse } from "@/common/types/brand-protection/results";
 
 export interface MonthlyAnalysisStats {
   // Totals
