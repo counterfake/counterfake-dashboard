@@ -24,3 +24,5 @@ export class ProductReasonsService {
     );
   }
 }
+
+export const productReasonsService = new ProductReasonsService();
