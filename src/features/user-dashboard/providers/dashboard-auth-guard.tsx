@@ -32,8 +32,6 @@ export default function DashboardAuthGuard({
 
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("currentDashboard", currentDashboard, "hasHydrated", hasHydrated);
-
   // Initial auth check and token refresh setup
   useEffect(() => {
     if (!hasHydrated) {
@@ -42,59 +40,41 @@ export default function DashboardAuthGuard({
     }
 
     let refreshTimer: NodeJS.Timeout;
-    let isComponentMounted = true;
 
     const initializeAuth = async () => {
-      try {
-        const isAuthenticatedResponse = await userAuthService.isAuthenticated();
+      const isAuthenticatedResponse = await userAuthService.isAuthenticated();
 
-        if (!isComponentMounted) return;
+      if (!isAuthenticatedResponse.success) {
+        const refreshTokenResponse = await refreshToken?.mutateAsync();
 
-        if (!isAuthenticatedResponse.success) {
+        if (!refreshTokenResponse.success) {
+          clearAuth();
+          setIsLoading(false);
+          router.push(ROUTES.USER_DASHBOARD_SIGN_IN);
+          return;
+        }
+      }
+
+      const timeUntilRefresh = getSessionExpiry();
+
+      if (timeUntilRefresh > 0) {
+        refreshTimer = setTimeout(async () => {
           const refreshTokenResponse = await refreshToken?.mutateAsync();
 
           if (!refreshTokenResponse.success) {
             clearAuth();
-            setIsLoading(false);
-            router.push(ROUTES.USER_DASHBOARD_SIGN_IN);
+            router.push(ROUTES.UNAUTHORIZED);
             return;
           }
-        }
-
-        const timeUntilRefresh = getSessionExpiry();
-
-        if (timeUntilRefresh > 0 && isComponentMounted) {
-          refreshTimer = setTimeout(async () => {
-            if (!isComponentMounted) return;
-
-            setIsLoading(true);
-            const refreshTokenResponse = await refreshToken?.mutateAsync();
-
-            if (!refreshTokenResponse.success) {
-              clearAuth();
-              setIsLoading(false);
-              router.push(ROUTES.USER_DASHBOARD_SIGN_IN);
-              return;
-            }
-
-            setIsLoading(false);
-          }, timeUntilRefresh);
-        }
-
-        setIsLoading(false);
-      } catch (error) {
-        if (isComponentMounted) {
-          clearAuth();
-          setIsLoading(false);
-          router.push(ROUTES.USER_DASHBOARD_SIGN_IN);
-        }
+        }, timeUntilRefresh);
       }
+
+      setIsLoading(false);
     };
 
     initializeAuth();
 
     return () => {
-      isComponentMounted = false;
       if (refreshTimer) {
         clearTimeout(refreshTimer);
       }
