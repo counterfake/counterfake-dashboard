@@ -1,3 +1,4 @@
+import { baseApiClient } from "@/common/lib/api/api-client";
 import { API_ENDPOINTS } from "@/common/lib/config/api";
 import { HttpClient } from "@/common/lib/api/http-client";
 import { MONTHS } from "@/common/lib/data/months";
@@ -21,10 +22,8 @@ import {
 export class ProductResultService {
   private readonly endpoints = API_ENDPOINTS.bpApi;
 
-  constructor(private httpClient: HttpClient) {}
-
   async getProductResults(params: GetProductResultsParams) {
-    return this.httpClient.get<GetProductResultsResponse>(
+    return baseApiClient.get<GetProductResultsResponse>(
       this.endpoints.resultsShow,
       {
         params,
@@ -36,7 +35,7 @@ export class ProductResultService {
   }
 
   async getProductResultsAnalysis(params: GetProductResultsAnalysisParams) {
-    return this.httpClient.get<GetProductResultsAnalysisResponse>(
+    return baseApiClient.get<GetProductResultsAnalysisResponse>(
       this.endpoints.resultsShowAnalysis,
       {
         params,
@@ -53,7 +52,7 @@ export class ProductResultService {
     const { brand, sortByMonth = true, order = "desc", limit } = params;
 
     const response =
-      await this.httpClient.get<GetProductResultsAnalysisMonthlyResponse>(
+      await baseApiClient.get<GetProductResultsAnalysisMonthlyResponse>(
         this.endpoints.resultsShowMonthly,
         {
           params: {
@@ -95,3 +94,5 @@ export class ProductResultService {
     return response;
   }
 }
+
+export const productResultService = new ProductResultService();
