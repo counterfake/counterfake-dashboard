@@ -30,11 +30,6 @@ export class UserService {
 
     const user = userResponse.data?.firebase_user;
 
-    console.log({
-      brandName: user?.selectedCompany?.brand_name,
-      brandId: user?.selectedCompany?.id,
-    });
-
     const userBrandResult = await this.getUserBrandResult(
       user?.selectedCompany?.brand_name,
       user?.selectedCompany?.id
@@ -46,10 +41,15 @@ export class UserService {
         this.getContextKey(this.fetchUser.name)
       );
 
-    console.log(userBrandResult.data);
+    if (!userBrandResult.data?.brandId || !userBrandResult.data?.brandSlug) {
+      return HttpClient.errorResult(
+        new Error("Brand not found"),
+        this.getContextKey(this.fetchUser.name)
+      );
+    }
 
     const validatedUser = userSchema.safeParse({
-      id: user?.id,
+      id: user?.uid, // Give firebase uid as id
       username: user?.displayName,
       role: user?.roles,
       brand: {
@@ -98,20 +98,16 @@ export class UserService {
     /**
      * check if the selected brand is a group brand
      */
-    const isGroupBrand = groupBrands?.some(
-      (brand) => brand?.name === userBrandName
+    const groupBrand = groupBrands?.find(
+      (brand) =>
+        brand?.name?.toLocaleLowerCase() === userBrandName?.toLocaleLowerCase()
     );
 
     let currentBrandId: string | null = null;
     let currentBrandSlug: string | null = null;
     let subBrands: number[] | null = null;
 
-    if (isGroupBrand) {
-      // find selected group brand data
-      const groupBrand = groupBrands?.find(
-        (brand) => brand?.name === userBrandName
-      );
-
+    if (groupBrand) {
       /**
        * if the selected brand is a group brand, set the child brands
        * of the group brand as strings. In this way, it provides easy
@@ -138,7 +134,7 @@ export class UserService {
     }
 
     return HttpClient.successResult({
-      isGroupBrand,
+      isGroupBrand: !!groupBrand,
       brandId: currentBrandId,
       brandSlug: currentBrandSlug,
       subBrands,
