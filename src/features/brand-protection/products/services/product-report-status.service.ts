@@ -46,3 +46,5 @@ export class ProductReportStatusService {
     return this.reportStatuses.map((item) => item.label);
   }
 }
+
+export const productReportStatusService = new ProductReportStatusService();
