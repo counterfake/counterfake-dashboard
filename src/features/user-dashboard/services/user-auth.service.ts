@@ -33,41 +33,50 @@ export class UserAuthService {
   }
 
   async login(credentials: LoginCredentials) {
-    try {
-      // Credentials validation
-      const validatedCredentials = loginCredentialsSchema.parse(credentials);
+    // Credentials validation
+    const validatedCredentials = loginCredentialsSchema.parse(credentials);
 
-      // API call
-      const response = await baseApiClient.post<LoginResponse>(
-        this.endpoints.login,
-        validatedCredentials,
-        { throwOnError: true }
-      );
+    // API call
+    const response = await baseApiClient.post<LoginResponse>(
+      this.endpoints.login,
+      validatedCredentials
+    );
 
-      // Token validation
-      const validatedTokens = authTokensSchema.parse({
-        accessToken: response.data?.access_token,
-        refreshToken: response.data?.refresh_token,
-        expiresIn: Number(response.data?.expires_in),
-        fetchedAt: Date.now(),
-      });
-
-      useAuthStore.getState().setTokens(validatedTokens);
-
-      // Fetch and save user data to store
-      const userResponse = await userService.fetchUser(true);
-
-      return { success: userResponse.success };
-    } catch (error) {
-      const appError = ErrorHandler.handle(
-        error,
+    if (!response.success) {
+      return HttpClient.errorResult(
+        response.error,
         this.getContextKey(this.login.name)
       );
-
-      useAuthStore.getState().clear();
-
-      return { success: false, error: appError };
     }
+
+    // Token validation
+    const validatedTokens = authTokensSchema.safeParse({
+      accessToken: response.data?.access_token,
+      refreshToken: response.data?.refresh_token,
+      expiresIn: Number(response.data?.expires_in),
+      fetchedAt: Date.now(),
+    });
+
+    if (!validatedTokens.success) {
+      return HttpClient.errorResult(
+        validatedTokens.error,
+        this.getContextKey(this.login.name)
+      );
+    }
+
+    // Fetch and save user data to store
+    const userResponse = await userService.fetchUser(true);
+
+    if (!userResponse.success) {
+      return HttpClient.errorResult(
+        userResponse.error.originalError,
+        this.getContextKey(this.login.name)
+      );
+    }
+
+    useAuthStore.getState().setTokens(validatedTokens.data);
+
+    return HttpClient.successResult(null);
   }
 
   async updatePassword(data: SetPasswordRequest) {
