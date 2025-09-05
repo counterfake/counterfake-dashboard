@@ -22,63 +22,51 @@ interface FilterOption {
 
 interface ProductFiltersProps {
   onClear: () => void;
-  onApply: (
-    newFilters: Record<keyof ProductFiltersProps["initialFilters"], any>
-  ) => void;
-  initialFilters: {
+  onApply: (filters: ProductFiltersProps["initialValues"]) => void;
+  initialValues: {
     category: string;
     platform: string;
-    productCategory: string;
+    status: string;
     reason: string;
-    reportStatuses: { value: string; label: string }[];
+    reportStatus: string[];
   };
   filterOptions: {
     categories: FilterOption[];
-    productCategories: FilterOption[];
-    reportStatuses: FilterOption[];
+    statuses: FilterOption[];
     platforms: FilterOption[];
     reasons: FilterOption[];
+    reportStatuses: FilterOption[];
   };
 }
 
-export default function ProductFilters({
+export default function ProductListFilters({
   onClear,
   onApply,
-  initialFilters,
+  initialValues,
   filterOptions,
 }: ProductFiltersProps) {
-  const [formValues, setFormValues] = useState(initialFilters);
-
-  const hasActiveFilters = Object.values(formValues).some((value) => {
-    if (Array.isArray(value)) {
-      return value.length > 0;
-    }
-    return !!value;
-  });
-
-  const handleFormValuesChange = (
-    key: keyof ProductFiltersProps["initialFilters"],
-    value: string | { value: string; label: string }[]
-  ) => {
-    setFormValues((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+  const [category, setCategory] = useState(initialValues.category);
+  const [platform, setPlatform] = useState(initialValues.platform);
+  const [reason, setReason] = useState(initialValues.reason);
+  const [reportStatus, setReportStatus] = useState(
+    filterOptions.reportStatuses.filter((option) =>
+      initialValues.reportStatus.includes(option.value)
+    )
+  );
+  const [status, setStatus] = useState(initialValues.status);
 
   const handleClearFilters = () => {
-    setFormValues({
-      category: "",
-      platform: "",
-      productCategory: "",
-      reason: "",
-      reportStatuses: [],
-    });
     onClear();
   };
 
   const handleApplyFilters = () => {
-    onApply(formValues);
+    onApply({
+      category,
+      platform,
+      reason,
+      status,
+      reportStatus: reportStatus.map((option) => option.value),
+    });
   };
 
   return (
@@ -88,38 +76,33 @@ export default function ProductFilters({
           <Filter className="w-4 h-4" />
           Filter
         </h3>
-        {hasActiveFilters && (
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleClearFilters}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <X className="w-4 h-4 mr-2" />
-              Clear
-            </Button>
-            <Button variant="soft" size="sm" onClick={handleApplyFilters}>
-              <Check className="w-4 h-4 mr-2" />
-              Apply
-            </Button>
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClearFilters}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <X className="w-4 h-4 mr-2" />
+            Reset
+          </Button>
+          <Button variant="soft" size="sm" onClick={handleApplyFilters}>
+            <Check className="w-4 h-4 mr-2" />
+            Apply
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {/* Category Filter */}
         <div>
-          <Label className="mb-2">Filter by Category</Label>
-          <Select
-            value={formValues.category}
-            onValueChange={(value) => handleFormValuesChange("category", value)}
-          >
+          <Label className="mb-2">Filter by Status</Label>
+          <Select value={status} onValueChange={(value) => setStatus(value)}>
             <SelectTrigger className="w-full h-10 px-3 py-2 text-sm border border-input bg-background rounded-md focus:outline-hidden focus:ring-2 focus:ring-ring">
               <SelectValue placeholder="Select an option" />
             </SelectTrigger>
             <SelectContent>
-              {filterOptions.categories.map((option) => (
+              {filterOptions.statuses.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -132,8 +115,8 @@ export default function ProductFilters({
         <div>
           <Label className="mb-2">Filter by Platform</Label>
           <Select
-            value={formValues.platform}
-            onValueChange={(value) => handleFormValuesChange("platform", value)}
+            value={platform}
+            onValueChange={(value) => setPlatform(value)}
           >
             <SelectTrigger className="w-full h-10 px-3 py-2 text-sm border border-input bg-background rounded-md focus:outline-hidden focus:ring-2 focus:ring-ring">
               <SelectValue placeholder="Select an option" />
@@ -152,16 +135,14 @@ export default function ProductFilters({
         <div>
           <Label className="mb-2">Filter by Product Category</Label>
           <Select
-            value={formValues.productCategory}
-            onValueChange={(value) =>
-              handleFormValuesChange("productCategory", value)
-            }
+            value={category}
+            onValueChange={(value) => setCategory(value)}
           >
             <SelectTrigger className="w-full h-10 px-3 py-2 text-sm border border-input bg-background rounded-md focus:outline-hidden focus:ring-2 focus:ring-ring">
               <SelectValue placeholder="Select an option" />
             </SelectTrigger>
             <SelectContent>
-              {filterOptions.productCategories.map((option) => (
+              {filterOptions.categories.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
@@ -173,10 +154,7 @@ export default function ProductFilters({
         {/* Reason Filter */}
         <div>
           <Label className="mb-2">Filter by Reason</Label>
-          <Select
-            value={formValues.reason}
-            onValueChange={(value) => handleFormValuesChange("reason", value)}
-          >
+          <Select value={reason} onValueChange={(value) => setReason(value)}>
             <SelectTrigger className="w-full h-10 px-3 py-2 text-sm border border-input bg-background rounded-md focus:outline-hidden focus:ring-2 focus:ring-ring">
               <SelectValue placeholder="Select an option" />
             </SelectTrigger>
@@ -195,11 +173,9 @@ export default function ProductFilters({
           <Label className="mb-2">Filter by Report Status</Label>
           <MultipleSelector
             options={filterOptions.reportStatuses as any}
-            value={formValues.reportStatuses}
+            value={reportStatus as any}
             placeholder="Select Status"
-            onChange={(value) =>
-              handleFormValuesChange("reportStatuses", value)
-            }
+            onChange={(value) => setReportStatus(value)}
             emptyIndicator={
               <p className="text-center text-sm">No results found</p>
             }

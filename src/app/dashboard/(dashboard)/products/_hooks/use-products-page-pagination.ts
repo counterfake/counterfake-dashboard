@@ -2,7 +2,7 @@ import { scrollIntoView } from "@/common/lib/utils/scroll-into-view";
 
 import { useSearchParams } from "@/common/hooks/use-search-params";
 
-export function useProductsListPagination() {
+export function useProductsPagePagination() {
   const searchParams = useSearchParams();
 
   // Pagination parameters

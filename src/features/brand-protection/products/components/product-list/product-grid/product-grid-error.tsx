@@ -1,7 +1,7 @@
 import React from "react";
 import SimpleErrorCard from "@/common/components/ui/data-display/cards/simple-error-card";
 
-export default function ProductErrorAlert() {
+export default function ProductGridError() {
   return (
     <SimpleErrorCard
       title="Failed to load products"

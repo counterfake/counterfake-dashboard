@@ -4,31 +4,35 @@ import React, { Suspense } from "react";
 
 import { ROUTES } from "@/common/lib/config/routes";
 
-// Logic Imports
-import { useProductsListPagination } from "@/features/products/product-list/hooks/use-products-list-pagination";
-import { useProductsListFilters } from "@/features/products/product-list/hooks/use-products-list-filters";
-import { useProductsListData } from "@/features/products/product-list/hooks/use-products-list-data";
-import { useProductListLayout } from "@/features/products/product-list/hooks/use-product-list-layout";
+import { useUserConfigStore } from "@/common/lib/stores/user-config-store";
 
-// Components
+// Common Components
+import Pagination from "@/common/components/ui/navigation/pagination";
+import AppliedFilters from "@/common/components/ui/data-display/applied-filters";
+
+// Dashboard Features
 import DashboardPageWrapper from "@/features/user-dashboard/components/layout/dashboard-page-wrapper";
 
-import ProductListSection from "@/features/products/product-list/components/products-page-sections/product-list-section";
-import ProductListToolbar from "@/features/products/product-list/components/product-list-toolbar";
-import ProductFilters from "@/features/products/product-list/components/product-filters";
-import AppliedFilters from "@/features/products/product-list/components/applied-filters";
+// Product Features
+import ProductListSearchArea from "@/features/brand-protection/products/components/product-list/product-list-search-area";
+import ProductListToolbar from "@/features/brand-protection/products/components/product-list/product-list-toolbar";
+import ProductListFilters from "@/features/brand-protection/products/components/product-list/product-list-filters";
+import ProductGrid from "@/features/brand-protection/products/components/product-list/product-grid/product-grid";
 
-import Pagination from "@/common/components/ui/navigation/pagination";
+// Internal Page Logic
+import { useProductsPagePagination } from "./_hooks/use-products-page-pagination";
+import { useProductsPageFilters } from "./_hooks/use-products-page-filters";
+import { useProductsPageData } from "./_hooks/use-products-page-data";
 
 function ProductsPage() {
-  const paginationLogic = useProductsListPagination();
-  const filterLogic = useProductsListFilters();
-  const dataLogic = useProductsListData({
+  const { productGridLayout, updateProductGridLayout } = useUserConfigStore();
+  const paginationLogic = useProductsPagePagination();
+  const filterLogic = useProductsPageFilters();
+  const dataLogic = useProductsPageData({
     filters: filterLogic.filters,
     currentPage: paginationLogic.currentPage,
     limit: paginationLogic.limit,
   });
-  const layoutLogic = useProductListLayout();
 
   return (
     <DashboardPageWrapper
@@ -46,37 +50,70 @@ function ProductsPage() {
       ]}
     >
       <div className="space-y-6 fade-in">
+        <ProductListSearchArea
+          initialValue={{
+            searchByName: filterLogic.filters.searchByName,
+            searchByURL: filterLogic.filters.searchByURL,
+          }}
+          onSearchByNameApply={(value) =>
+            filterLogic.updateFilters({ searchByName: value })
+          }
+          onSearchByURLApply={(value) =>
+            filterLogic.updateFilters({ searchByURL: value })
+          }
+          onSearchByNameClear={() =>
+            filterLogic.updateFilters({ searchByName: "" })
+          }
+          onSearchByURLClear={() =>
+            filterLogic.updateFilters({ searchByURL: "" })
+          }
+        />
+
         <ProductListToolbar
-          onSearchApply={filterLogic.handleSearchApply}
-          onSearchClear={filterLogic.handleSearchClear}
+          currentLayout={productGridLayout}
+          filterOpen={filterLogic.filterOpen}
+          onLayoutChange={updateProductGridLayout}
           onLimitChange={paginationLogic.handleLimitChange}
           onFilterOpen={filterLogic.handleFilterOpen}
-          onLayoutChange={layoutLogic.updateProductGridLayout}
-          currentLayout={layoutLogic.productGridLayout}
-          initialValues={filterLogic.filters}
-          filterOpen={filterLogic.filterOpen}
         />
 
         <AppliedFilters
-          appliedFilters={filterLogic.getAppliedFiltersDisplay(
-            dataLogic.filterOptions
-          )}
+          filters={dataLogic.getAppliedFilters(filterLogic.filters)}
+          onClear={filterLogic.clearFilters}
+          clearButtonLabel="Reset to Default"
         />
 
         {filterLogic.filterOpen && (
-          <ProductFilters
-            initialFilters={filterLogic.getInitialFiltersForForm()}
+          <ProductListFilters
+            onClear={() =>
+              filterLogic.updateFilters({
+                category: "",
+                platform: "",
+                reason: "",
+                reportStatus: "",
+                status: "",
+              })
+            }
+            onApply={(values) =>
+              filterLogic.updateFilters(dataLogic.formatFilterState(values))
+            }
+            initialValues={dataLogic.formatFilters(filterLogic.filters)}
             filterOptions={dataLogic.filterOptions}
-            onClear={filterLogic.handleClearFilters}
-            onApply={filterLogic.handleApplyFilters as any}
           />
         )}
 
-        <ProductListSection
+        <ProductGrid
           isLoading={dataLogic.productsResponse?.isLoading}
-          isError={!!dataLogic.productsResponse?.isError}
+          isError={
+            !!dataLogic.productsResponse?.isError &&
+            dataLogic.productsResponse?.error?.response?.status !== 404
+          }
+          isEmpty={
+            dataLogic.products.length === 0 ||
+            dataLogic.productsResponse?.error?.response?.status === 404
+          }
           products={dataLogic.products}
-          layout={layoutLogic.productGridLayout}
+          layout={productGridLayout}
         />
 
         <Pagination

@@ -29,11 +29,9 @@ export interface DefaultBrandProductCardProps {
     discountedPrice?: string | number;
     imageUrl: string;
     platform: string;
-    seller: string;
+    sellerName: string;
     sellerUrl: string;
-    status: number;
     rating?: number;
-    fakeScore?: number;
     reasons: string[];
     brand: string;
     visitButtonHref: string;
@@ -115,14 +113,14 @@ export function DefaultBrandProductCard({
                       href={product.sellerUrl}
                       className="text-primary font-medium hover:underline"
                     >
-                      {product.seller}
+                      {product.sellerName}
                     </Link>{" "}
                     on {product.platform}
                   </p>
                 </PreventClick>
               </TooltipTrigger>
               <TooltipContent>
-                {product.seller}
+                {product.sellerName}
                 <span className="text-primary"> on {product.platform}</span>
               </TooltipContent>
             </Tooltip>

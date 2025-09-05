@@ -23,7 +23,7 @@ export interface CompactBrandProductCardProps {
     discountedPrice?: string | number;
     imageUrl: string;
     platform: string;
-    seller: string;
+    sellerName: string;
     sellerUrl: string;
     reasons: string[];
     viewDetailsHref: string;
@@ -101,7 +101,7 @@ export function CompactBrandProductCard({
               href={product.sellerUrl || "#"}
               className="text-primary hover:underline truncate max-w-[120px]"
             >
-              {product.seller}
+              {product.sellerName}
             </Link>
           </div>
           <div className="flex justify-between">

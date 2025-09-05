@@ -8,17 +8,17 @@ import { GetResultsAnalysisResponse } from "@/common/types/brand-protection/resu
 const reportStatusService = bpApiClient.productReportStatusService;
 const categoryService = bpApiClient.productCategoryService;
 
-interface UseProductListFilterOptionsProps {
+interface UseProductPageFilterOptionsProps {
   parentClassesData: GetParentClassesResponse["parent_classes"];
   productAnalysis: GetResultsAnalysisResponse["platform_analysis"];
   categoryReasons: GetCategoryReasonsResponse["results"];
 }
 
-export function useProductListFilterOptions({
+export function useProductPageFilterOptions({
   parentClassesData,
   productAnalysis,
   categoryReasons,
-}: UseProductListFilterOptionsProps) {
+}: UseProductPageFilterOptionsProps) {
   return {
     categories: categoryService.getAll().map((category) => ({
       value: String(category.id),
