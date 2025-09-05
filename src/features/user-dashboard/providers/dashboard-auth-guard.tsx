@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/common/lib/stores/auth-store";
 import { ROUTES } from "@/common/lib/config/routes";
 
+import LoadingPage from "@/common/components/pages/loading-page";
+
 import { useUserRefreshToken } from "../hooks/use-user-auth";
 
 import { userAuthService } from "../services/user-auth.service";
-import LoadingPage from "@/common/components/pages/loading-page";
 
 interface DashboardAuthGuardProps {
   children: React.ReactNode;
@@ -49,7 +50,7 @@ export default function DashboardAuthGuard({
 
         if (!refreshTokenResponse.success) {
           clearAuth();
-          setIsLoading(false);
+          setIsLoading(true);
           router.push(ROUTES.USER_DASHBOARD_SIGN_IN);
           return;
         }
@@ -57,6 +58,7 @@ export default function DashboardAuthGuard({
 
       const timeUntilRefresh = getSessionExpiry();
 
+      // Refresh Timer Setup
       if (timeUntilRefresh > 0) {
         refreshTimer = setTimeout(async () => {
           const refreshTokenResponse = await refreshToken?.mutateAsync();
