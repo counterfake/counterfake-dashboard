@@ -6,7 +6,7 @@ import { GENERAL_CONFIG } from "@/common/lib/config/general";
 import { useAuthStore } from "@/common/lib/stores/auth-store";
 import { useUserConfigStore } from "@/common/lib/stores/user-config-store";
 
-import { useVersion } from "@/common/hooks/use-version";
+import { useAppVersionInfo } from "@/common/hooks/use-app-version-info";
 
 import {
   DashboardSidebar,
@@ -28,7 +28,7 @@ export default function DashboardLayout({
   const { user } = useAuthStore();
   const userConfig = useUserConfigStore();
   const sendBetaFeedback = useBetaFeedback();
-  const version = useVersion();
+  const { version } = useAppVersionInfo();
 
   const handleSendBetaFeedback = (message: string) => {
     sendBetaFeedback.mutate(message);
