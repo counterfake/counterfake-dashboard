@@ -27,7 +27,7 @@ interface UserSignInFormProps {
   isSuccess: boolean;
 }
 
-export default function UserSignInForm({
+export default function CustomerSignInForm({
   onSubmit,
   isLoading,
   isSuccess,

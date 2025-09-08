@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-import { useAuthStore } from "@/common/lib/stores/auth-store";
-
 import { DASHBOARD_CONFIG } from "@/common/lib/config/dashboard";
 
 import LoadingWrapper from "@/common/components/layout/loading-wrapper";
 import { AUTH_CONFIG } from "@/common/lib/config/auth";
+import { useAuthStore } from "@/common/lib/stores/auth-store";
+import { ROUTES } from "@/common/lib/config/routes";
 
 interface AuthRouteGuardProps {
   children: React.ReactNode;
@@ -41,11 +41,11 @@ export const AuthRouterProvider = ({ children }: AuthRouteGuardProps) => {
 
     // Keep loading if redirection is needed
     if (
-      currentDashboard === "user" &&
-      !pathname.startsWith(DASHBOARD_CONFIG.user.ROOT_PATH)
+      currentDashboard === "customer" &&
+      !pathname.startsWith(DASHBOARD_CONFIG.customer.ROOT_PATH)
     ) {
       setIsLoading(true);
-      router.push(DASHBOARD_CONFIG.user.INDEX_PATH);
+      router.push(DASHBOARD_CONFIG.customer.INDEX_PATH);
       return;
     }
 
@@ -56,6 +56,12 @@ export const AuthRouterProvider = ({ children }: AuthRouteGuardProps) => {
     ) {
       setIsLoading(true);
       router.push(DASHBOARD_CONFIG.admin.INDEX_PATH);
+      return;
+    }
+
+    if (pathname === "/") {
+      setIsLoading(true);
+      router.push(ROUTES.USER_DASHBOARD_SIGN_IN);
       return;
     }
 

@@ -4,7 +4,7 @@ import React, { Suspense } from "react";
 
 import { ROUTES } from "@/common/lib/config/routes";
 
-import { useUserConfigStore } from "@/common/lib/stores/user-config-store";
+import { useCustomerConfigStore } from "@/features/user-dashboard/stores/customer-config.store";
 
 // Common Components
 import Pagination from "@/common/components/ui/navigation/pagination";
@@ -19,13 +19,14 @@ import ProductListToolbar from "@/features/brand-protection/products/components/
 import ProductListFilters from "@/features/brand-protection/products/components/product-list/product-list-filters";
 import ProductGrid from "@/features/brand-protection/products/components/product-list/product-grid/product-grid";
 
-// Internal Page Logic
+// Page Internal Logic
 import { useProductsPagePagination } from "./_hooks/use-products-page-pagination";
 import { useProductsPageFilters } from "./_hooks/use-products-page-filters";
 import { useProductsPageData } from "./_hooks/use-products-page-data";
 
 function ProductsPage() {
-  const { productGridLayout, updateProductGridLayout } = useUserConfigStore();
+  const { productGridLayout, updateProductGridLayout } =
+    useCustomerConfigStore();
   const paginationLogic = useProductsPagePagination();
   const filterLogic = useProductsPageFilters();
   const dataLogic = useProductsPageData({

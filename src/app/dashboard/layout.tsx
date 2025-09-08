@@ -2,12 +2,12 @@
 
 import React from "react";
 
-import DashboardAuthGuard from "@/features/user-dashboard/providers/dashboard-auth-guard";
+import CustomerAuthGuard from "@/features/authentication/providers/customer-auth-guard";
 
-export default function DashboardLayout({
+export default function CustomerDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <DashboardAuthGuard>{children}</DashboardAuthGuard>;
+  return <CustomerAuthGuard>{children}</CustomerAuthGuard>;
 }

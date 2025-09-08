@@ -1,27 +1,26 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import useToast from "@/common/hooks/use-toast";
-import { ROUTES } from "@/common/lib/config/routes";
 
-import UserSignInForm from "@/features/authentication/components/user-auth/sign-in/form";
+import CustomerSignInForm from "@/features/authentication/components/customer-auth/sign-in/form";
 import { SignInFormData } from "@/features/authentication/validation/form.schemas";
 
-import { useUserLogin } from "@/features/user-dashboard/hooks/use-user-auth";
+import { useCustomerLogin } from "@/features/authentication/hooks/use-customer-auth";
 
 export default function SignInPage() {
-  const router = useRouter();
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const toast = useToast();
 
-  const userLogin = useUserLogin();
+  const customerLogin = useCustomerLogin();
 
   const onSubmit = async ({ email, password }: SignInFormData) => {
-    const response = await userLogin.mutateAsync({ username: email, password });
+    const response = await customerLogin.mutateAsync({ email, password });
 
     if (response.success) {
-      router.push(ROUTES.USER_DASHBOARD);
+      setIsSuccess(true);
       return;
     }
 
@@ -34,10 +33,10 @@ export default function SignInPage() {
   };
 
   return (
-    <UserSignInForm
+    <CustomerSignInForm
       onSubmit={onSubmit}
-      isLoading={userLogin.isPending}
-      isSuccess={userLogin.isSuccess}
+      isLoading={customerLogin.isPending}
+      isSuccess={isSuccess}
     />
   );
 }

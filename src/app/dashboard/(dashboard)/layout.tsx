@@ -3,10 +3,9 @@
 import React from "react";
 
 import { GENERAL_CONFIG } from "@/common/lib/config/general";
-import { useAuthStore } from "@/common/lib/stores/auth-store";
-import { useUserConfigStore } from "@/common/lib/stores/user-config-store";
 
 import { useAppVersionInfo } from "@/common/hooks/use-app-version-info";
+import { useAuthStore } from "@/common/lib/stores/auth-store";
 
 import {
   DashboardSidebar,
@@ -16,6 +15,7 @@ import InfoBar from "@/features/user-dashboard/components/info-bar";
 import GiveFeedbackForBetaDialog from "@/features/user-dashboard/components/give-feedback-for-beta-dialog";
 
 import { useBetaFeedback } from "@/features/notifications/email/hooks/use-internal-email";
+import { useCustomerConfigStore } from "@/features/user-dashboard/stores/customer-config.store";
 
 export default function DashboardLayout({
   children,
@@ -26,7 +26,7 @@ export default function DashboardLayout({
     React.useState(false);
 
   const { user } = useAuthStore();
-  const userConfig = useUserConfigStore();
+  const userConfig = useCustomerConfigStore();
   const sendBetaFeedback = useBetaFeedback();
   const { version } = useAppVersionInfo();
 
