@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 
 import { type ApiResponse } from "@/common/types/api";
-import { type AppError } from "@/common/lib/utils/error-handler";
+import { AppError } from "@/common/lib/utils/error-handler";
 
 /**
  * useQuery hook compatible with ApiResponse structure
@@ -68,6 +68,7 @@ export function useApiQuery<TData = unknown, TError = AppError>(
  *   },
  *   onSuccess: (data) => {
  *     // Only runs on success (success: true)
+ *     // data will have proper TypeScript typing
  *     console.log('Login successful:', data);
  *   },
  *   onError: (error) => {
@@ -83,11 +84,9 @@ export function useApiMutation<
 >(
   options: Omit<UseMutationOptions<TData, TError, TVariables>, "mutationFn"> & {
     mutationFn: (variables: TVariables) => Promise<ApiResponse<TData>>;
-    onSuccess?: (data: TData, variables: TVariables, context?: unknown) => void;
-    onError?: (error: TError, variables: TVariables, context?: unknown) => void;
   }
 ) {
-  const { mutationFn, onSuccess, onError, ...mutationOptions } = options;
+  const { mutationFn, ...mutationOptions } = options;
 
   return useMutation<TData, TError, TVariables>({
     ...mutationOptions,
@@ -100,14 +99,6 @@ export function useApiMutation<
       }
 
       return response.data as TData;
-    },
-    onSuccess: (data, variables, context) => {
-      // Call original callback on success
-      onSuccess?.(data, variables, context);
-    },
-    onError: (error, variables, context) => {
-      // Call original callback on error
-      onError?.(error, variables, context);
     },
   });
 }

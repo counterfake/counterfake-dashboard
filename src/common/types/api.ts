@@ -16,20 +16,6 @@ export interface ApiResponse<T = any> {
   error: AppError | null;
 }
 
-export interface ApiRequestConfig {
-  headers?: FetchHeaders;
-  timeout?: number;
-  retries?: number;
-  requiresAuth?: boolean;
-  params?: any;
-}
-
-export interface RefreshTokenResponse {
-  accessToken: string;
-  expiresIn: number;
-  refreshToken?: string;
-}
-
 // Fetch API Headers Interface
 export interface FetchHeaders {
   // Content Headers

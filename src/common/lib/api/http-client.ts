@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { ApiResponse } from "@/common/types/api";
 
-import { ErrorHandler } from "../utils/error-handler";
+import { AppError, ErrorHandler } from "../utils/error-handler";
 
 interface HttpClientBaseConfig {
   baseURL: string;
@@ -148,7 +148,7 @@ export class HttpClient {
 
     return HttpClient.errorResult(
       new Error("Max retries exceeded"),
-      "HttpClient.request"
+      `${config.method} ${config.url}`
     );
   }
 
@@ -198,11 +198,17 @@ export class HttpClient {
     };
   }
 
-  static errorResult(error: Error | unknown, context?: string) {
+  static errorResult(
+    error: Error | AppError | unknown,
+    context?: string
+  ): ApiResponse<null> {
+    const errorValue =
+      error instanceof AppError ? error : new AppError(error, context);
+
     return {
       success: false,
-      error: ErrorHandler.handle(error, context),
+      error: errorValue,
       data: null,
-    } satisfies ApiResponse<any>;
+    };
   }
 }
