@@ -105,19 +105,21 @@ function ProductsPage() {
           />
         )}
 
-        <ProductGrid
-          isLoading={dataLogic.productsResponse?.isLoading}
-          isError={
-            !!dataLogic.productsResponse?.isError &&
-            dataLogic.productsResponse?.error?.response?.status !== 404
-          }
-          isEmpty={
-            dataLogic.products.length === 0 ||
-            dataLogic.productsResponse?.error?.response?.status === 404
-          }
-          products={dataLogic.products}
-          layout={productGridLayout}
-        />
+        <div id="products-grid">
+          <ProductGrid
+            isLoading={dataLogic.productsResponse?.isLoading}
+            isError={
+              !!dataLogic.productsResponse?.isError &&
+              dataLogic.productsResponse?.error?.response?.status !== 404
+            }
+            isEmpty={
+              dataLogic.products.length === 0 ||
+              dataLogic.productsResponse?.error?.response?.status === 404
+            }
+            products={dataLogic.products}
+            layout={productGridLayout}
+          />
+        </div>
 
         <Pagination
           currentPage={paginationLogic.currentPage}
