@@ -7,17 +7,12 @@ import { useAuthStore } from "@/common/lib/stores/auth-store";
 
 import { authTokensSchema } from "@/common/types/auth";
 
-import {
-  RefreshTokenRequest,
-  RefreshTokenResponse,
-} from "@/common/types/brand-protection/auth";
-
 import { HttpClient } from "./http-client";
 
 /**
  * Base API Client
  */
-export class ApiClient extends HttpClient {
+export class BaseApiClient extends HttpClient {
   constructor() {
     super({
       baseURL: API_CONFIG.bpApi.baseURL,
@@ -96,12 +91,9 @@ export class ApiClient extends HttpClient {
       );
     }
 
-    const response = await this.post<RefreshTokenResponse, RefreshTokenRequest>(
-      API_ENDPOINTS.bpApi.refresh,
-      {
-        token: refreshTokenValue,
-      }
-    );
+    const response = await this.post(API_ENDPOINTS.bpApi.refresh, {
+      token: refreshTokenValue,
+    });
 
     if (!response.success) {
       // Return with the error result
@@ -128,7 +120,7 @@ export class ApiClient extends HttpClient {
   }
 }
 
-export const baseApiClient = new ApiClient();
+export const baseApiClient = new BaseApiClient();
 
 export const productAnalysisApiClient = new HttpClient({
   baseURL: API_CONFIG.productAnalysisApi.baseURL,
