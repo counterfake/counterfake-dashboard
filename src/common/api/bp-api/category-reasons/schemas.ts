@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+export const categoryReasonSchema = z.object({
+  index: z.number(),
+  name: z.string(),
+});
+
 // --------------------------
 // Params Schemas
 // --------------------------
@@ -17,10 +22,5 @@ export const getCategoryReasonsResponseSchema = z.object({
   data_count: z.number(),
   page_number: z.number(),
   generated_at: z.string(),
-  results: z.array(
-    z.object({
-      index: z.number(),
-      name: z.string(),
-    })
-  ),
+  results: z.array(categoryReasonSchema),
 });

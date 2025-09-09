@@ -1,7 +1,6 @@
 import { z } from "zod";
-
-import { sellerSchema } from "@/common/types/brand-protection/sellers";
-import { categoryReasonSchema } from "@/common/types/brand-protection/category-reasons";
+import { categoryReasonSchema } from "../category-reasons";
+import { getSellerByIdResponseSchema } from "../sellers";
 
 // --------------------------
 // Params Schemas
@@ -16,6 +15,7 @@ export const getProductsParamsSchema = z.object({
   fields: z.string().optional(),
   hidden_classes: z.boolean().optional(),
   category: z.string().or(z.number()).optional(),
+  category_reasons: z.string().optional(),
   search: z.string().optional(),
 });
 
@@ -92,7 +92,7 @@ export const getProductByIdResponseSchema = z.object({
   report: z.number(),
   report_updated_at: z.string(),
   reported_at: z.string(),
-  seller: sellerSchema,
+  seller: getSellerByIdResponseSchema,
   title_text: z.string(),
   unique: z.string(),
   updated_at: z.string(),

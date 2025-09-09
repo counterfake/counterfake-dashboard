@@ -17,7 +17,7 @@ interface ProductFiltersProps {
   onSearchByURLClear: () => void;
 }
 
-export default function ProductListSearchArea({
+export function ProductListSearchArea({
   initialValue,
   onSearchByNameApply,
   onSearchByURLApply,

@@ -14,10 +14,12 @@ import AppliedFilters from "@/common/components/ui/data-display/applied-filters"
 import DashboardPageWrapper from "@/features/user-dashboard/components/layout/dashboard-page-wrapper";
 
 // Product Features
-import ProductListSearchArea from "@/features/brand-protection/products/components/product-list/product-list-search-area";
-import ProductListToolbar from "@/features/brand-protection/products/components/product-list/product-list-toolbar";
-import ProductListFilters from "@/features/brand-protection/products/components/product-list/product-list-filters";
-import ProductGrid from "@/features/brand-protection/products/components/product-list/product-grid/product-grid";
+import {
+  ProductGrid,
+  ProductListFilters,
+  ProductListSearchArea,
+  ProductListToolbar,
+} from "@/features/products";
 
 // Page Internal Logic
 import { useProductsPagePagination } from "./_hooks/use-products-page-pagination";
@@ -123,7 +125,7 @@ function ProductsPage() {
           onPageChange={paginationLogic.setCurrentPage}
           showInfo={true}
           totalItems={
-            dataLogic.productsResponse?.data?.data_count ||
+            dataLogic.productsResponse?.data?.totalProducts ||
             dataLogic.products.length
           }
           itemsPerPage={paginationLogic.limit}

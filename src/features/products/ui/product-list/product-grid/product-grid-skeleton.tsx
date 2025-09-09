@@ -2,7 +2,7 @@ import React from "react";
 
 import { Skeleton } from "@/common/components/ui/primitives/skeleton";
 
-export default function ProductGridSkeleton() {
+export function ProductGridSkeleton() {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
       {Array.from({ length: 12 }).map((_, index) => (

@@ -39,7 +39,7 @@ interface ProductFiltersProps {
   };
 }
 
-export default function ProductListFilters({
+export function ProductListFilters({
   onClear,
   onApply,
   initialValues,

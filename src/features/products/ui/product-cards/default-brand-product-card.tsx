@@ -18,8 +18,6 @@ import {
 
 import { PreventClick } from "@/common/components/utility/prevent-click";
 
-import Rating from "@/common/components/ui/data-display/rating";
-
 import { SelectableCard } from "@/common/components/ui/data-display/selectable-card";
 
 export interface DefaultBrandProductCardProps {
@@ -31,7 +29,6 @@ export interface DefaultBrandProductCardProps {
     platform: string;
     sellerName: string;
     sellerUrl: string;
-    rating?: number;
     reasons: string[];
     brand: string;
     visitButtonHref: string;
@@ -140,7 +137,6 @@ export function DefaultBrandProductCard({
                 <div className="text-xl font-semibold">{product.price}</div>
               )}
             </div>
-            <Rating rating={product.rating} size="sm" />
           </div>
 
           {/* Additional Info */}

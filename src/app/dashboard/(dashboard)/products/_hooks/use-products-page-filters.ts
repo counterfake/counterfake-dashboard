@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 
 import { useSearchParams } from "@/common/hooks/use-search-params";
-
-import { productReportStatusService } from "@/features/brand-protection/products/services/product-report-status.service";
-import { productStatusService } from "@/features/brand-protection/products/services/product-status.service";
+import {
+  productReportStatusService,
+  productStatusService,
+} from "@/features/products";
 
 export interface ProductFilters {
   searchByName: string;

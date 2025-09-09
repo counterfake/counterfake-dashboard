@@ -34,13 +34,11 @@ export const getResultsAnalysisParamsSchema = z.object({
   profile: z.string().optional(),
   product_count: z.string().optional(),
   search: z.string().optional(),
+  url: z.string().optional(),
 });
 
 export const getResultsAnalysisMonthlyParamsSchema = z.object({
   brand: z.string().optional(),
-  limit: z.number().optional(),
-  sortByMonth: z.boolean().optional(),
-  order: z.enum(["asc", "desc"]).optional(),
 });
 
 // --------------------------

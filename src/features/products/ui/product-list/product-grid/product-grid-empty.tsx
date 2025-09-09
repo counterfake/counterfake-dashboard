@@ -2,7 +2,7 @@ import React from "react";
 
 import { Search } from "lucide-react";
 
-export default function ProductGridEmpty() {
+export function ProductGridEmpty() {
   return (
     <div className="text-center space-y-6 max-w-md mx-auto py-10">
       {/* Icon */}

@@ -2,34 +2,18 @@ import { Fragment } from "react";
 
 import { cn } from "@/common/lib/utils/ui";
 
+import { Product } from "../../../types/products.types";
+
 import { DefaultBrandProductCard } from "../../product-cards/default-brand-product-card";
 import { CompactBrandProductCard } from "../../product-cards/compact-brand-product-card";
 import { MinimalBrandProductCard } from "../../product-cards/minimal-brand-product-card";
 
-import ProductGridSkeleton from "./product-grid-skeleton";
-import ProductGridError from "./product-grid-error";
-import ProductGridEmpty from "./product-grid-empty";
-
-interface ProductItem {
-  id: number;
-  name: string;
-  price: string;
-  discountedPrice?: string;
-  imageUrl: string;
-  platform: string;
-  sellerName: string;
-  sellerUrl: string;
-  rating: number;
-  reasons: string[];
-  brand: string;
-  visitButtonHref: string;
-  detailsButtonHref: string;
-  titleHref: string;
-  isRisky: boolean;
-}
+import { ProductGridSkeleton } from "./product-grid-skeleton";
+import { ProductGridError } from "./product-grid-error";
+import { ProductGridEmpty } from "./product-grid-empty";
 
 interface ProductsGridProps {
-  products: ProductItem[];
+  products: Product[];
   layout: "default" | "compact" | "minimal";
   isLoading: boolean;
   isError: boolean;
@@ -43,7 +27,7 @@ const layoutClasses = {
   minimal: "grid-cols-2",
 } as const;
 
-export default function ProductGrid({
+export function ProductGrid({
   products,
   layout,
   isLoading,
@@ -68,16 +52,15 @@ export default function ProductGrid({
                   name: product.name,
                   price: product.price,
                   discountedPrice: product.discountedPrice,
-                  imageUrl: product.imageUrl,
-                  platform: product.platform,
+                  imageUrl: product.coverImage,
+                  platform: product.platformName,
                   sellerName: product.sellerName,
                   sellerUrl: product.sellerUrl,
-                  rating: product.rating,
                   reasons: product.reasons,
-                  brand: product.brand,
-                  visitButtonHref: product.visitButtonHref,
-                  detailsButtonHref: product.detailsButtonHref,
-                  titleHref: product.titleHref,
+                  brand: product.brandName,
+                  visitButtonHref: product.url,
+                  detailsButtonHref: product.url,
+                  titleHref: product.url,
                   isRisky: product?.isRisky,
                 }}
               />
@@ -88,12 +71,12 @@ export default function ProductGrid({
                   name: product.name,
                   price: product.price,
                   discountedPrice: product.discountedPrice,
-                  imageUrl: product.imageUrl,
-                  platform: product.platform,
+                  imageUrl: product.coverImage,
+                  platform: product.platformName,
                   sellerName: product.sellerName,
                   sellerUrl: product.sellerUrl,
                   reasons: product.reasons,
-                  viewDetailsHref: product.visitButtonHref,
+                  viewDetailsHref: product.url,
                   isRisky: product.isRisky,
                 }}
               />
@@ -104,8 +87,8 @@ export default function ProductGrid({
                   name: product.name,
                   price: product.price,
                   discountedPrice: product.discountedPrice,
-                  imageUrl: product.imageUrl,
-                  platform: product.platform,
+                  imageUrl: product.coverImage,
+                  platform: product.platformName,
                 }}
               />
             )}

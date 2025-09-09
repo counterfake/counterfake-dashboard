@@ -1,19 +1,20 @@
 import { useMemo } from "react";
 
-import { useAuthStore } from "@/common/lib/stores/auth-store";
+import { ROUTES } from "@/common/lib/config/routes";
 
 import {
-  useProductResults,
-  useProductResultsAnalysis,
-} from "@/features/brand-protection/products/hooks/use-product-result";
-import { useProductReasons } from "@/features/brand-protection/products/hooks/use-product-reasons";
-import { useParentClasses } from "@/features/brand-protection/classification/hooks/use-classifications";
-import { productReportStatusService } from "@/features/brand-protection/products/services/product-report-status.service";
-import { productStatusService } from "@/features/brand-protection/products/services/product-status.service";
+  // Services
+  productReportStatusService,
+  productStatusService,
+
+  // Hooks
+  useGetCustomerProductAnalysis,
+  useGetCustomerProductCategories,
+  useGetCustomerProductResults,
+  useGetProductReasons,
+} from "@/features/products";
 
 import { type ProductFilters } from "./use-products-page-filters";
-import { absoluteImageUrl } from "@/common/lib/utils/absolute-image-url";
-import { ROUTES } from "@/common/lib/config/routes";
 
 interface UseProductsPageDataProps {
   filters: ProductFilters;
@@ -26,97 +27,62 @@ export function useProductsPageData({
   currentPage,
   limit,
 }: UseProductsPageDataProps) {
-  const { user } = useAuthStore();
-
   // --------------------------
   // Fetch data
   // --------------------------
 
   // Fetch product data
-  const productsResponse = useProductResults(
-    {
-      brand: user?.brand.id || undefined,
-      page_number: currentPage,
-      page_size: limit,
-      url: filters.searchByURL || null,
-      search: filters.searchByName || null,
-      category: filters.status,
-      platform: filters.platform,
-      report: filters.reportStatus,
-      parent_product: filters.category,
-      product_count: "5",
-      category_reasons: filters.reason,
-      expand_relations: "seller.profile,platform,images,category_reasons,brand",
-      fields:
-        "brand,currency,_price_discountedPrice,id,images,platform,_price_realPrice,seller,title_text,url,_category,_related_product,price_actualPrice,category_reasons,rating",
-    },
-    {
-      enabled: !!user?.brand.id,
-    }
-  );
-
-  // Fetch product analysis data
-  const productAnalysisResponse = useProductResultsAnalysis(
-    {
-      search: filters.searchByName,
-      category: filters.status,
-      platform: filters.platform,
-      report: filters.reportStatus,
-      parent_product: filters.category,
-      brand: user?.brand.id || undefined,
-      product_count: "5",
-    },
-    {
-      enabled: !!user?.brand.id,
-    }
-  );
-
-  const productReasonsResponse = useProductReasons({
-    page_size: 100,
+  const productsResponse = useGetCustomerProductResults({
+    page: currentPage,
+    limit: limit,
+    url: filters.searchByURL,
+    search: filters.searchByName,
+    statusId: Number(filters.status) as any,
+    platformId: filters.platform,
+    reportStatusIds: filters.reportStatus,
+    category: filters.category,
+    reasons: filters.reason,
   });
 
-  const parentClassesResponse = useParentClasses(
-    {
-      brand: user?.brand?.id!,
-    },
-    {
-      enabled: !!user?.brand?.id,
-    }
-  );
+  // Fetch product analysis data
+  const productAnalysisResponse = useGetCustomerProductAnalysis({
+    productName: filters.searchByName,
+    productUrl: filters.searchByURL,
+    statusId: Number(filters.status) as any,
+    platformId: filters.platform,
+    reportStatusIds: filters.reportStatus,
+    categoryId: filters.category,
+    sellerShouldHaveProducts: 5,
+    reasons: filters.reason,
+  });
+
+  const productReasonsResponse = useGetProductReasons({
+    limit: 100,
+  });
+
+  const parentClassesResponse = useGetCustomerProductCategories({
+    doAnalysis: true,
+  });
 
   // --------------------------
   // Data Transforms
   // --------------------------
-  const products = useMemo(
-    () =>
-      productsResponse?.data?.results.map((product) => ({
-        id: product.id,
-        name: product.title_text,
-        price: `${product.price_actualPrice} ${product.currency}`,
-        discountedPrice: `${product.price_discountedPrice} ${product.currency}`,
-        imageUrl: absoluteImageUrl(product.images[0].path),
-        platform: product.platform.name,
-        sellerName: product.seller.profile.universal_name,
-        sellerUrl: product.seller.profile.universal_name,
-        rating: product.rating,
-        reasons: product.category_reasons.map((reason) => reason.name),
-        brand:
-          typeof product.brand === "object"
-            ? product.brand?.brand_name
-            : "Brand Not Found",
-        visitButtonHref: product.url,
-        detailsButtonHref: `${ROUTES.USER_DASHBOARD}/products/${product.id}`,
-        titleHref: `${ROUTES.USER_DASHBOARD}/products/${product.id}`,
-        isRisky: product._category === 1,
-      })) || [],
-    [productsResponse]
-  );
+  const products = useMemo(() => {
+    const productData = productsResponse?.data?.products || [];
+
+    return productData.map((product) => ({
+      ...product,
+      visitButtonHref: product?.url,
+      detailsButtonHref: `${ROUTES.USER_DASHBOARD}/products/${product?.id}`,
+      titleHref: `${ROUTES.USER_DASHBOARD}/products/${product?.id}`,
+    }));
+  }, [productsResponse]);
   const productAnalysis = useMemo(
-    () => productAnalysisResponse?.data?.platform_analysis || [],
+    () => productAnalysisResponse?.data?.platforms || [],
     [productAnalysisResponse]
   );
   const totalPages = useMemo(
-    () => productsResponse?.data?.page_count || 1,
+    () => productsResponse?.data?.totalPages || 1,
     [productsResponse]
   );
   const productReasons = useMemo(
@@ -124,7 +90,7 @@ export function useProductsPageData({
     [productReasonsResponse]
   );
   const productCategories = useMemo(
-    () => parentClassesResponse?.data?.parent_classes || [],
+    () => parentClassesResponse?.data || [],
     [parentClassesResponse]
   );
 

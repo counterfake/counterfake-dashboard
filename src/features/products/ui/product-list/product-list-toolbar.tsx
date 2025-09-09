@@ -8,8 +8,6 @@ import {
   GalleryHorizontal,
 } from "lucide-react";
 
-import { type UserConfigState } from "@/common/lib/stores/user-config-store";
-
 import { Button } from "@/common/components/ui/primitives/button";
 import {
   Select,
@@ -21,14 +19,14 @@ import {
 import { Label } from "@/common/components/ui/primitives/label";
 
 interface ProductListToolbarProps {
-  onLayoutChange: (layout: UserConfigState["productGridLayout"]) => void;
+  onLayoutChange: (layout: "default" | "compact" | "minimal") => void;
   onLimitChange: (limit: number) => void;
   onFilterOpen: () => void;
-  currentLayout: UserConfigState["productGridLayout"];
+  currentLayout: "default" | "compact" | "minimal";
   filterOpen: boolean;
 }
 
-export default function ProductListToolbar({
+export function ProductListToolbar({
   onLayoutChange,
   onLimitChange,
   onFilterOpen,
