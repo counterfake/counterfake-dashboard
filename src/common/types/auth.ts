@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-export const dashboardTypeSchema = z.enum(["admin", "user"]);
+export const dashboardTypeSchema = z.enum(["admin", "customer"]);
 export type DashboardType = z.infer<typeof dashboardTypeSchema>;
 
-export const userRoleSchema = z.enum(["admin", "user"]);
+export const userRoleSchema = z.enum(["admin", "customer"]);
 export type UserRole = z.infer<typeof userRoleSchema>;
 
 export const userSchema = z.object({

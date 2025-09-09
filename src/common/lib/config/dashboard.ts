@@ -6,14 +6,12 @@ export const DASHBOARD_CONFIG = {
   admin: {
     ROOT_PATH: ROUTES.ADMIN_DASHBOARD,
     INDEX_PATH: ROUTES.ADMIN_DASHBOARD,
-    ALLOWED_ROLES: ["admin"],
   },
-  user: {
+  customer: {
     ROOT_PATH: ROUTES.USER_DASHBOARD,
     INDEX_PATH: ROUTES.USER_DASHBOARD,
-    ALLOWED_ROLES: ["user"],
   },
 } as const satisfies Record<
   DashboardType,
-  { ROOT_PATH: string; INDEX_PATH: string; ALLOWED_ROLES: readonly string[] }
+  { ROOT_PATH: string; INDEX_PATH: string }
 >;
