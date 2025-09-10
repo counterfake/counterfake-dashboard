@@ -1,24 +1,28 @@
 import { AxiosError, AxiosRequestConfig } from "axios";
 
 import { ROUTES } from "@/common/lib/config/routes";
-import { API_CONFIG, API_ENDPOINTS } from "@/common/lib/config/api";
+import { API_CONFIG } from "@/common/lib/config/api";
 
 import { useAuthStore } from "@/common/lib/stores/auth-store";
 
 import { authTokensSchema } from "@/common/types/auth";
 
 import { HttpClient } from "./http-client";
+import { BpAuthApi } from "@/common/api/bp-api/auth";
 
 /**
  * Base API Client
  */
 export class BaseApiClient extends HttpClient {
+  private authApi: BpAuthApi;
+
   constructor() {
     super({
       baseURL: API_CONFIG.bpApi.baseURL,
-      retries: 1,
       throwOnError: false,
     });
+
+    this.authApi = new BpAuthApi(this);
 
     this.setupInterceptors();
   }
@@ -52,33 +56,35 @@ export class BaseApiClient extends HttpClient {
         ) {
           originalRequest._retry = true;
 
-          try {
-            // Try to refresh token
-            const newToken = await this.refreshToken();
+          // Try to refresh token
+          const newToken = await this.refreshToken();
 
-            if (newToken && originalRequest.headers) {
-              originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          if (!newToken.success && !originalRequest.headers) {
+            // Clear auth store
+            useAuthStore.getState().clear();
 
-              return this.client(originalRequest);
+            if (typeof window !== "undefined") {
+              window.location.href = `${ROUTES.UNAUTHORIZED}?reason=refresh-token-failed`;
             }
-          } catch (refreshError) {
-            try {
-              // Clear auth store
-              useAuthStore.getState().clear();
 
-              if (typeof window !== "undefined") {
-                window.location.href = ROUTES.UNAUTHORIZED;
-              }
-            } catch (logoutError) {
-              console.error("Logout error", logoutError);
-            }
-            return Promise.reject(refreshError);
+            return Promise.reject(newToken);
           }
+
+          const authorization = `Bearer ${newToken}`;
+
+          originalRequest.headers.Authorization = authorization;
+          this.client.defaults.headers.common.Authorization = authorization;
+
+          return this.client(originalRequest);
         }
 
         return Promise.reject(error);
       }
     );
+  }
+
+  public setAuthorizationHeader(token: string) {
+    this.client.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
 
   public async refreshToken() {
@@ -91,7 +97,7 @@ export class BaseApiClient extends HttpClient {
       );
     }
 
-    const response = await this.post(API_ENDPOINTS.bpApi.refresh, {
+    const response = await this.authApi.refreshToken({
       token: refreshTokenValue,
     });
 
