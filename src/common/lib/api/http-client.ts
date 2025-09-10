@@ -3,12 +3,11 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 import { ApiResponse } from "@/common/types/api";
 
-import { AppError, ErrorHandler } from "../utils/error-handler";
+import { AppError } from "../utils/error-handler";
 
 interface HttpClientBaseConfig {
   baseURL: string;
   timeout?: number;
-  retries?: number;
   throwOnError?: boolean;
 }
 
@@ -55,18 +54,11 @@ type HttpClientRequestConfig = AxiosRequestConfig & {
 
 export class HttpClient {
   protected client: AxiosInstance;
-  protected retries: number;
   protected throwOnError: boolean;
 
   constructor(config: HttpClientBaseConfig) {
-    const {
-      retries = 3,
-      throwOnError = true,
-      timeout = 15000,
-      baseURL,
-    } = config;
+    const { throwOnError = true, timeout = 15000, baseURL } = config;
 
-    this.retries = retries;
     this.throwOnError = throwOnError;
 
     this.client = axios.create({
@@ -80,76 +72,50 @@ export class HttpClient {
   ): Promise<ApiResponse<T>> {
     const { throwOnError = this.throwOnError, validationSchemas } = config;
 
-    let attempt = 0;
+    try {
+      let params = config.params;
 
-    while (attempt < this.retries) {
-      try {
-        let params = config.params;
-
-        if (typeof params === "object") {
-          // Validate URL parameters if provided
-          if (validationSchemas?.params) {
-            params = validationSchemas.params.parse(params);
-          }
-
-          params = {}; // Reset params to an empty object
-
-          for (const key in config.params) {
-            if (
-              config.params[key] !== null &&
-              config.params[key] !== "" &&
-              config.params[key] !== undefined
-            ) {
-              params[key] = config.params[key];
-            }
-          }
+      if (typeof params === "object") {
+        // Validate URL parameters if provided
+        if (validationSchemas?.params) {
+          params = validationSchemas.params.parse(params);
         }
 
-        // Validate request body data if provided
-        if (validationSchemas?.data)
-          config.data = validationSchemas.data.parse(config.data);
+        params = {}; // Reset params to an empty object
 
-        let response: AxiosResponse<T> = await this.client({
-          ...config,
-          params,
-        });
-
-        // Validate response data if provided
-        if (validationSchemas?.responseData) {
-          response.data = validationSchemas.responseData.parse(response.data);
-        }
-
-        return HttpClient.successResult(response.data);
-      } catch (error: any) {
-        attempt++;
-
-        // Don't retry on authentication errors or client errors (4xx)
-        if (error.response?.status < 500 || attempt >= this.retries) {
-          if (throwOnError) {
-            throw error;
+        for (const key in config.params) {
+          if (
+            config.params[key] !== null &&
+            config.params[key] !== "" &&
+            config.params[key] !== undefined
+          ) {
+            params[key] = config.params[key];
           }
-
-          return HttpClient.errorResult(
-            error,
-            `${config.method} ${config.url}`
-          );
         }
-
-        // Wait before retry (exponential backoff)
-        await new Promise((resolve) =>
-          setTimeout(resolve, Math.pow(2, attempt) * 1000)
-        );
       }
-    }
 
-    if (throwOnError) {
-      throw new Error("Max retries exceeded");
-    }
+      // Validate request body data if provided
+      if (validationSchemas?.data)
+        config.data = validationSchemas.data.parse(config.data);
 
-    return HttpClient.errorResult(
-      new Error("Max retries exceeded"),
-      `${config.method} ${config.url}`
-    );
+      let response: AxiosResponse<T> = await this.client({
+        ...config,
+        params,
+      });
+
+      // Validate response data if provided
+      if (validationSchemas?.responseData) {
+        response.data = validationSchemas.responseData.parse(response.data);
+      }
+
+      return HttpClient.successResult(response.data);
+    } catch (error: any) {
+      if (throwOnError) {
+        throw error;
+      }
+
+      return HttpClient.errorResult(error, `${config.method} ${config.url}`);
+    }
   }
 
   public async get<T = any>(
