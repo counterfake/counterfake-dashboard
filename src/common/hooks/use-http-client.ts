@@ -21,6 +21,7 @@ import { AppError } from "@/common/lib/utils/error-handler";
  *   queryKey: ['users'],
  *   queryFn: () => httpClient.get<User[]>('/users'),
  *   enabled: true,
+ *   emptyData: [], // Initial data that doesn't affect loading states
  * });
  *
  * @description
@@ -30,15 +31,18 @@ import { AppError } from "@/common/lib/utils/error-handler";
  * `error`: AppError if success: false
  *
  * `data`: User[] type (only response.data part)
+ *
+ * `emptyData`: Initial data that is returned immediately without affecting isLoading/isFetching states
  */
 export function useApiQuery<TData = unknown, TError = AppError>(
   options: Omit<UseQueryOptions<TData, TError>, "queryFn"> & {
     queryFn: () => Promise<ApiResponse<TData>>;
+    emptyData?: TData;
   }
 ) {
-  const { queryFn, ...queryOptions } = options;
+  const { queryFn, emptyData, ...queryOptions } = options;
 
-  return useQuery<TData, TError>({
+  const queryResult = useQuery<TData, TError>({
     ...queryOptions,
     queryFn: async () => {
       const response = await queryFn();
@@ -51,6 +55,17 @@ export function useApiQuery<TData = unknown, TError = AppError>(
       return response.data as TData;
     },
   });
+
+  // If emptyData is provided and no data is available yet, return emptyData
+  // This doesn't affect loading states unlike placeholderData
+  if (emptyData !== undefined && queryResult.data === undefined) {
+    return {
+      ...queryResult,
+      data: emptyData,
+    };
+  }
+
+  return queryResult;
 }
 
 /**
