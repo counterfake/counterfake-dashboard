@@ -5,6 +5,7 @@ import { type GetParentClassByIdResponse } from "@/common/api/bp-api/parent-clas
 export type GetProductCategoriesParams = {
   brand?: string;
   doAnalysis?: boolean;
+  sortByRiskyCount?: boolean;
 };
 
 export type ProductCategory = GetParentClassByIdResponse;
@@ -13,4 +14,5 @@ export interface ProductCategoriesServiceInterface {
   getProductCategories(
     params: GetProductCategoriesParams
   ): Promise<ApiResponse<ProductCategory[]>>;
+  transformProductCategory(category: ProductCategory): ProductCategory;
 }

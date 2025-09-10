@@ -1,6 +1,5 @@
 import { baseApiClient } from "@/common/lib/api/api-client";
 import { HttpClient } from "@/common/lib/api/http-client";
-import { MONTHS } from "@/common/lib/data/months";
 import { absoluteImageUrl } from "@/common/lib/utils/absolute-image-url";
 
 // API Layer Imports
@@ -9,9 +8,7 @@ import { BpResultsApi } from "@/common/api/bp-api/results";
 
 // Internal Types
 import {
-  type GetProductAnalysisParams,
   type TransformProductDataParam,
-  type GetProductAnalysisMonthlyParams,
   type GetProductResultsParams,
   type ProductServiceInterface,
   Product,
@@ -120,72 +117,6 @@ export class ProductService implements ProductServiceInterface {
       totalProducts: result.data.data_count,
       products: transformedProducts,
     });
-  }
-
-  public async getProductAnalysis(params: GetProductAnalysisParams) {
-    const result = await this.resultsApi.getResultsAnalysis({
-      brand: params.brand,
-      category: String(params.statusId),
-      parent_product: params.categoryId,
-      platform: params.platformId,
-      report: params.reportStatusIds,
-      search: params.productName,
-      url: params.productUrl,
-      product_count: String(params.sellerShouldHaveProducts),
-      profile: params.sellerProfileId,
-    });
-
-    if (!result.success) {
-      return HttpClient.errorResult(
-        result.error,
-        this.getContextKey(this.getProductAnalysis.name)
-      );
-    }
-
-    const data = result.data;
-
-    return HttpClient.successResult({
-      sellers: data.seller_analysis,
-      platforms: data.platform_analysis,
-      totalProducts: data.count,
-    });
-  }
-
-  public async getProductAnalysisMonthly(
-    params: GetProductAnalysisMonthlyParams
-  ) {
-    const { brand, sortByMonth = true, order = "desc", limit } = params;
-
-    const result = await this.resultsApi.getResultsAnalysisMonthly({ brand });
-
-    if (!result.success) {
-      return HttpClient.errorResult(
-        result.error,
-        this.getContextKey(this.getProductAnalysisMonthly.name)
-      );
-    }
-
-    // --------------------------
-    // Sort data if sortByMonth is true - Business Logic
-    // --------------------------
-    if (sortByMonth && result.data) {
-      // Sort incoming data by year and month
-      result.data.sort((a, b) => {
-        const [aMonth, aYear] = a.month.split(" ");
-        const [bMonth, bYear] = b.month.split(" ");
-
-        if (aYear !== bYear) {
-          return Number(bYear) - Number(aYear);
-        }
-
-        return MONTHS.indexOf(bMonth) - MONTHS.indexOf(aMonth);
-      });
-
-      if (limit) result.data.splice(limit);
-      if (order === "desc") result.data.reverse();
-    }
-
-    return result;
   }
 
   public transformProduct(product: TransformProductDataParam): Product {

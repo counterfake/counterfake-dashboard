@@ -16,24 +16,7 @@ export type GetProductResultsParams = {
   url?: string;
   category?: string;
 };
-export type GetProductAnalysisParams = {
-  brand?: string;
-  statusId?: ProductStatusId;
-  reasons?: string;
-  platformId?: string;
-  reportStatusIds?: string;
-  productName?: string;
-  productUrl?: string;
-  categoryId?: string;
-  sellerShouldHaveProducts?: number;
-  sellerProfileId?: string;
-};
-export type GetProductAnalysisMonthlyParams = {
-  brand: string;
-  limit?: number;
-  sortByMonth?: boolean;
-  order?: "asc" | "desc";
-};
+
 export type TransformProductDataParam = GetProductByIdResponse;
 
 export type Product = {
@@ -62,11 +45,5 @@ export type Product = {
 export interface ProductServiceInterface {
   getProductById(id: string): Promise<ApiResponse<Product>>;
   getProductResults(params: GetProductResultsParams): Promise<ApiResponse<any>>;
-  getProductAnalysis(
-    params: GetProductAnalysisParams
-  ): Promise<ApiResponse<any>>;
-  getProductAnalysisMonthly(
-    params: GetProductAnalysisMonthlyParams
-  ): Promise<ApiResponse<any>>;
   transformProduct(product: TransformProductDataParam): Product;
 }

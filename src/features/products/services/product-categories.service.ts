@@ -8,6 +8,7 @@ import { BpParentClassesApi } from "@/common/api/bp-api/parent-classes";
 import {
   type ProductCategoriesServiceInterface,
   type GetProductCategoriesParams,
+  type ProductCategory,
 } from "../types/product-categories.types";
 
 /**
@@ -47,7 +48,24 @@ export class ProductCategoriesService
     const data = response.data;
     const categories = data?.parent_classes;
 
-    return HttpClient.successResult(categories);
+    const transformedCategories = categories.map((category) =>
+      this.transformProductCategory(category)
+    );
+
+    if (params.sortByRiskyCount) {
+      transformedCategories.sort((a, b) => b.riskyProducts - a.riskyProducts);
+    }
+
+    return HttpClient.successResult(transformedCategories);
+  }
+
+  public transformProductCategory(category: ProductCategory) {
+    return {
+      name: category.name,
+      id: category.index,
+      riskyProducts: category.details_for_risky.risky_count,
+      totalProducts: category.details_for_risky.total_count,
+    };
   }
 }
 

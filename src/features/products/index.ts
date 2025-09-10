@@ -22,6 +22,7 @@ export * from "./services/product-reasons.service";
 export * from "./services/product.service";
 export * from "./services/product-report-status.service";
 export * from "./services/product-status.service";
+export * from "./services/product-analysis.service";
 
 // Hooks
 export * from "./hooks/use-product-reasons";

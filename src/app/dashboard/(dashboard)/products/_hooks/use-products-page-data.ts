@@ -109,7 +109,7 @@ export function useProductsPageData({
   const categoryOptions = useMemo(
     () =>
       productCategories.map((category) => ({
-        value: String(category.index),
+        value: String(category.id),
         label: category.name,
       })),
     [productCategories]
