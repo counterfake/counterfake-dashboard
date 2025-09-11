@@ -24,7 +24,7 @@ interface ProductRatingProps {
   isLoading?: boolean;
 }
 
-export default function ProductRating({
+export function ProductRating({
   rating,
   isLoading = false,
 }: ProductRatingProps) {

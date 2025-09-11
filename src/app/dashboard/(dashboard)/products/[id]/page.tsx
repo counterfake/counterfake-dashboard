@@ -6,27 +6,28 @@ import { useParams } from "next/navigation";
 import { ROUTES } from "@/common/lib/config/routes";
 
 // Components
+import {
+  ProductAnalysis,
+  ProductImageGallery,
+  ProductInfoCard,
+} from "@/features/products";
 import DashboardPageWrapper from "@/features/user-dashboard/components/layout/dashboard-page-wrapper";
 
-import ProductImageGallery from "@/features/products/product-detail/components/product-image-gallery";
-import ProductInfoCard from "@/features/products/product-detail/components/product-info-card";
-import ProductDetailsCard from "@/features/products/product-detail/components/product-details-card";
-import ProductRating from "@/features/products/product-detail/components/product-rating";
-
 // Hooks
-import { useProductDetail } from "@/features/products/product-detail/hooks/use-product-detail";
+import { useProductDetailPageData } from "./_hooks/use-product-detail-page-data";
 
 export default function ProductDetailPage() {
   const params = useParams();
   const productId = params?.id as string;
 
-  const { productResponse } = useProductDetail(productId);
+  const { productResponse, productCategoryResponse } =
+    useProductDetailPageData(productId);
 
   const productData = productResponse.data;
 
   return (
     <DashboardPageWrapper
-      title="Product Detail"
+      title="Product Details"
       description="View comprehensive information about the reported product"
       breadcrumbs={[
         {
@@ -38,46 +39,51 @@ export default function ProductDetailPage() {
           href: ROUTES.USER_DASHBOARD_PRODUCTS,
         },
         {
-          label: productData?.name || "Product Detail",
+          label: productData?.name || "Product Details",
           current: true,
         },
       ]}
     >
       <div className="space-y-6 fade-in">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
           {/* Product Image Gallery */}
-          <ProductImageGallery
-            images={productData?.images || []}
-            productName={productData?.name || ""}
-            isLoading={productResponse.isLoading}
-          />
+          <div className="lg:sticky top-10 self-start">
+            <ProductImageGallery
+              images={productData?.images || []}
+              productName={productData?.name || ""}
+              isLoading={productResponse.isLoading}
+            />
+          </div>
 
-          {/* Product Basic Info */}
           <div className="space-y-6">
             <ProductInfoCard
-              product={productData}
+              product={{
+                ...productData,
+                category: productCategoryResponse?.data?.name,
+              }}
               isLoading={productResponse.isLoading}
             />
 
-            <ProductRating
-              rating={productData?.rating}
+            <ProductAnalysis
+              analysis={{
+                analysisSummaryText: productData?.analysis?.analysisSummaryText,
+                reportReasons: productData?.analysis?.reportReasons,
+                status: productData?.analysis?.status,
+                statusId: productData?.analysis?.statusId,
+                daysSinceListed: productData?.analysis?.daysSinceListed,
+                daysSinceReported: productData?.analysis?.daysSinceReported,
+                fakeScore: productData?.analysis?.fakeScore,
+                fakeScoreProbability:
+                  productData?.analysis?.fakeScoreProbability,
+                sellerIsRisky: productData?.analysis?.isRisky,
+                rating: productData?.analysis?.rating,
+                isLowRating: productData?.analysis?.isLowRating,
+                isPriceOutlier: productData?.analysis?.isPriceOutlier,
+              }}
               isLoading={productResponse.isLoading}
             />
           </div>
         </div>
-
-        {/* Product Details */}
-        <ProductDetailsCard
-          isLoading={productResponse.isLoading}
-          productDescription={productData?.description || ""}
-          reportData={{
-            reportReasons: productData?.reportReason || [],
-            isRiskyRating: productData?.isRiskyRating || false,
-            isRatingAvailable: productData?.isRatingAvailable || false,
-            isPriceOutlier: productData?.isPriceOutlier || false,
-            isRiskySeller: productData?.seller.isRisky || false,
-          }}
-        />
       </div>
     </DashboardPageWrapper>
   );

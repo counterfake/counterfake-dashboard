@@ -9,9 +9,9 @@ import { Button } from "@/common/components/ui/primitives/button";
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from "@/common/components/ui/primitives/dialog";
 import { Skeleton } from "@/common/components/ui/primitives/skeleton";
-import { DialogTitle } from "@radix-ui/react-dialog";
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -19,7 +19,7 @@ interface ProductImageGalleryProps {
   isLoading?: boolean;
 }
 
-export default function ProductImageGallery({
+export function ProductImageGallery({
   images,
   productName,
   isLoading = false,
@@ -117,7 +117,7 @@ export default function ProductImageGallery({
         </div>
 
         {/* Thumbnail Gallery */}
-        {images.length > 1 && (
+        {images.length > 0 && (
           <div className="px-4 pb-2 mt-4 flex flex-wrap gap-2">
             {images.map((image, index) => (
               <button
@@ -143,8 +143,10 @@ export default function ProductImageGallery({
 
       {/* Fullscreen Dialog */}
       <Dialog open={isFullscreen} onOpenChange={setIsFullscreen}>
-        <DialogContent className="max-w-[90vw] max-h-[90vh] p-0">
-          <DialogTitle>{productName}</DialogTitle>
+        <DialogContent className="max-w-[90vw] max-h-[90vh]">
+          <DialogTitle className="text-xl font-semibold">
+            {productName}
+          </DialogTitle>
           <div className="relative w-full h-[85vh]">
             <Image
               src={images[currentImageIndex]}

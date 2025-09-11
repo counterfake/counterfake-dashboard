@@ -1,14 +1,20 @@
 import { baseApiClient } from "@/common/lib/api/api-client";
 import { HttpClient } from "@/common/lib/api/http-client";
 import { absoluteImageUrl } from "@/common/lib/utils/absolute-image-url";
+import {
+  calculateDaysSince,
+  formatDateForUserLocale,
+} from "@/common/lib/utils/date-helper";
 
 // API Layer Imports
-import { BpProductsApi } from "@/common/api/bp-api/products";
+import {
+  BpProductsApi,
+  type GetProductByIdResponse,
+} from "@/common/api/bp-api/products";
 import { BpResultsApi } from "@/common/api/bp-api/results";
 
 // Internal Types
 import {
-  type TransformProductDataParam,
   type GetProductResultsParams,
   type ProductServiceInterface,
   Product,
@@ -67,7 +73,42 @@ export class ProductService implements ProductServiceInterface {
       );
     }
 
-    const result = await this.productsApi.getProductById(id);
+    const requiredFields: Array<keyof GetProductByIdResponse> = [
+      "analyse_summary",
+      "brand",
+      "category_reasons",
+      "classification",
+      "created_at",
+      "currency",
+      "description_text",
+      "id",
+      "images",
+      "fake_score",
+      "platform",
+      "price_actualPrice",
+      "related_product",
+      "report",
+      "reported_at",
+      "seller",
+      "title_text",
+      "url",
+      "_category",
+      "_related_product",
+    ];
+
+    const expandRelations = [
+      "seller.profile",
+      "platform",
+      "images",
+      "category_reasons",
+      "brand",
+      "classification",
+    ];
+
+    const result = await this.productsApi.getProductById(id, {
+      fields: requiredFields.join(","),
+      expand_relations: expandRelations.join(","),
+    });
 
     if (!result.success) {
       return HttpClient.errorResult(
@@ -76,13 +117,44 @@ export class ProductService implements ProductServiceInterface {
       );
     }
 
-    const transformedProduct = this.transformProduct(result.data);
+    const transformedProduct = this.transformProductResponse(result.data);
 
     return HttpClient.successResult(transformedProduct);
   }
 
   public async getProductResults(params: GetProductResultsParams) {
-    const result = await this.resultsApi.getResults({
+    const requiredFields: Array<keyof GetProductByIdResponse> = [
+      "analyse_summary",
+      "brand",
+      "category_reasons",
+      "classification",
+      "created_at",
+      "currency",
+      "description_text",
+      "id",
+      "images",
+      "platform",
+      "price_actualPrice",
+      "related_product",
+      "report",
+      "reported_at",
+      "seller",
+      "title_text",
+      "url",
+      "_category",
+      "_related_product",
+    ];
+
+    const expandRelations = [
+      "seller.profile",
+      "platform",
+      "images",
+      "category_reasons",
+      "brand",
+      "classification",
+    ];
+
+    const response = await this.resultsApi.getResults({
       brand: params.brand,
       category: String(params.statusId),
       category_reasons: params.reasons,
@@ -94,71 +166,172 @@ export class ProductService implements ProductServiceInterface {
       url: params.url,
       parent_product: params.category,
       product_count: "5",
-      expand_relations: "seller.profile,platform,images,category_reasons,brand",
-      fields:
-        "brand,currency,_price_discountedPrice,_price_realPrice,id,images,platform,seller,title_text,url,_category,_related_product,price_actualPrice,category_reasons",
+      expand_relations: expandRelations.join(","),
+      fields: requiredFields.join(","),
     });
 
-    if (!result.success) {
+    if (!response.success) {
       return HttpClient.errorResult(
-        result.error,
+        response.error,
         this.getContextKey(this.getProductResults.name)
       );
     }
 
-    const transformedProducts = result.data.results.map((product) =>
-      this.transformProduct(product)
-    );
+    // For the performance, we use for loop to store transformed products
+    let transformedProducts: Product[] = [];
+
+    if (!Array.isArray(response.data?.results)) {
+      return HttpClient.errorResult(
+        new Error("response.data.results is not an array"),
+        this.getContextKey(this.getProductResults.name)
+      );
+    }
+
+    for (let index = 0; index < response.data?.results?.length; index++) {
+      const product = response.data?.results?.[index];
+
+      transformedProducts.push(this.transformProductResponse(product));
+    }
 
     return HttpClient.successResult({
-      limit: result.data.page_size,
-      page: result.data.page_number,
-      totalPages: result.data.page_count,
-      totalProducts: result.data.data_count,
+      limit: response.data.page_size,
+      page: response.data.page_number,
+      totalPages: response.data.page_count,
+      totalProducts: response.data.data_count,
       products: transformedProducts,
     });
   }
 
-  public transformProduct(product: TransformProductDataParam): Product {
+  public transformProductResponse(product: GetProductByIdResponse): Product {
+    // Get product status
     const productStatus = this.productStatusService.getById(
-      product._category as ProductStatusId
+      product?._category as ProductStatusId
     );
 
+    // Get product report status
     const productReportStatus = this.productReportStatusService.getById(
-      product.report as ProductReportStatusId
+      product?.report as ProductReportStatusId
     );
 
+    // Get product reasons
     const reasons = product.category_reasons?.map((reason) => reason?.name);
 
+    // Get brand name and id
     let brandName: string | null = null;
     let brandId: number | null = null;
 
-    if (typeof product.brand === "object") {
+    if (typeof product?.brand === "object") {
       brandName = product?.brand?.brand_name;
       brandId = product?.brand?.id;
+    }
+
+    // Handle ad price data
+    let originalPrice: number | null = null;
+    let discountedPrice: number | null = null;
+    let discountPercentage: number | null = null;
+
+    if (
+      typeof product?.price_actualPrice === "number" &&
+      product?.price_actualPrice > 0
+    ) {
+      originalPrice = product?.price_actualPrice;
+    }
+
+    if (
+      typeof product?.price_discountedPrice === "number" &&
+      product?.price_discountedPrice > 0
+    ) {
+      discountedPrice = product?.price_discountedPrice;
+
+      discountPercentage = Math.round(
+        (1 - originalPrice / discountedPrice) * 100
+      );
+    }
+
+    // Handle sub category data
+    if (typeof product?.classification !== "object")
+      throw new Error("product.classification is not an object");
+
+    const subCategory = {
+      name: product?.classification?.name,
+      id: product?.classification?.index,
+      parentCategoryId: product?.classification?.parent,
+    };
+
+    // Handle fake score data
+    let fakeScore = null;
+    let fakeScoreProbability = null;
+
+    if (typeof product?.fake_score === "number" && product?.fake_score > 0) {
+      fakeScore = product?.fake_score;
+      fakeScoreProbability = (fakeScore * 100).toFixed(1);
+    }
+
+    // Handle rating data
+    let rating: number | null = null;
+
+    if (typeof product?.rating === "number" && product?.rating > 0) {
+      rating = product?.rating;
+    }
+
+    let isLowRating = false;
+
+    if (rating) {
+      isLowRating = rating < 60;
     }
 
     return {
       id: product?.id,
       name: product?.title_text,
-      price: product?.price_actualPrice,
-      discountedPrice: product?.price_discountedPrice,
-      currency: product?.currency,
       coverImage: absoluteImageUrl(product?.images?.[0]?.path),
       images: product?.images?.map((image) => absoluteImageUrl(image?.path)),
-      platformName: product?.platform?.name,
-      platformId: product?.platform?.id,
-      sellerName: product?.seller?.name,
-      sellerUrl: product?.seller?.url,
-      reasons,
-      brandName,
-      brandId,
-      url: product?.url,
-      isRisky: product?.category === 1,
-      statusId: productStatus?.id,
-      status: productStatus?.label,
-      reportStatusId: productReportStatus?.id,
-      reportStatus: productReportStatus?.label,
+      ad: {
+        description: product?.description_text,
+        originalPrice,
+        discountedPrice,
+        discountPercentage,
+        currency: product?.currency,
+        url: product?.url,
+      },
+      analysis: {
+        analysisSummaryText: product?.analyse_summary,
+        isRisky: product?.category === 1,
+        fakeScore,
+        fakeScoreProbability,
+        statusId: productStatus?.id,
+        status: productStatus?.label,
+        reportStatusId: productReportStatus?.id,
+        reportStatus: productReportStatus?.label,
+        reportReasons: reasons,
+        listedAt: formatDateForUserLocale(product?.created_at),
+        reportedAt: formatDateForUserLocale(product?.reported_at),
+        daysSinceListed: calculateDaysSince(product?.created_at),
+        daysSinceReported: calculateDaysSince(product?.reported_at),
+        isPriceOutlier: product?.price_isOutlier,
+        rating,
+        isLowRating,
+      },
+      brand: {
+        name: brandName,
+        id: brandId,
+      },
+      platform: {
+        name: product?.platform?.name,
+        id: product?.platform?.id,
+        iconLink: product?.platform?.icon_link,
+      },
+      profile: {
+        id: product?.seller?.profile?.id,
+        name: product?.seller?.profile?.universal_name,
+        isRisky: product?.seller?.profile?.category === 1,
+      },
+      seller: {
+        name: product?.seller?.name,
+        url: product?.seller?.url,
+        id: product?.seller?.id,
+        avatarUrl: product?.seller?.picture_url,
+      },
+      subCategory,
     };
   }
 }

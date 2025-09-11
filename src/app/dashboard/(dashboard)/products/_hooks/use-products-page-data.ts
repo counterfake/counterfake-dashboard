@@ -72,7 +72,7 @@ export function useProductsPageData({
 
     return productData.map((product) => ({
       ...product,
-      visitButtonHref: product?.url,
+      visitButtonHref: product?.ad?.url,
       detailsButtonHref: `${ROUTES.USER_DASHBOARD}/products/${product?.id}`,
       titleHref: `${ROUTES.USER_DASHBOARD}/products/${product?.id}`,
     }));

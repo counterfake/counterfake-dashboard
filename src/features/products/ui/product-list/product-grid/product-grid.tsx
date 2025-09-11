@@ -50,18 +50,18 @@ export function ProductGrid({
               <DefaultBrandProductCard
                 product={{
                   name: product.name,
-                  price: product.price,
-                  discountedPrice: product.discountedPrice,
+                  price: product.ad.originalPrice,
+                  discountedPrice: product.ad.discountedPrice,
                   imageUrl: product.coverImage,
-                  platform: product.platformName,
-                  sellerName: product.sellerName,
-                  sellerUrl: product.sellerUrl,
-                  reasons: product.reasons,
-                  brand: product.brandName,
-                  visitButtonHref: product.url,
-                  detailsButtonHref: product.url,
-                  titleHref: product.url,
-                  isRisky: product?.isRisky,
+                  platform: product.platform.name,
+                  sellerName: product.seller.name,
+                  sellerUrl: product.seller.url,
+                  reasons: product.analysis.reportReasons,
+                  brand: product.brand.name,
+                  visitButtonHref: product.ad.url,
+                  detailsButtonHref: product.ad.url,
+                  titleHref: `/dashboard/products/${product.id}`,
+                  isRisky: product.analysis.isRisky,
                 }}
               />
             )}
@@ -69,15 +69,15 @@ export function ProductGrid({
               <CompactBrandProductCard
                 product={{
                   name: product.name,
-                  price: product.price,
-                  discountedPrice: product.discountedPrice,
+                  price: product.ad.originalPrice,
+                  discountedPrice: product.ad.discountedPrice,
                   imageUrl: product.coverImage,
-                  platform: product.platformName,
-                  sellerName: product.sellerName,
-                  sellerUrl: product.sellerUrl,
-                  reasons: product.reasons,
-                  viewDetailsHref: product.url,
-                  isRisky: product.isRisky,
+                  platform: product.platform.name,
+                  sellerName: product.seller.name,
+                  sellerUrl: product.seller.url,
+                  reasons: product.analysis.reportReasons,
+                  viewDetailsHref: product.ad.url,
+                  isRisky: product.analysis.isRisky,
                 }}
               />
             )}
@@ -85,10 +85,10 @@ export function ProductGrid({
               <MinimalBrandProductCard
                 product={{
                   name: product.name,
-                  price: product.price,
-                  discountedPrice: product.discountedPrice,
+                  price: product.ad.originalPrice,
+                  discountedPrice: product.ad.discountedPrice,
                   imageUrl: product.coverImage,
-                  platform: product.platformName,
+                  platform: product.platform.name,
                 }}
               />
             )}
