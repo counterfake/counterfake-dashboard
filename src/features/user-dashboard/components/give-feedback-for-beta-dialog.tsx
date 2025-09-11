@@ -9,7 +9,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/common/components/ui/primitives/dialog";
 import { Input } from "@/common/components/ui/primitives/input";
 import { Label } from "@/common/components/ui/primitives/label";
@@ -37,9 +36,6 @@ export default function GiveFeedbackForBetaDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant="outline">Give Feedback</Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Give Feedback</DialogTitle>
