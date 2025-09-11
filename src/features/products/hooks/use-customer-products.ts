@@ -14,6 +14,8 @@ import type {
   GetProductAnalysisParams,
 } from "../types/product-analysis.types";
 
+import { productEmptyData } from "../data/product-empty-data";
+
 const NAMESPACE = "customer-products";
 
 export function useGetCustomerProductResults(
@@ -46,29 +48,8 @@ export function useGetCustomerProductById(productId: string) {
   return useApiQuery({
     queryKey: [NAMESPACE, productId],
     queryFn: () => productService.getProductById(productId),
-    enabled: !!user?.brand?.id,
-    emptyData: {
-      id: null,
-      brandId: null,
-      brandName: "",
-      name: "",
-      price: null,
-      discountedPrice: null,
-      currency: "",
-      coverImage: "",
-      images: [],
-      platformName: "",
-      platformId: null,
-      sellerName: "",
-      sellerUrl: "",
-      reasons: [],
-      url: "",
-      isRisky: false,
-      statusId: null,
-      status: "",
-      reportStatusId: null,
-      reportStatus: "",
-    },
+    enabled: !!user?.brand?.id || !!productId,
+    emptyData: productEmptyData,
   });
 }
 

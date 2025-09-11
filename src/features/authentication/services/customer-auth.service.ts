@@ -9,7 +9,11 @@ import { BpAuthApi } from "@/common/api/bp-api/auth";
 import { customerService } from "./customer.service";
 
 export class CustomerAuthService {
-  private readonly bpAuthApi = new BpAuthApi(baseApiClient);
+  private readonly bpAuthApi: BpAuthApi;
+
+  constructor() {
+    this.bpAuthApi = new BpAuthApi(baseApiClient);
+  }
 
   // Context key for error handler
   private getContextKey(functionKey: string) {
@@ -45,17 +49,22 @@ export class CustomerAuthService {
       );
     }
 
+    baseApiClient.setAuthorizationHeader(validatedTokens.data.accessToken);
+
     // Fetch and save user data to store
     const userResponse = await customerService.fetchCurrentCustomer();
 
     if (!userResponse.success) {
       return HttpClient.errorResult(
-        userResponse.error.originalError,
+        userResponse.error,
         this.getContextKey(this.login.name)
       );
     }
 
-    return HttpClient.successResult(validatedTokens.data);
+    return HttpClient.successResult({
+      tokens: validatedTokens.data,
+      user: userResponse.data,
+    });
   }
 
   async refreshToken(refreshTokenValue: string) {

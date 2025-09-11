@@ -56,6 +56,10 @@ export function useApiQuery<TData = unknown, TError = AppError>(
     },
   });
 
+  if (queryResult.error) {
+    throw queryResult.error;
+  }
+
   // If emptyData is provided and no data is available yet, return emptyData
   // This doesn't affect loading states unlike placeholderData
   if (emptyData !== undefined && queryResult.data === undefined) {

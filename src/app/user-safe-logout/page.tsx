@@ -7,12 +7,12 @@ import { ROUTES } from "@/common/lib/config/routes";
 
 import LogoutVerificationPage from "@/common/components/pages/logout-verification-page";
 
-import { useUserLogout } from "@/features/user-dashboard/hooks/use-user-auth";
+import { useCustomerLogout } from "@/features/authentication/hooks/use-customer-auth";
 
 export default function LogoutRoute() {
   const router = useRouter();
 
-  const logout = useUserLogout(false);
+  const logout = useCustomerLogout();
 
   useEffect(() => {
     setTimeout(async () => {

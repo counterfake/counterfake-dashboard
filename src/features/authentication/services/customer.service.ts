@@ -13,9 +13,15 @@ import { BpAuthApi } from "@/common/api/bp-api/auth";
 import { userSchema } from "@/common/types/auth";
 
 export class CustomerService {
-  private readonly bpAuthApi = new BpAuthApi(baseApiClient);
-  private readonly bpBrandsApi = new BpBrandsApi(baseApiClient);
-  private readonly bpGroupBrandsApi = new BpGroupBrandApi(baseApiClient);
+  private readonly bpAuthApi: BpAuthApi;
+  private readonly bpBrandsApi: BpBrandsApi;
+  private readonly bpGroupBrandsApi: BpGroupBrandApi;
+
+  constructor() {
+    this.bpAuthApi = new BpAuthApi(baseApiClient);
+    this.bpBrandsApi = new BpBrandsApi(baseApiClient);
+    this.bpGroupBrandsApi = new BpGroupBrandApi(baseApiClient);
+  }
 
   // Context key for error handler
   private getContextKey(functionKey: string) {
@@ -52,20 +58,14 @@ export class CustomerService {
     const groupBrands = groupBrandsResponse?.data?.results || [];
     const brands = brandsResponse?.data?.results || [];
 
-    const userBrandResult = await this.getCustomerBrandResult({
+    const userBrandResult = this.getCustomerBrandResult({
       userBrandName: currentCustomer?.selectedCompany?.brand_name,
       userBrandId: currentCustomer?.selectedCompany?.id,
       groupBrands,
       brands,
     });
 
-    if (!userBrandResult.success)
-      return HttpClient.errorResult(
-        userBrandResult.error,
-        this.getContextKey(functionName)
-      );
-
-    if (!userBrandResult.data?.brandId || !userBrandResult.data?.brandSlug) {
+    if (!userBrandResult?.brandId || !userBrandResult?.brandSlug) {
       return HttpClient.errorResult(
         new Error("Brand not found"),
         this.getContextKey(functionName)
@@ -78,10 +78,10 @@ export class CustomerService {
       role: currentCustomer?.roles,
       brand: {
         name: currentCustomer?.selectedCompany?.brand_name,
-        id: userBrandResult.data?.brandId,
-        slug: userBrandResult.data?.brandSlug,
-        isGroupBrand: userBrandResult.data?.isGroupBrand,
-        subBrands: userBrandResult.data?.subBrands,
+        id: userBrandResult.brandId,
+        slug: userBrandResult.brandSlug,
+        isGroupBrand: userBrandResult.isGroupBrand,
+        subBrands: userBrandResult.subBrands,
       },
     });
 
@@ -94,7 +94,7 @@ export class CustomerService {
     return HttpClient.successResult(validatedCustomer.data);
   }
 
-  private async getCustomerBrandResult(data: {
+  private getCustomerBrandResult(data: {
     userBrandName?: string;
     userBrandId?: number;
     groupBrands: GetGroupBrandsResponse["results"];
@@ -140,12 +140,12 @@ export class CustomerService {
       currentBrandSlug = brand?.brand_slug || null;
     }
 
-    return HttpClient.successResult({
+    return {
       isGroupBrand: !!groupBrand,
       brandId: currentBrandId,
       brandSlug: currentBrandSlug,
       subBrands,
-    });
+    };
   }
 }
 

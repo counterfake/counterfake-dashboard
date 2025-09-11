@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import useToast from "@/common/hooks/use-toast";
 
 import CustomerSignInForm from "@/features/authentication/components/customer-auth/sign-in/form";
@@ -10,8 +8,6 @@ import { SignInFormData } from "@/features/authentication/validation/form.schema
 import { useCustomerLogin } from "@/features/authentication/hooks/use-customer-auth";
 
 export default function SignInPage() {
-  const [isSuccess, setIsSuccess] = useState(false);
-
   const toast = useToast();
 
   const customerLogin = useCustomerLogin();
@@ -19,10 +15,7 @@ export default function SignInPage() {
   const onSubmit = async ({ email, password }: SignInFormData) => {
     const response = await customerLogin.mutateAsync({ email, password });
 
-    if (response.success) {
-      setIsSuccess(true);
-      return;
-    }
+    if (response.success) return;
 
     toast.error(
       "Login failed",
@@ -36,7 +29,7 @@ export default function SignInPage() {
     <CustomerSignInForm
       onSubmit={onSubmit}
       isLoading={customerLogin.isPending}
-      isSuccess={isSuccess}
+      isSuccess={customerLogin.isSuccess}
     />
   );
 }

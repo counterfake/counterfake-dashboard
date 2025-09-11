@@ -2,20 +2,29 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
 import { useAuthStore } from "@/common/lib/stores/auth-store";
+import { ROUTES } from "@/common/lib/config/routes";
 
 import { customerAuthService } from "../services/customer-auth.service";
-import { ROUTES } from "@/common/lib/config/routes";
 
 export function useCustomerLogin() {
   const authStore = useAuthStore();
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (credentials: { email: string; password: string }) => {
+    mutationFn: async (credentials: { email: string; password: string }) => {
+      authStore.clear(); // Clear previous tokens for security or invalidation
+
       return customerAuthService.login(credentials);
     },
-    onSuccess: (response) => {
-      authStore.setTokens(response.data);
+    onSettled: (response) => {
+      if (!response.success) {
+        authStore.clear();
+        return;
+      }
+
+      authStore.setTokens(response.data.tokens);
+      authStore.setUser(response.data.user);
+      authStore.setCurrentDashboard("customer");
       router.push(ROUTES.USER_DASHBOARD);
     },
   });
@@ -38,7 +47,9 @@ export function useCustomerRefreshToken() {
     mutationFn: () => {
       return customerAuthService.refreshToken(refreshToken);
     },
-    onSuccess: (response) => {
+    onSettled: (response) => {
+      if (!response.success) return;
+
       authStore.setTokens(response.data);
     },
   });
