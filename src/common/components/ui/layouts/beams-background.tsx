@@ -8,6 +8,8 @@ interface AnimatedGradientBackgroundProps {
   className?: string;
   children?: React.ReactNode;
   intensity?: "subtle" | "medium" | "strong";
+  animationSpeed?: number;
+  animationOpacity?: number;
 }
 
 interface Beam {
@@ -19,11 +21,14 @@ interface Beam {
   speed: number;
   opacity: number;
   hue: number;
-  pulse: number;
-  pulseSpeed: number;
 }
 
-function createBeam(width: number, height: number, isDarkMode: boolean): Beam {
+function createBeam(
+  width: number,
+  height: number,
+  isDarkMode: boolean,
+  animationSpeed: number
+): Beam {
   const angle = -35 + Math.random() * 10;
   const hueBase = isDarkMode ? 190 : 210;
   const hueRange = isDarkMode ? 70 : 50;
@@ -34,22 +39,23 @@ function createBeam(width: number, height: number, isDarkMode: boolean): Beam {
     width: 30 + Math.random() * 60,
     length: height * 2.5,
     angle: angle,
-    speed: 0.6 + Math.random() * 1.2,
+    speed: (0.6 + Math.random() * 1.2) * animationSpeed,
     opacity: 0.12 + Math.random() * 0.16,
     hue: hueBase + Math.random() * hueRange,
-    pulse: Math.random() * Math.PI * 2,
-    pulseSpeed: 0.02 + Math.random() * 0.03,
   };
 }
 
 export default function BeamsBackground({
   className,
   intensity = "strong",
+  animationSpeed = 1,
+  animationOpacity = 1,
   children,
 }: AnimatedGradientBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const beamsRef = useRef<Beam[]>([]);
   const animationFrameRef = useRef<number>(0);
+  const animationSpeedRef = useRef<number>(1);
   const MINIMUM_BEAMS = 20;
   const isDarkModeRef = useRef<boolean>(false);
 
@@ -65,6 +71,9 @@ export default function BeamsBackground({
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Update animation speed ref
+    animationSpeedRef.current = animationSpeed;
 
     // Check for dark mode
     const updateDarkMode = () => {
@@ -90,7 +99,12 @@ export default function BeamsBackground({
 
       const totalBeams = MINIMUM_BEAMS * 1.5;
       beamsRef.current = Array.from({ length: totalBeams }, () =>
-        createBeam(canvas.width, canvas.height, isDarkModeRef.current)
+        createBeam(
+          canvas.width,
+          canvas.height,
+          isDarkModeRef.current,
+          animationSpeed
+        )
       );
     };
 
@@ -110,7 +124,7 @@ export default function BeamsBackground({
       beam.x =
         column * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
       beam.width = 100 + Math.random() * 100;
-      beam.speed = 0.5 + Math.random() * 0.4;
+      beam.speed = (0.5 + Math.random() * 0.4) * animationSpeed;
       beam.hue = hueBase + (index * hueRange) / totalBeams;
       beam.opacity = 0.2 + Math.random() * 0.1;
       return beam;
@@ -121,10 +135,7 @@ export default function BeamsBackground({
       ctx.translate(beam.x, beam.y);
       ctx.rotate((beam.angle * Math.PI) / 180);
 
-      const pulsingOpacity =
-        beam.opacity *
-        (0.8 + Math.sin(beam.pulse) * 0.2) *
-        opacityMap[intensity];
+      const pulsingOpacity = beam.opacity * opacityMap[intensity];
 
       const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
 
@@ -174,7 +185,6 @@ export default function BeamsBackground({
       const totalBeams = beamsRef.current.length;
       beamsRef.current.forEach((beam, index) => {
         beam.y -= beam.speed;
-        beam.pulse += beam.pulseSpeed;
 
         // Reset beam when it goes off screen
         if (beam.y + beam.length < -100) {
@@ -196,7 +206,7 @@ export default function BeamsBackground({
       }
       observer.disconnect();
     };
-  }, [intensity]);
+  }, [intensity, animationSpeed]);
 
   return (
     <div
@@ -208,7 +218,7 @@ export default function BeamsBackground({
       <canvas
         ref={canvasRef}
         className="absolute inset-0"
-        style={{ filter: "blur(15px)" }}
+        style={{ filter: "blur(15px)", opacity: animationOpacity }}
       />
 
       <motion.div
@@ -217,7 +227,7 @@ export default function BeamsBackground({
           opacity: [0.05, 0.15, 0.05],
         }}
         transition={{
-          duration: 10,
+          duration: 10 / animationSpeed,
           ease: "easeInOut",
           repeat: Number.POSITIVE_INFINITY,
         }}
