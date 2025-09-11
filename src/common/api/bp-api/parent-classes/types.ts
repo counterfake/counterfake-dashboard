@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import {
+  getParentClassByIdParamsSchema,
   getParentClassByIdResponseSchema,
   getParentClassesParamsSchema,
   getParentClassesResponseSchema,
@@ -11,6 +12,10 @@ import {
 // --------------------------
 export type GetParentClassesParams = z.infer<
   typeof getParentClassesParamsSchema
+>;
+
+export type GetParentClassByIdParams = z.infer<
+  typeof getParentClassByIdParamsSchema
 >;
 
 // --------------------------

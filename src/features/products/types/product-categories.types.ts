@@ -8,11 +8,26 @@ export type GetProductCategoriesParams = {
   sortByRiskyCount?: boolean;
 };
 
-export type ProductCategory = GetParentClassByIdResponse;
+export type GetProductCategoryByIdParams = {
+  doAnalysis?: boolean;
+};
+
+export type ProductCategory = {
+  name: string;
+  id: number;
+  riskyProducts: number;
+  totalProducts: number;
+};
 
 export interface ProductCategoriesServiceInterface {
   getProductCategories(
     params: GetProductCategoriesParams
   ): Promise<ApiResponse<ProductCategory[]>>;
-  transformProductCategory(category: ProductCategory): ProductCategory;
+  getProductCategoryById(
+    id: number,
+    params?: GetProductCategoryByIdParams
+  ): Promise<ApiResponse<ProductCategory>>;
+  transformProductCategory(
+    category: GetParentClassByIdResponse
+  ): ProductCategory;
 }

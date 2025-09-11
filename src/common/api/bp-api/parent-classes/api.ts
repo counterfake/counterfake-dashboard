@@ -11,11 +11,15 @@ import { API_ENDPOINTS } from "@/common/lib/config/api";
 import { HttpClient } from "@/common/lib/api/http-client";
 
 import type {
+  GetParentClassByIdParams,
   GetParentClassByIdResponse,
   GetParentClassesParams,
   GetParentClassesResponse,
 } from "./types";
-import { getParentClassesParamsSchema } from "./schemas";
+import {
+  getParentClassByIdParamsSchema,
+  getParentClassesParamsSchema,
+} from "./schemas";
 
 /**
  * Brand Protection Parent Classes Api Layer
@@ -37,9 +41,15 @@ export class BpParentClassesApi {
     );
   }
 
-  async getParentClassById(id: string) {
+  async getParentClassById(id: string, params?: GetParentClassByIdParams) {
     return this.apiClient.get<GetParentClassByIdResponse>(
-      this.endpoints.parentClasses + "/" + id
+      this.endpoints.parentClasses + "/" + id,
+      {
+        params,
+        validationSchemas: {
+          params: getParentClassByIdParamsSchema,
+        },
+      }
     );
   }
 }

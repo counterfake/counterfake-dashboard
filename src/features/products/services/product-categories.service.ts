@@ -2,13 +2,17 @@ import { HttpClient } from "@/common/lib/api/http-client";
 import { baseApiClient } from "@/common/lib/api/api-client";
 
 // API Layer
-import { BpParentClassesApi } from "@/common/api/bp-api/parent-classes";
+import {
+  BpParentClassesApi,
+  type GetParentClassByIdResponse,
+} from "@/common/api/bp-api/parent-classes";
 
 // Internal Types
 import {
   type ProductCategoriesServiceInterface,
   type GetProductCategoriesParams,
   type ProductCategory,
+  GetProductCategoryByIdParams,
 } from "../types/product-categories.types";
 
 /**
@@ -59,12 +63,37 @@ export class ProductCategoriesService
     return HttpClient.successResult(transformedCategories);
   }
 
-  public transformProductCategory(category: ProductCategory) {
+  public async getProductCategoryById(
+    id: number,
+    params?: GetProductCategoryByIdParams
+  ) {
+    if (!id) {
+      return HttpClient.errorResult(
+        new Error("Product category id is required"),
+        this.getContextKey(this.getProductCategoryById.name)
+      );
+    }
+
+    const response = await this.parentClassesApi.getParentClassById(
+      String(id),
+      {
+        do_analysis: params?.doAnalysis,
+      }
+    );
+
+    const transformedCategory = this.transformProductCategory(response.data);
+
+    return HttpClient.successResult(transformedCategory);
+  }
+
+  public transformProductCategory(
+    category: GetParentClassByIdResponse
+  ): ProductCategory {
     return {
-      name: category.name,
-      id: category.index,
-      riskyProducts: category.details_for_risky.risky_count,
-      totalProducts: category.details_for_risky.total_count,
+      name: category?.name,
+      id: category?.index,
+      riskyProducts: category?.details_for_risky?.risky_count || null,
+      totalProducts: category?.details_for_risky?.total_count || null,
     };
   }
 }

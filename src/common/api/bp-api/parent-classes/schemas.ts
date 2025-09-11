@@ -8,6 +8,10 @@ export const getParentClassesParamsSchema = z.object({
   do_analysis: z.boolean().optional(),
 });
 
+export const getParentClassByIdParamsSchema = z.object({
+  do_analysis: z.boolean().optional(),
+});
+
 // --------------------------
 // Response Schemas
 // --------------------------
