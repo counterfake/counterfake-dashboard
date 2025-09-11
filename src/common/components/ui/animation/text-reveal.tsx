@@ -1,7 +1,9 @@
 "use client";
 
 import { FC, ElementType } from "react";
-import { motion, MotionProps } from "motion/react";
+import { motion, MotionProps, useInView } from "motion/react";
+import { useRef } from "react";
+import { PiStarFourFill } from "react-icons/pi";
 
 interface Props extends MotionProps {
   text: string;
@@ -9,6 +11,25 @@ interface Props extends MotionProps {
   delay?: number;
   duration?: number;
   className?: string;
+  /**
+   * Animation should start when element enters the viewport
+   */
+  triggerOnView?: boolean;
+  /**
+   * Viewport threshold for animation trigger
+   */
+  viewThreshold?: number;
+  /**
+   * Animation should only run once
+   */
+  once?: boolean;
+  /**
+   * Convert normal spaces to non-breaking spaces. This prevents line wrapping.
+   * Keep it false to allow natural wrapping behavior.
+   */
+  convertSpacesToNbsp?: boolean;
+  beforeContent?: React.ReactNode;
+  afterContent?: React.ReactNode;
 }
 
 export const TextReveal: FC<Props> = ({
@@ -16,14 +37,32 @@ export const TextReveal: FC<Props> = ({
   as = "h2",
   delay = 0.3,
   duration = 0.02,
-  className = "flex overflow-hidden mt-10 text-4xl font-black text-black",
+  className = "flex overflow-hidden text-4xl font-black text-black",
+  triggerOnView = false,
+  viewThreshold = 0.1,
+  once = true,
+  convertSpacesToNbsp = false,
+  beforeContent,
+  afterContent,
   ...props
 }: Props) => {
   const letters = Array.from(text);
   const MotionComponent = motion[as as keyof typeof motion] as any;
+  const ref = useRef(null);
+  const isInView = useInView(ref, {
+    amount: viewThreshold,
+    once: once,
+  });
+
+  const animationState = triggerOnView
+    ? isInView
+      ? "visible"
+      : "hidden"
+    : "visible";
 
   return (
     <MotionComponent
+      ref={ref}
       role="heading"
       variants={{
         hidden: { opacity: 0 },
@@ -36,7 +75,7 @@ export const TextReveal: FC<Props> = ({
         }),
       }}
       initial="hidden"
-      animate="visible"
+      animate={animationState}
       className={className}
       {...props}
     >
@@ -55,7 +94,9 @@ export const TextReveal: FC<Props> = ({
             hidden: { opacity: 0, y: 10 },
           }}
         >
-          {letter === " " ? "\u00A0" : letter}
+          {index === 0 && beforeContent}
+          {letter === " " ? (convertSpacesToNbsp ? "\u00A0" : " ") : letter}
+          {index === letters.length - 1 && afterContent}
         </motion.span>
       ))}
     </MotionComponent>
