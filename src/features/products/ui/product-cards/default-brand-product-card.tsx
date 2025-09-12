@@ -66,7 +66,7 @@ export function DefaultBrandProductCard({
           />
           {product.isRisky && (
             <div className="absolute top-3 right-3">
-              <Badge variant="destructive">
+              <Badge variant="destructiveSoft">
                 <AlertTriangle className="w-3 h-3 mr-1" />
                 Risky
               </Badge>

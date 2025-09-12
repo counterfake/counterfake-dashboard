@@ -10,13 +10,8 @@ import {
 } from "@/common/components/ui/primitives/card";
 import { Separator } from "@/common/components/ui/primitives/separator";
 import { SellerCard } from "@/common/components/ui/enhanced-seller-card";
-import { DefaultBrandProductCard } from "@/common/components/ui/data-display/cards/default-brand-product-card";
-
-import { mockBrandProducts } from "@/common/lib/mock-data";
 
 import PageWrapper from "../components/PageWrapper";
-import { CompactBrandProductCard } from "@/common/components/ui/data-display/cards/compact-brand-product-card";
-import { MinimalBrandProductCard } from "@/common/components/ui/data-display/cards/minimal-brand-product-card";
 
 const sampleSeller = {
   id: "1",
@@ -63,17 +58,6 @@ export default function CardsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* <CompactBrandProductCard product={mockBrandProducts[0]} />
               <CompactBrandProductCard product={mockBrandProducts[1]} /> */}
-            </div>
-          </div>
-
-          <Separator />
-
-          <div className="space-y-4">
-            <h4 className="font-semibold">Minimal Product Cards</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <MinimalBrandProductCard product={mockBrandProducts[0]} />
-              <MinimalBrandProductCard product={mockBrandProducts[1]} />
-              <MinimalBrandProductCard product={mockBrandProducts[2]} />
             </div>
           </div>
         </CardContent>

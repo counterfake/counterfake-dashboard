@@ -28,24 +28,28 @@ export function BadgesAndAvatarsDemo() {
           <Label>Badge Variants</Label>
           <div className="flex flex-wrap gap-2">
             <Badge>Default</Badge>
-            <Badge variant="secondary">Secondary</Badge>
+            <Badge variant="primarySoft">Primary Soft</Badge>
+            <Badge variant="secondarySoft">Secondary Soft</Badge>
+            <Badge variant="destructiveSoft">Destructive Soft</Badge>
+            <Badge variant="successSoft">Success Soft</Badge>
+            <Badge variant="warningSoft">Warning Soft</Badge>
+            <Badge variant="infoSoft">Info Soft</Badge>
             <Badge variant="outline">Outline</Badge>
-            <Badge variant="destructive">Destructive</Badge>
           </div>
         </div>
 
         <div className="space-y-3">
           <Label>Status Badges</Label>
           <div className="flex flex-wrap gap-2">
-            <Badge variant="success">
+            <Badge variant="successSoft">
               <CheckCircle className="w-3 h-3 mr-1" />
               Success
             </Badge>
-            <Badge variant="warning">
+            <Badge variant="warningSoft">
               <AlertTriangle className="w-3 h-3 mr-1" />
               Warning
             </Badge>
-            <Badge variant="info">
+            <Badge variant="infoSoft">
               <Info className="w-3 h-3 mr-1" />
               Info
             </Badge>

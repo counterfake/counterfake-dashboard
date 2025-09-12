@@ -115,7 +115,7 @@ export function CompactBrandProductCard({
           {product.isRisky && (
             <div className="flex justify-between">
               <span className="text-muted-foreground">Status:</span>
-              <Badge variant="destructive">
+              <Badge variant="destructiveSoft">
                 <AlertTriangle className="w-3 h-3 mr-1" />
                 Risky
               </Badge>

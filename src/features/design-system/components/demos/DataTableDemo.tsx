@@ -79,12 +79,12 @@ export function DataTableDemo() {
                     <Badge
                       variant={
                         item.status === "Risky"
-                          ? "destructive"
+                          ? "destructiveSoft"
                           : item.status === "Not Risky"
-                          ? "success"
+                          ? "successSoft"
                           : item.status === "Pending"
-                          ? "info"
-                          : "warning"
+                          ? "infoSoft"
+                          : "warningSoft"
                       }
                     >
                       {item.status}

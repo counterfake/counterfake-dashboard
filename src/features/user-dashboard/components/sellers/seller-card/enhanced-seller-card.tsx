@@ -62,7 +62,9 @@ export function SellerCard({
             {seller.category && (
               <Badge
                 variant={
-                  seller.category === "risky" ? "destructive" : "success"
+                  seller.category === "risky"
+                    ? "destructiveSoft"
+                    : "successSoft"
                 }
                 className="text-xs"
               >
@@ -113,7 +115,9 @@ export function SellerCard({
               {seller.category && (
                 <Badge
                   variant={
-                    seller.category === "risky" ? "destructive" : "success"
+                    seller.category === "risky"
+                      ? "destructiveSoft"
+                      : "successSoft"
                   }
                   className="text-xs"
                 >
@@ -245,7 +249,7 @@ export function SellerCard({
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg">{seller.name}</CardTitle>
           {seller.riskyProducts > 0 && (
-            <Badge variant="destructive" className="text-xs">
+            <Badge variant="destructiveSoft" className="text-xs">
               {seller.riskyProducts} Risky
             </Badge>
           )}

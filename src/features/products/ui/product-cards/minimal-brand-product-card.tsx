@@ -87,7 +87,7 @@ export function MinimalBrandProductCard({
           ) : (
             <p className="font-medium">{product.price || "No Price"}</p>
           )}
-          <Badge variant="destructive" className="text-xs">
+          <Badge variant="destructiveSoft" className="text-xs">
             Risky
           </Badge>
         </div>
