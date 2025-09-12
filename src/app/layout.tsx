@@ -13,9 +13,9 @@ import { AuthRouterProvider } from "@/features/authentication/providers/auth-rou
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CounterBrand - Counterfeit Product Detection",
+  title: "Counterfake - AI Powered Brand Protection",
   description:
-    "Advanced counterfeit product detection and brand protection platform",
+    "Advanced counterfeit brand detection and brand protection platform",
 };
 
 export default function RootLayout({
