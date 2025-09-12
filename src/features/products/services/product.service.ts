@@ -133,6 +133,7 @@ export class ProductService implements ProductServiceInterface {
       "description_text",
       "id",
       "images",
+      "fake_score",
       "platform",
       "price_actualPrice",
       "related_product",
@@ -295,7 +296,7 @@ export class ProductService implements ProductServiceInterface {
       },
       analysis: {
         analysisSummaryText: product?.analyse_summary,
-        isRisky: product?.category === 1,
+        isRisky: product?._category === 1,
         fakeScore,
         fakeScoreProbability,
         statusId: productStatus?.id,
@@ -307,7 +308,10 @@ export class ProductService implements ProductServiceInterface {
         reportedAt: formatDateForUserLocale(product?.reported_at),
         daysSinceListed: calculateDaysSince(product?.created_at),
         daysSinceReported: calculateDaysSince(product?.reported_at),
-        isPriceOutlier: product?.price_isOutlier,
+        isPriceOutlier:
+          product?.price_isOutlier === undefined
+            ? null
+            : product?.price_isOutlier,
         rating,
         isLowRating,
       },
