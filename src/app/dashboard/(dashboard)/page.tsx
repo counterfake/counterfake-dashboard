@@ -68,7 +68,7 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      {/* <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="xl:col-span-2">
           <TopRiskyCategories
             topRiskyCategories={dataLogic.transformedTopRiskyCategories}
@@ -83,7 +83,13 @@ export default function DashboardPage() {
             isError={dataLogic.riskyPlatforms.isError}
           />
         </div>
-      </div>
+      </div> */}
+
+      <RiskyPlatforms
+        monthlyChartData={dataLogic.transformedRiskyPlatformsData}
+        isLoading={dataLogic.riskyPlatforms.isLoading}
+        isError={dataLogic.riskyPlatforms.isError}
+      />
     </DashboardPageWrapper>
   );
 }
