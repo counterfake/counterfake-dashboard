@@ -1,3 +1,10 @@
+# [0.3.0-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.1...v0.3.0-beta.2) (2025-09-12)
+
+
+### Bug Fixes
+
+* fix all type errors ([d467814](https://github.com/counterfake/counterfake-dashboard/commit/d467814d9c10b43e0de29eda5d102a4bd8386a03))
+
 # [0.3.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.2.0...v0.3.0-beta.1) (2025-09-12)
 
 
