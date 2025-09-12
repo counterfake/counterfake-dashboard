@@ -49,7 +49,7 @@ export class ProductAnalysisService implements ProductAnalysisServiceInterface {
       category: String(params.statusId),
       parent_product: params.categoryId,
       platform: params.platformId,
-      report: params.reportStatusIds,
+      report: params.reportStatusIds.join(","),
       search: params.productName,
       url: params.productUrl,
       product_count: String(params.sellerShouldHaveProducts),
