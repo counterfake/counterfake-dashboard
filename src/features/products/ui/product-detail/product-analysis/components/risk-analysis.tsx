@@ -183,12 +183,7 @@ export function RiskAnalysis({
             {isPriceOutlier === true && (
               <TrendingUp className="h-6 w-6 text-destructive" />
             )}
-            {isPriceOutlier === false && (
-              <DollarSign className="h-6 w-6 text-success" />
-            )}
-            {isPriceOutlier === null && (
-              <DollarSign className="h-6 w-6 text-muted-foreground" />
-            )}
+            {!isPriceOutlier && <DollarSign className="h-6 w-6 text-success" />}
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground">
                 Price Analysis
@@ -197,13 +192,11 @@ export function RiskAnalysis({
                 className={cn(
                   "font-semibold text-base",
                   isPriceOutlier === true && "text-destructive",
-                  isPriceOutlier === false && "text-success",
-                  isPriceOutlier === null && "text-muted-foreground"
+                  !isPriceOutlier && "text-success"
                 )}
               >
                 {isPriceOutlier === true && "Abnormal Pricing"}
-                {isPriceOutlier === false && "Normal Pricing"}
-                {isPriceOutlier === null && "No Data"}
+                {!isPriceOutlier && "Normal Pricing"}
               </span>
             </div>
           </div>

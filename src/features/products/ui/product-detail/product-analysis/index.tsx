@@ -71,22 +71,30 @@ export function ProductAnalysis({
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            <Animate type="fadeIn" duration={0.5} delay={0.4} triggerOnView>
+            <Animate
+              type="fadeIn"
+              duration={0.5}
+              delay={0.4}
+              triggerOnView
+              className="border-b pb-4"
+            >
               <AnalysisSummary
                 analysisSummaryText={analysis?.analysisSummaryText}
               />
             </Animate>
 
-            <Animate type="fadeIn" duration={0.5} delay={0.4} triggerOnView>
-              <ReportReasons reportReasons={analysis?.reportReasons || []} />
-            </Animate>
+            <div className="grid grid-cols-2 gap-4">
+              <Animate type="fadeIn" duration={0.5} delay={0.4} triggerOnView>
+                <ReportReasons reportReasons={analysis?.reportReasons || []} />
+              </Animate>
 
-            <Animate type="fadeIn" duration={0.5} delay={0.4} triggerOnView>
-              <ReportCategory
-                status={analysis?.status}
-                statusId={analysis?.statusId}
-              />
-            </Animate>
+              <Animate type="fadeIn" duration={0.5} delay={0.4} triggerOnView>
+                <ReportCategory
+                  status={analysis?.status}
+                  statusId={analysis?.statusId}
+                />
+              </Animate>
+            </div>
 
             <Animate type="fadeIn" duration={0.5} delay={0.4} triggerOnView>
               <TimeAnalysis
