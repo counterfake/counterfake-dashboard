@@ -11,6 +11,7 @@ import {
   StarOff,
   DollarSign,
   TrendingUp,
+  ShieldOff,
 } from "lucide-react";
 
 import { cn } from "@/common/lib/utils/ui";
@@ -48,18 +49,21 @@ export function RiskAnalysis({
         Risk Analysis
       </h4>
 
-      {/* Fake Score Analysis */}
-      {fakeScore && (
+      <div className="grid grid-cols-2 gap-4">
+        {/* Fake Score Analysis */}
         <div className="flex items-center justify-between bg-muted/20 rounded-lg px-4 py-3 border">
           <div className="flex items-center gap-3">
-            {fakeScore < 0.3 && (
+            {fakeScore && fakeScore < 0.3 && (
               <ShieldCheck className="h-6 w-6 text-success" />
             )}
-            {fakeScore >= 0.3 && fakeScore <= 0.5 && (
+            {fakeScore && fakeScore >= 0.3 && fakeScore <= 0.5 && (
               <Shield className="h-6 w-6 text-warning" />
             )}
-            {fakeScore > 0.5 && (
+            {fakeScore && fakeScore > 0.5 && (
               <ShieldX className="h-6 w-6 text-destructive" />
+            )}
+            {!fakeScore && (
+              <ShieldOff className="h-6 w-6 text-muted-foreground" />
             )}
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground">
@@ -68,58 +72,69 @@ export function RiskAnalysis({
               <span
                 className={cn(
                   "font-semibold text-base",
-                  fakeScore < 0.3 && "text-success",
-                  fakeScore >= 0.3 && fakeScore <= 0.5 && "text-warning",
-                  fakeScore > 0.5 && "text-destructive"
+                  fakeScore && fakeScore < 0.3 && "text-success",
+                  fakeScore &&
+                    fakeScore >= 0.3 &&
+                    fakeScore <= 0.5 &&
+                    "text-warning",
+                  fakeScore && fakeScore > 0.5 && "text-destructive",
+                  !fakeScore && "text-muted-foreground"
                 )}
               >
-                {fakeScore < 0.3 && "Low-Risk Product"}
-                {fakeScore >= 0.3 && fakeScore <= 0.5 && "Medium-Risk Product"}
-                {fakeScore > 0.5 && "High-Risk Product"}
+                {fakeScore && fakeScore < 0.3 && "Low-Risk Product"}
+                {fakeScore &&
+                  fakeScore >= 0.3 &&
+                  fakeScore <= 0.5 &&
+                  "Medium-Risk Product"}
+                {fakeScore && fakeScore > 0.5 && "High-Risk Product"}
+                {!fakeScore && "No Data"}
               </span>
             </div>
           </div>
           <div className="text-right">
-            <span className="text-2xl font-bold text-foreground">
-              {fakeScoreProbability}%
+            <span
+              className={cn(
+                "text-xl font-bold text-foreground",
+                !fakeScoreProbability && "text-muted-foreground"
+              )}
+            >
+              {fakeScoreProbability ? `${fakeScoreProbability}%` : "No Data"}
             </span>
             <p className="text-xs font-normal text-muted-foreground">
               Fake Probability
             </p>
           </div>
         </div>
-      )}
 
-      {/* Seller Risk Analysis */}
-      {sellerIsRisky !== undefined && (
-        <div className="flex items-center justify-between bg-muted/20 rounded-lg px-4 py-3 border">
-          <div className="flex items-center gap-3">
-            {sellerIsRisky ? (
-              <UserX className="h-6 w-6 text-destructive" />
-            ) : (
-              <UserCheck className="h-6 w-6 text-success" />
-            )}
-            <div className="flex flex-col">
-              <span className="text-sm text-muted-foreground">
-                Seller Risk Status
-              </span>
-              <span
-                className={cn(
-                  "font-semibold text-base",
-                  sellerIsRisky ? "text-destructive" : "text-success"
-                )}
-              >
-                {sellerIsRisky
-                  ? "Suspicious Activity Found"
-                  : "No Suspicious Activity"}
-              </span>
+        {/* Seller Risk Analysis */}
+        {sellerIsRisky !== undefined && (
+          <div className="flex items-center justify-between bg-muted/20 rounded-lg px-4 py-3 border">
+            <div className="flex items-center gap-3">
+              {sellerIsRisky ? (
+                <UserX className="h-6 w-6 text-destructive" />
+              ) : (
+                <UserCheck className="h-6 w-6 text-success" />
+              )}
+              <div className="flex flex-col">
+                <span className="text-sm text-muted-foreground">
+                  Seller Risk Status
+                </span>
+                <span
+                  className={cn(
+                    "font-semibold text-base",
+                    sellerIsRisky ? "text-destructive" : "text-success"
+                  )}
+                >
+                  {sellerIsRisky
+                    ? "Suspicious Activity Found"
+                    : "No Suspicious Activity"}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Rating Analysis */}
-      {rating !== undefined && (
+        {/* Rating Analysis */}
         <div className="flex items-center justify-between bg-muted/20 rounded-lg px-4 py-3 border">
           <div className="flex items-center gap-3">
             {rating === null ? (
@@ -150,22 +165,29 @@ export function RiskAnalysis({
             </div>
           </div>
           <div className="text-right">
-            <span className="text-lg font-bold text-foreground">
-              {rating !== null ? `${rating}/100` : "N/A"}
+            <span
+              className={cn(
+                "text-lg font-bold",
+                rating ? "text-foreground" : "text-muted-foreground"
+              )}
+            >
+              {rating !== null ? `${rating}/100` : "No Rating Data"}
             </span>
             <p className="text-xs text-muted-foreground">User Rating</p>
           </div>
         </div>
-      )}
 
-      {/* Price Outlier Analysis */}
-      {isPriceOutlier !== undefined && (
+        {/* Price Outlier Analysis */}
         <div className="flex items-center justify-between bg-muted/20 rounded-lg px-4 py-3 border">
           <div className="flex items-center gap-3">
-            {isPriceOutlier ? (
+            {isPriceOutlier === true && (
               <TrendingUp className="h-6 w-6 text-destructive" />
-            ) : (
+            )}
+            {isPriceOutlier === false && (
               <DollarSign className="h-6 w-6 text-success" />
+            )}
+            {isPriceOutlier === null && (
+              <DollarSign className="h-6 w-6 text-muted-foreground" />
             )}
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground">
@@ -174,15 +196,19 @@ export function RiskAnalysis({
               <span
                 className={cn(
                   "font-semibold text-base",
-                  isPriceOutlier ? "text-destructive" : "text-success"
+                  isPriceOutlier === true && "text-destructive",
+                  isPriceOutlier === false && "text-success",
+                  isPriceOutlier === null && "text-muted-foreground"
                 )}
               >
-                {isPriceOutlier ? "Abnormal Pricing" : "Normal Pricing"}
+                {isPriceOutlier === true && "Abnormal Pricing"}
+                {isPriceOutlier === false && "Normal Pricing"}
+                {isPriceOutlier === null && "No Data"}
               </span>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

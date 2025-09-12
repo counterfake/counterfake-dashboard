@@ -55,35 +55,32 @@ export default function ProductDetailPage() {
             />
           </div>
 
-          <div className="space-y-6">
-            <ProductInfoCard
-              product={{
-                ...productData,
-                category: productCategoryResponse?.data?.name,
-              }}
-              isLoading={productResponse.isLoading}
-            />
-
-            <ProductAnalysis
-              analysis={{
-                analysisSummaryText: productData?.analysis?.analysisSummaryText,
-                reportReasons: productData?.analysis?.reportReasons,
-                status: productData?.analysis?.status,
-                statusId: productData?.analysis?.statusId,
-                daysSinceListed: productData?.analysis?.daysSinceListed,
-                daysSinceReported: productData?.analysis?.daysSinceReported,
-                fakeScore: productData?.analysis?.fakeScore,
-                fakeScoreProbability:
-                  productData?.analysis?.fakeScoreProbability,
-                sellerIsRisky: productData?.analysis?.isRisky,
-                rating: productData?.analysis?.rating,
-                isLowRating: productData?.analysis?.isLowRating,
-                isPriceOutlier: productData?.analysis?.isPriceOutlier,
-              }}
-              isLoading={productResponse.isLoading}
-            />
-          </div>
+          <ProductInfoCard
+            product={{
+              ...productData,
+              category: productCategoryResponse?.data?.name,
+            }}
+            isLoading={productResponse.isLoading}
+          />
         </div>
+
+        <ProductAnalysis
+          analysis={{
+            analysisSummaryText: productData?.analysis?.analysisSummaryText,
+            reportReasons: productData?.analysis?.reportReasons,
+            status: productData?.analysis?.status,
+            statusId: productData?.analysis?.statusId,
+            daysSinceListed: productData?.analysis?.daysSinceListed,
+            daysSinceReported: productData?.analysis?.daysSinceReported,
+            fakeScore: productData?.analysis?.fakeScore,
+            fakeScoreProbability: productData?.analysis?.fakeScoreProbability,
+            sellerIsRisky: productData?.analysis?.isRisky,
+            rating: productData?.analysis?.rating,
+            isLowRating: productData?.analysis?.isLowRating,
+            isPriceOutlier: productData?.analysis?.isPriceOutlier,
+          }}
+          isLoading={productResponse.isLoading}
+        />
       </div>
     </DashboardPageWrapper>
   );

@@ -69,9 +69,7 @@ export function ProductInfoCard({
           {product?.name ? (
             <CardTitle className="text-2xl">{product?.name}</CardTitle>
           ) : (
-            <CardTitle className="text-2xl opacity-70">
-              Product Name: Unknown
-            </CardTitle>
+            <CardTitle className="text-2xl opacity-70">No Title</CardTitle>
           )}
           <div className="flex items-center gap-2">
             {product?.ad?.discountedPrice && product?.ad?.originalPrice && (
@@ -94,7 +92,7 @@ export function ProductInfoCard({
             )}
             {!product?.ad?.originalPrice && !product?.ad?.discountedPrice && (
               <span className="text-xl font-semibold text-primary opacity-60">
-                Price: Not Available
+                No Price
               </span>
             )}
           </div>
