@@ -41,12 +41,12 @@ export default function AppliedFilters({
           return (
             <div
               key={`${filter.label}-${filter.value}`}
-              className="text-xs bg-muted border-border text-foreground rounded-full hover:bg-accent-foreground/10 px-3 py-1 font-medium max-w-xs"
+              className="truncate text-xs bg-muted border-border text-foreground rounded-full hover:bg-accent-foreground/10 px-3 py-1 font-medium max-w-xs"
             >
               <span className="text-accent-foreground font-medium">
                 {filter.label}:
               </span>{" "}
-              <span className="truncate font-normal">{filter.value}</span>
+              <span className="font-normal">{filter.value}</span>
             </div>
           );
         })}
