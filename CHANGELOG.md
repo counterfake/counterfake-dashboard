@@ -1,3 +1,10 @@
+# [0.3.0-beta.3](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.2...v0.3.0-beta.3) (2025-09-12)
+
+
+### Features
+
+* update site title and description to reflect Counterfake branding and added favicon ([a8f6b10](https://github.com/counterfake/counterfake-dashboard/commit/a8f6b10006d48062704544ea635b42ebf51bc67d))
+
 # [0.3.0-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.1...v0.3.0-beta.2) (2025-09-12)
 
 
