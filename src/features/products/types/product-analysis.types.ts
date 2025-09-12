@@ -3,6 +3,7 @@ import { type ApiResponse } from "@/common/types/api";
 import { type GetResultsAnalysisMonthlyResponse } from "@/common/api/bp-api/results";
 
 import { type ProductStatusId } from "./product-status.types";
+import { ProductReportStatusId } from "./product-report-status.type";
 
 export interface MonthlyAnalysisStats {
   // Totals
@@ -27,7 +28,7 @@ export type GetProductAnalysisParams = {
   statusId?: ProductStatusId;
   reasons?: string;
   platformId?: string;
-  reportStatusIds?: string;
+  reportStatusIds?: ProductReportStatusId[];
   productName?: string;
   productUrl?: string;
   categoryId?: string;

@@ -50,7 +50,7 @@ export function useProductsPageData({
     productUrl: filters.searchByURL,
     statusId: Number(filters.status) as any,
     platformId: filters.platform,
-    reportStatusIds: filters.reportStatus,
+    reportStatusIds: filters.reportStatus.split(",").map(Number) as any,
     categoryId: filters.category,
     sellerShouldHaveProducts: 5,
     reasons: filters.reason,

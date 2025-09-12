@@ -30,8 +30,7 @@ export function useDashboardPageData({
     sellerShouldHaveProducts: 5,
     reportStatusIds: productReportStatusService
       .filterByKeys(["REPORTED", "REOPENED", "NOTIFIED", "READY"])
-      .map((status) => status.id)
-      .join(","),
+      .map((status) => status.id),
   });
 
   const productAnalysisMonthlyResponse = useGetCustomerProductAnalysisMonthly({
