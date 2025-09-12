@@ -13,47 +13,39 @@ import {
   useGetCustomerProductResults,
   useGetProductReasons,
 } from "@/features/products";
-
-import { type ProductFilters } from "./use-products-page-filters";
+import { ProductQueries } from "./use-products-page-query";
 
 interface UseProductsPageDataProps {
-  filters: ProductFilters;
-  currentPage: number;
-  limit: number;
+  queries: ProductQueries;
 }
 
-export function useProductsPageData({
-  filters,
-  currentPage,
-  limit,
-}: UseProductsPageDataProps) {
+export function useProductsPageData({ queries }: UseProductsPageDataProps) {
   // --------------------------
   // Fetch data
   // --------------------------
 
   // Fetch product data
   const productsResponse = useGetCustomerProductResults({
-    page: currentPage,
-    limit: limit,
-    url: filters.searchByURL,
-    search: filters.searchByName,
-    statusId: Number(filters.status) as any,
-    platformId: filters.platform,
-    reportStatusIds: filters.reportStatus,
-    category: filters.category,
-    reasons: filters.reason,
+    page: Number(queries.currentPage),
+    limit: Number(queries.limit),
+    url: queries.searchByURL,
+    search: queries.searchByName,
+    statusId: Number(queries.status) as any,
+    platformId: queries.platform,
+    reportStatusIds: queries.reportStatus,
+    category: queries.category,
+    reasons: queries.reason,
   });
 
   // Fetch product analysis data
   const productAnalysisResponse = useGetCustomerProductAnalysis({
-    productName: filters.searchByName,
-    productUrl: filters.searchByURL,
-    statusId: Number(filters.status) as any,
-    platformId: filters.platform,
-    reportStatusIds: filters.reportStatus.split(",").map(Number) as any,
-    categoryId: filters.category,
+    productName: queries.searchByName,
+    productUrl: queries.searchByURL,
+    statusId: Number(queries.status) as any,
+    reportStatusIds: queries.reportStatus.split(",").map(Number) as any,
+    categoryId: queries.category,
     sellerShouldHaveProducts: 5,
-    reasons: filters.reason,
+    reasons: queries.reason,
   });
 
   const productReasonsResponse = useGetProductReasons({
@@ -77,7 +69,7 @@ export function useProductsPageData({
       titleHref: `${ROUTES.USER_DASHBOARD}/products/${product?.id}`,
     }));
   }, [productsResponse]);
-  const productAnalysis = useMemo(
+  const platformAnalysis = useMemo(
     () => productAnalysisResponse?.data?.platforms || [],
     [productAnalysisResponse]
   );
@@ -99,11 +91,11 @@ export function useProductsPageData({
   // --------------------------
   const platformOptions = useMemo(
     () =>
-      productAnalysis.map((platform) => ({
+      platformAnalysis.map((platform) => ({
         value: String(platform.id),
-        label: platform.name,
+        label: `${platform.name} (${platform.value})`,
       })),
-    [productAnalysis]
+    [platformAnalysis]
   );
 
   const categoryOptions = useMemo(
@@ -171,7 +163,7 @@ export function useProductsPageData({
    * Converts comma-separated report status string into an array of values
    * and maps other filter properties directly
    */
-  const formatFilters = (filterData: ProductFilters) => {
+  const formatQueries = (filterData: ProductQueries) => {
     const reportStatus = reportStatusOptions
       .filter((reportStatus) =>
         filterData.reportStatus.split(",").includes(reportStatus.value)
@@ -186,12 +178,14 @@ export function useProductsPageData({
       status: filterData?.status,
       reason: filterData?.reason,
       reportStatus: reportStatus,
+      currentPage: filterData?.currentPage,
+      limit: filterData?.limit,
     };
   };
 
-  const formatFilterState = (
-    filterState: Partial<ReturnType<typeof formatFilters>>
-  ): ProductFilters => {
+  const formatQueriesForQuery = (
+    filterState: Partial<ReturnType<typeof formatQueries>>
+  ): ProductQueries => {
     return {
       searchByName: filterState.searchByName || "",
       searchByURL: filterState.searchByURL || "",
@@ -200,11 +194,13 @@ export function useProductsPageData({
       category: filterState.category || "",
       reason: filterState.reason || "",
       reportStatus: filterState.reportStatus.join(","),
+      currentPage: filterState.currentPage || "",
+      limit: filterState.limit || "",
     };
   };
 
   const getAppliedFilters = (
-    filterData: ProductFilters
+    filterData: Omit<ProductQueries, "currentPage" | "limit">
   ): { label: string; value: string }[] => {
     let appliedFilters: { label: string; value: string }[] = [];
 
@@ -228,6 +224,7 @@ export function useProductsPageData({
       .map((reportStatus) => reportStatus.label);
 
     // Add valid filters to applied filters
+    // Search filters
     if (filterData.searchByName)
       appliedFilters.push({
         label: "Search by name",
@@ -238,12 +235,17 @@ export function useProductsPageData({
         label: "Search by URL",
         value: filterData.searchByURL,
       });
+    // Category filter
     if (category)
       appliedFilters.push({ label: "Category", value: category.label });
+    // Platform filter
     if (platform)
       appliedFilters.push({ label: "Platform", value: platform.label });
+    // Status filter
     if (status) appliedFilters.push({ label: "Status", value: status.label });
+    // Reason filter
     if (reason) appliedFilters.push({ label: "Reason", value: reason.label });
+    // Report Status filter
     if (reportStatus)
       appliedFilters.push({
         label: "Report Status",
@@ -256,17 +258,15 @@ export function useProductsPageData({
   return {
     // Data
     products,
-    productAnalysis,
     totalPages,
     filterOptions,
 
     // Responses
     productsResponse,
-    productAnalysisResponse,
 
     // Actions
-    formatFilters,
-    formatFilterState,
+    formatQueries,
+    formatQueriesForQuery,
     getAppliedFilters,
   };
 }

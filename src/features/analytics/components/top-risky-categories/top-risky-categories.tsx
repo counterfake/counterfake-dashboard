@@ -100,7 +100,7 @@ export function TopRiskyCategories({
                               asChild
                             >
                               <Link
-                                href={`${ROUTES.USER_DASHBOARD_PRODUCTS}?productCategory=${category.id}`}
+                                href={`${ROUTES.USER_DASHBOARD_PRODUCTS}?category=${category.id}`}
                               >
                                 <ExternalLink className="h-3 w-3" />
                               </Link>

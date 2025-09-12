@@ -5,12 +5,12 @@ export * from "./ui/product-cards/default-brand-product-card";
 export * from "./ui/product-cards/minimal-brand-product-card";
 // - Product List
 export * from "./ui/product-list/product-list-filters";
-export * from "./ui/product-list/product-list-search-area";
 export * from "./ui/product-list/product-list-toolbar";
 export * from "./ui/product-list/product-grid/product-grid";
 export * from "./ui/product-list/product-grid/product-grid-error";
 export * from "./ui/product-list/product-grid/product-grid-empty";
 export * from "./ui/product-list/product-grid/product-grid-skeleton";
+export * from "./ui/product-list/product-list-sidebar";
 // - Product Detail
 export * from "./ui/product-detail/product-image-gallery";
 export * from "./ui/product-detail/product-info-card";

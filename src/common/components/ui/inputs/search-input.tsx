@@ -8,16 +8,22 @@ import { Button } from "../primitives/button";
 
 interface SearchInputProps extends InputProps {
   containerClassName?: string;
+  searchButtonClassName?: string;
+  clearButtonClassName?: string;
   onClear?: () => void;
   onSearch?: () => void;
-  allowClear?: boolean;
+  allowClearButton?: boolean;
+  allowSearchButton?: boolean;
 }
 
 export default function SearchInput({
   containerClassName,
   className,
+  searchButtonClassName,
+  clearButtonClassName,
   value,
-  allowClear = true,
+  allowClearButton = true,
+  allowSearchButton = true,
   onClear,
   onSearch,
   ...props
@@ -27,7 +33,7 @@ export default function SearchInput({
       <div className="relative flex-1">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
-          className={cn("pl-10", className)}
+          className={cn("pl-10", allowSearchButton && "pr-10", className)}
           value={value}
           {...props}
           onKeyDown={(e) => {
@@ -37,18 +43,27 @@ export default function SearchInput({
           }}
         />
         <div className="flex gap-1 absolute right-1 top-1/2 transform -translate-y-1/2">
-          {value && allowClear && (
+          {value && allowClearButton && (
             <Button
               variant="ghost"
-              className="text-muted-foreground hover:bg-muted hover:text-destructive p-0 h-8 w-8 "
+              className={cn(
+                "text-muted-foreground hover:bg-muted hover:text-destructive p-0 h-8 w-8 ",
+                clearButtonClassName
+              )}
               onClick={onClear}
             >
               <X className="w-4 h-4" />
             </Button>
           )}
-          <Button variant="ghost" className="p-0 h-8 w-8" onClick={onSearch}>
-            <ArrowRight className="w-4 h-4" />
-          </Button>
+          {allowSearchButton && (
+            <Button
+              variant="ghost"
+              className={cn("p-0 h-8 w-8", searchButtonClassName)}
+              onClick={onSearch}
+            >
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          )}
         </div>
       </div>
     </div>

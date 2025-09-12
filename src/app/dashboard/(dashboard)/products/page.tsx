@@ -4,8 +4,6 @@ import React, { Suspense } from "react";
 
 import { ROUTES } from "@/common/lib/config/routes";
 
-import { useCustomerConfigStore } from "@/features/user-dashboard/stores/customer-config.store";
-
 // Common Components
 import Pagination from "@/common/components/ui/navigation/pagination";
 import AppliedFilters from "@/common/components/ui/data-display/applied-filters";
@@ -16,25 +14,18 @@ import DashboardPageWrapper from "@/features/user-dashboard/components/layout/da
 // Product Features
 import {
   ProductGrid,
-  ProductListFilters,
-  ProductListSearchArea,
+  ProductListSidebar,
   ProductListToolbar,
 } from "@/features/products";
 
 // Page Internal Logic
-import { useProductsPagePagination } from "./_hooks/use-products-page-pagination";
-import { useProductsPageFilters } from "./_hooks/use-products-page-filters";
+import { useProductsPageQuery } from "./_hooks/use-products-page-query";
 import { useProductsPageData } from "./_hooks/use-products-page-data";
 
 function ProductsPage() {
-  const { productGridLayout, updateProductGridLayout } =
-    useCustomerConfigStore();
-  const paginationLogic = useProductsPagePagination();
-  const filterLogic = useProductsPageFilters();
+  const queryLogic = useProductsPageQuery();
   const dataLogic = useProductsPageData({
-    filters: filterLogic.filters,
-    currentPage: paginationLogic.currentPage,
-    limit: paginationLogic.limit,
+    queries: queryLogic.queries,
   });
 
   return (
@@ -53,85 +44,64 @@ function ProductsPage() {
       ]}
     >
       <div className="space-y-6 fade-in">
-        <ProductListSearchArea
-          initialValue={{
-            searchByName: filterLogic.filters.searchByName,
-            searchByURL: filterLogic.filters.searchByURL,
-          }}
-          onSearchByNameApply={(value) =>
-            filterLogic.updateFilters({ searchByName: value })
-          }
-          onSearchByURLApply={(value) =>
-            filterLogic.updateFilters({ searchByURL: value })
-          }
-          onSearchByNameClear={() =>
-            filterLogic.updateFilters({ searchByName: "" })
-          }
-          onSearchByURLClear={() =>
-            filterLogic.updateFilters({ searchByURL: "" })
-          }
-        />
-
         <ProductListToolbar
-          currentLayout={productGridLayout}
-          filterOpen={filterLogic.filterOpen}
-          onLayoutChange={updateProductGridLayout}
-          onLimitChange={paginationLogic.handleLimitChange}
-          onFilterOpen={filterLogic.handleFilterOpen}
+          onLimitChange={queryLogic.handleLimitChange}
+          limit={Number(queryLogic.queries.limit)}
+          initialValue={{
+            searchByName: queryLogic.queries.searchByName,
+            searchByURL: queryLogic.queries.searchByURL,
+          }}
+          onSearchByNameApply={(value) => queryLogic.updateSearchByName(value)}
+          onSearchByURLApply={(value) => queryLogic.updateSearchByURL(value)}
+          onSearchByNameClear={() => queryLogic.updateSearchByName("")}
+          onSearchByURLClear={() => queryLogic.updateSearchByURL("")}
         />
 
         <AppliedFilters
-          filters={dataLogic.getAppliedFilters(filterLogic.filters)}
-          onClear={filterLogic.clearFilters}
+          filters={dataLogic.getAppliedFilters(queryLogic.queries)}
+          onClear={queryLogic.resetAllQueries}
           clearButtonLabel="Reset to Default"
         />
 
-        {filterLogic.filterOpen && (
-          <ProductListFilters
-            onClear={() =>
-              filterLogic.updateFilters({
-                category: "",
-                platform: "",
-                reason: "",
-                reportStatus: "",
-                status: "",
-              })
-            }
-            onApply={(values) =>
-              filterLogic.updateFilters(dataLogic.formatFilterState(values))
-            }
-            initialValues={dataLogic.formatFilters(filterLogic.filters)}
-            filterOptions={dataLogic.filterOptions}
-          />
-        )}
+        <div className="flex gap-4 relative" id="products-grid">
+          <div className="flex-shrink-0 sticky top-6 h-full">
+            <ProductListSidebar
+              onClearFilters={queryLogic.clearFilters}
+              onApplyFilters={(values) => {
+                queryLogic.updateFilters(
+                  dataLogic.formatQueriesForQuery(values)
+                );
+              }}
+              onChangeStatus={queryLogic.updateStatus}
+              onChangePlatform={queryLogic.updatePlatform}
+              initialValues={dataLogic.formatQueries(queryLogic.queries)}
+              filterOptions={dataLogic.filterOptions}
+            />
+          </div>
+          <div className="flex-1 space-y-6">
+            <ProductGrid
+              isLoading={dataLogic.productsResponse?.isLoading}
+              isError={
+                !!dataLogic.productsResponse?.isError &&
+                dataLogic.productsResponse?.error?.response?.status !== 404
+              }
+              isEmpty={
+                dataLogic.products.length === 0 ||
+                dataLogic.productsResponse?.error?.response?.status === 404
+              }
+              products={dataLogic.products}
+            />
 
-        <div id="products-grid">
-          <ProductGrid
-            isLoading={dataLogic.productsResponse?.isLoading}
-            isError={
-              !!dataLogic.productsResponse?.isError &&
-              dataLogic.productsResponse?.error?.response?.status !== 404
-            }
-            isEmpty={
-              dataLogic.products.length === 0 ||
-              dataLogic.productsResponse?.error?.response?.status === 404
-            }
-            products={dataLogic.products}
-            layout={productGridLayout}
-          />
+            <Pagination
+              currentPage={Number(queryLogic.queries.currentPage)}
+              totalPages={dataLogic.totalPages}
+              onPageChange={queryLogic.setCurrentPage}
+              showInfo
+              totalItems={dataLogic.productsResponse?.data?.totalProducts}
+              itemsPerPage={Number(queryLogic.queries.limit)}
+            />
+          </div>
         </div>
-
-        <Pagination
-          currentPage={paginationLogic.currentPage}
-          totalPages={dataLogic.totalPages}
-          onPageChange={paginationLogic.setCurrentPage}
-          showInfo={true}
-          totalItems={
-            dataLogic.productsResponse?.data?.totalProducts ||
-            dataLogic.products.length
-          }
-          itemsPerPage={paginationLogic.limit}
-        />
       </div>
     </DashboardPageWrapper>
   );
