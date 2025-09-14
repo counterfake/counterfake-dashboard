@@ -26,7 +26,7 @@ export function useProductsPageData({ queries }: UseProductsPageDataProps) {
 
   // Fetch product data
   const productsResponse = useGetCustomerProductResults({
-    page: Number(queries.currentPage),
+    page: Number(queries.page),
     limit: Number(queries.limit),
     url: queries.searchByURL,
     search: queries.searchByName,
@@ -178,7 +178,7 @@ export function useProductsPageData({ queries }: UseProductsPageDataProps) {
       status: filterData?.status,
       reason: filterData?.reason,
       reportStatus: reportStatus,
-      currentPage: filterData?.currentPage,
+      page: filterData?.page,
       limit: filterData?.limit,
     };
   };
@@ -194,7 +194,7 @@ export function useProductsPageData({ queries }: UseProductsPageDataProps) {
       category: filterState.category || "",
       reason: filterState.reason || "",
       reportStatus: filterState.reportStatus.join(","),
-      currentPage: filterState.currentPage || "",
+      page: filterState.page || "",
       limit: filterState.limit || "",
     };
   };

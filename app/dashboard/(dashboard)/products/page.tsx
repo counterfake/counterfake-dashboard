@@ -9,7 +9,7 @@ import Pagination from "@/common/components/ui/navigation/pagination";
 import AppliedFilters from "@/common/components/ui/data-display/applied-filters";
 
 // Dashboard Features
-import DashboardPageWrapper from "@/features/user-dashboard/components/layout/dashboard-page-wrapper";
+import { CustomerPageWrapper } from "@/widgets/customer-page-layout/customer-page-layout.ui";
 
 // Product Features
 import {
@@ -29,7 +29,7 @@ function ProductsPage() {
   });
 
   return (
-    <DashboardPageWrapper
+    <CustomerPageWrapper
       title="Products Data Analytics"
       description="Advanced analytics dashboard showing product detection and risk analysis"
       breadcrumbs={[
@@ -93,7 +93,7 @@ function ProductsPage() {
             />
 
             <Pagination
-              currentPage={Number(queryLogic.queries.currentPage)}
+              currentPage={Number(queryLogic.queries.page)}
               totalPages={dataLogic.totalPages}
               onPageChange={queryLogic.setCurrentPage}
               showInfo
@@ -103,7 +103,7 @@ function ProductsPage() {
           </div>
         </div>
       </div>
-    </DashboardPageWrapper>
+    </CustomerPageWrapper>
   );
 }
 

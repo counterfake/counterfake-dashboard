@@ -18,7 +18,7 @@ export type ProductQueries = ProductFilters & {
   platform: string;
   searchByName: string;
   searchByURL: string;
-  currentPage: string;
+  page: string;
   limit: string;
 };
 
@@ -54,7 +54,7 @@ export function useProductsPageQuery() {
       category: searchParams.get("category") || "",
       reason: searchParams.get("reason") || "",
       reportStatus: searchParams.get("reportStatus") || defaultReportStatuses,
-      currentPage: searchParams.get("page") || "1",
+      page: searchParams.get("page") || "1",
       limit: searchParams.get("limit") || "12",
     }),
     [defaultReportStatuses, defaultStatus, searchParams]
@@ -79,21 +79,21 @@ export function useProductsPageQuery() {
       reason: "",
       reportStatus: defaultReportStatuses,
       // Pagination
-      currentPage: "1",
+      page: "1",
     });
   };
 
   const handleLimitChange = (newLimit: number) => {
     updateQueries({
       limit: newLimit.toString(),
-      currentPage: "1",
+      page: "1",
     });
   };
 
   const setCurrentPage = (page: number) => {
     scrollIntoView("products-grid");
     updateQueries({
-      currentPage: page.toString(),
+      page: page.toString(),
     });
   };
 
@@ -102,21 +102,21 @@ export function useProductsPageQuery() {
       category: newFilters.category,
       reason: newFilters.reason,
       reportStatus: newFilters.reportStatus,
-      currentPage: "1",
+      page: "1",
     });
   };
 
   const updateSearchByName = (searchValue: string) => {
     updateQueries({
       searchByName: searchValue,
-      currentPage: "1",
+      page: "1",
     });
   };
 
   const updateSearchByURL = (searchValue: string) => {
     updateQueries({
       searchByURL: searchValue,
-      currentPage: "1",
+      page: "1",
     });
   };
 
@@ -128,7 +128,7 @@ export function useProductsPageQuery() {
       category: "",
       reason: "",
       reportStatus: defaultReportStatuses,
-      currentPage: "1",
+      page: "1",
     });
   };
 
@@ -139,7 +139,7 @@ export function useProductsPageQuery() {
       category: "",
       reason: "",
       reportStatus: defaultReportStatuses,
-      currentPage: "1",
+      page: "1",
     });
   };
 
@@ -148,7 +148,7 @@ export function useProductsPageQuery() {
       category: "",
       reason: "",
       reportStatus: defaultReportStatuses,
-      currentPage: "1",
+      page: "1",
     });
   };
 
