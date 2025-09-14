@@ -40,7 +40,7 @@ interface AuthState {
      *
      * If false, any of the required roles must be present in the user roles.
      */
-    matchAll: boolean
+    matchAll?: boolean
   ) => boolean;
   hasValidSession: () => boolean;
 }
