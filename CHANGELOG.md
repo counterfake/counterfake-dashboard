@@ -1,3 +1,32 @@
+# [0.3.0-beta.4](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.3...v0.3.0-beta.4) (2025-09-14)
+
+
+### Bug Fixes
+
+* fix products page bugs ([2c2784b](https://github.com/counterfake/counterfake-dashboard/commit/2c2784bfefed15dfcfad78272c2e2ae1f1dcf493))
+* **products:** fix product grid responsive view issue ([0414fd1](https://github.com/counterfake/counterfake-dashboard/commit/0414fd139e8166d0c7be305d30de0f87b7dbce33))
+
+
+### Code Refactoring
+
+* move next.js app directory from ./src to root directory ([f62820d](https://github.com/counterfake/counterfake-dashboard/commit/f62820d0e146387880feca094bdf81697441bc0b))
+
+
+### Features
+
+* add switch-brand feature for admin customer accounts ([a32e747](https://github.com/counterfake/counterfake-dashboard/commit/a32e74731250d8d7fdd7b066773bc3da95fd9086))
+* add toggle-sidebar feature ([71a2f77](https://github.com/counterfake/counterfake-dashboard/commit/71a2f77890b1f2f6e116f061264aac17f30f9656))
+* create entities/brand slice for new feature-sliced structure migration ([5aeaec7](https://github.com/counterfake/counterfake-dashboard/commit/5aeaec7e14b92ae1a549b066226d649bc0924f5c))
+* create new app layer for new feature-sliced structure migration ([3ca2294](https://github.com/counterfake/counterfake-dashboard/commit/3ca229421b52020247b1f184973155202a6a9c57))
+* create new widgets layer for new feature-sliced structure migration ([8951cf3](https://github.com/counterfake/counterfake-dashboard/commit/8951cf37008ab219307c3505c94628aad9f47ef8))
+* create shared modules for new feature-sliced structure migration ([7a0df7b](https://github.com/counterfake/counterfake-dashboard/commit/7a0df7bf0031737e65ee7c051ac33eb0b7137d9c))
+* migrate new bpApi client and the switch brand feature in the authentication feature ([e05c439](https://github.com/counterfake/counterfake-dashboard/commit/e05c439a5563aec6004b0fd224d9d5a17b40d1ef))
+
+
+### BREAKING CHANGES
+
+* The ./src/app directory will now be used the feature-sliced structure. Do not use it for next.js routing.
+
 # [0.3.0-beta.3](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.2...v0.3.0-beta.3) (2025-09-12)
 
 
