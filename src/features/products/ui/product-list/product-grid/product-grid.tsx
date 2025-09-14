@@ -31,7 +31,7 @@ export function ProductGrid({
   if (isEmpty) return <ProductGridEmpty />;
 
   return (
-    <div className={cn("grid gap-6 md:grid-cols-2 lg:grid-cols-3", className)}>
+    <div className={cn("grid gap-6 md:grid-cols-2 xl:grid-cols-3", className)}>
       {products.map((product) => {
         return (
           <Fragment key={product.id}>
