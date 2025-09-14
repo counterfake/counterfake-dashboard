@@ -5,6 +5,7 @@ import { useAuthStore } from "@/common/lib/stores/auth-store";
 import { ROUTES } from "@/common/lib/config/routes";
 
 import { customerAuthService } from "../services/customer-auth.service";
+import { updateSession } from "@/shared/api/brand-protection/bp-api.auth";
 
 export function useCustomerLogin() {
   const authStore = useAuthStore();
@@ -51,6 +52,13 @@ export function useCustomerRefreshToken() {
       if (!response.success) return;
 
       authStore.setTokens(response.data);
+
+      // TODO (IMPORTANT): Remove this logic from here and re-engineer this structure for feature-sliced ​​design.
+      updateSession({
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
+        expiresIn: response.data.expiresIn,
+      });
     },
   });
 }

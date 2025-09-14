@@ -12,6 +12,7 @@ import LoadingPage from "@/common/components/pages/loading-page";
 import { useCustomerRefreshToken } from "../hooks/use-customer-auth";
 
 import { customerAuthService } from "../services/customer-auth.service";
+import { useCurrentCustomer } from "../hooks/use-customer";
 
 interface CustomerAuthGuardProps {
   children: React.ReactNode;
@@ -20,12 +21,17 @@ interface CustomerAuthGuardProps {
 export default function CustomerAuthGuard({
   children,
 }: CustomerAuthGuardProps) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const currentCustomer = useCurrentCustomer({ enabled: isAuthenticated });
+
   const hasHydrated = useAuthStore.persist?.hasHydrated?.() ?? false;
 
   const {
     currentDashboard,
     getSessionExpiry,
     clear: clearAuth,
+    setUser,
   } = useAuthStore();
 
   const refreshToken = useCustomerRefreshToken();
@@ -58,6 +64,8 @@ export default function CustomerAuthGuard({
         }
       }
 
+      setIsAuthenticated(true);
+
       const timeUntilRefresh = getSessionExpiry();
 
       // Refresh Timer Setup
@@ -85,7 +93,12 @@ export default function CustomerAuthGuard({
     };
   }, [hasHydrated, currentDashboard]);
 
-  // Hydration tamamlanmadıysa loading göster
+  useEffect(() => {
+    if (!isAuthenticated || !currentCustomer.data || !hasHydrated) return;
+
+    setUser(currentCustomer.data);
+  }, [currentCustomer.data, isAuthenticated, hasHydrated, setUser]);
+
   if (!hasHydrated || isLoading) {
     return <LoadingPage />;
   }

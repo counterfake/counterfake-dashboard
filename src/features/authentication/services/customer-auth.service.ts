@@ -7,6 +7,7 @@ import { baseApiClient } from "@/common/lib/api/api-client";
 import { BpAuthApi } from "@/common/api/bp-api/auth";
 
 import { customerService } from "./customer.service";
+import { updateSession } from "@/shared/api/brand-protection/bp-api.auth";
 
 export class CustomerAuthService {
   private readonly bpAuthApi: BpAuthApi;
@@ -50,6 +51,13 @@ export class CustomerAuthService {
     }
 
     baseApiClient.setAuthorizationHeader(validatedTokens.data.accessToken);
+
+    // TODO (IMPORTANT): Remove this logic from here and re-engineer this structure for feature-sliced ​​design.
+    updateSession({
+      accessToken: validatedTokens.data.accessToken,
+      refreshToken: validatedTokens.data.refreshToken,
+      expiresIn: validatedTokens.data.expiresIn,
+    });
 
     // Fetch and save user data to store
     const userResponse = await customerService.fetchCurrentCustomer();
