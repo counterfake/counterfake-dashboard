@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 
-import "./globals.css";
-
-import ReactQueryProvider from "@/common/providers/react-query-provider";
+import QueryClientProvider from "@/app/providers/query-client-provider";
+import SetupInterceptorsProvider from "@/app/providers/setup-interceptors-provider";
 
 import ClientRehydrator from "@/common/components/utility/client-rehydrator";
 
 import { AuthRouterProvider } from "@/features/authentication/providers/auth-router-provider";
+
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,12 +27,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
-        <ReactQueryProvider>
+        <QueryClientProvider>
           <AuthRouterProvider>
-            <Toaster position="top-right" />
-            {children}
+            <SetupInterceptorsProvider>
+              <Toaster position="top-right" />
+              {children}
+            </SetupInterceptorsProvider>
           </AuthRouterProvider>
-        </ReactQueryProvider>
+        </QueryClientProvider>
         <ClientRehydrator />
       </body>
     </html>
