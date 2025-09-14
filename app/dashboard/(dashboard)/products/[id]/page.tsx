@@ -11,7 +11,7 @@ import {
   ProductImageGallery,
   ProductInfoCard,
 } from "@/features/products";
-import DashboardPageWrapper from "@/features/user-dashboard/components/layout/dashboard-page-wrapper";
+import { CustomerPageWrapper } from "@/widgets/customer-page-layout/customer-page-layout.ui";
 
 // Hooks
 import { useProductDetailPageData } from "./_hooks/use-product-detail-page-data";
@@ -26,7 +26,7 @@ export default function ProductDetailPage() {
   const productData = productResponse.data;
 
   return (
-    <DashboardPageWrapper
+    <CustomerPageWrapper
       title="Product Details"
       description="View comprehensive information about the reported product"
       breadcrumbs={[
@@ -82,6 +82,6 @@ export default function ProductDetailPage() {
           isLoading={productResponse.isLoading}
         />
       </div>
-    </DashboardPageWrapper>
+    </CustomerPageWrapper>
   );
 }

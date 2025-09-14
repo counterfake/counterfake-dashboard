@@ -14,7 +14,7 @@ import {
 import { Button } from "@/common/components/ui/primitives/button";
 import { Input } from "@/common/components/ui/primitives/input";
 
-import DashboardPageWrapper from "@/features/user-dashboard/components/layout/dashboard-page-wrapper";
+import { CustomerPageWrapper } from "@/widgets/customer-page-layout/customer-page-layout.ui";
 
 export default function Settings() {
   const { user } = useAuthStore();
@@ -30,7 +30,7 @@ export default function Settings() {
   };
 
   return (
-    <DashboardPageWrapper
+    <CustomerPageWrapper
       title="Settings"
       breadcrumbs={[
         { label: "Dashboard", href: "/dashboard" },
@@ -132,6 +132,6 @@ export default function Settings() {
           </Card>
         </div>
       </div>
-    </DashboardPageWrapper>
+    </CustomerPageWrapper>
   );
 }

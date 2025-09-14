@@ -8,7 +8,7 @@ import { Input } from "@/common/components/ui/primitives/input";
 import { Button } from "@/common/components/ui/primitives/button";
 import SellerCard from "@/common/components/sellers/SellerCard";
 
-import DashboardPageWrapper from "@/features/user-dashboard/components/layout/dashboard-page-wrapper";
+import { CustomerPageWrapper } from "@/widgets/customer-page-layout/customer-page-layout.ui";
 
 interface SellersProps {
   onViewDetails: (seller: Seller) => void;
@@ -41,7 +41,7 @@ export default function SellersPage({ onViewDetails }: SellersProps) {
   };
 
   return (
-    <DashboardPageWrapper
+    <CustomerPageWrapper
       title="Sellers"
       breadcrumbs={[
         { label: "Dashboard", href: "/dashboard" },
@@ -121,6 +121,6 @@ export default function SellersPage({ onViewDetails }: SellersProps) {
           </Button>
         </div>
       )}
-    </DashboardPageWrapper>
+    </CustomerPageWrapper>
   );
 }

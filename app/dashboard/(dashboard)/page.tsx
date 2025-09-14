@@ -2,8 +2,6 @@
 
 import React from "react";
 
-import DashboardPageWrapper from "@/features/user-dashboard/components/layout/dashboard-page-wrapper";
-
 import { MonthlyAnalysisStats } from "@/features/analytics/components/monthly-analysis-stats/monthly-analysis-stats";
 import { MonthlyRiskyClosedProducts } from "@/features/analytics/components/monthly-risky-closed-products/monthly-risky-closed-products";
 import { Top10RiskySellers } from "@/features/analytics/components/top-10-risky-sellers/top-10-risky-sellers";
@@ -14,6 +12,8 @@ import { RiskyPlatforms } from "@/features/analytics/components/risky-platforms/
 import { useDashboardPageMonths } from "./_hooks/use-dashboard-page-months";
 import { useDashboardPageData } from "./_hooks/use-dashboard-page-data";
 
+import { CustomerPageWrapper } from "@/widgets/customer-page-layout/customer-page-layout.ui";
+
 export default function DashboardPage() {
   const mountsLogic = useDashboardPageMonths();
   const dataLogic = useDashboardPageData({
@@ -21,7 +21,7 @@ export default function DashboardPage() {
   });
 
   return (
-    <DashboardPageWrapper
+    <CustomerPageWrapper
       title="Dashboard"
       description="Monitor your brand protection metrics and recent activity."
       showGoBack={false}
@@ -90,6 +90,6 @@ export default function DashboardPage() {
         isLoading={dataLogic.riskyPlatforms.isLoading}
         isError={dataLogic.riskyPlatforms.isError}
       />
-    </DashboardPageWrapper>
+    </CustomerPageWrapper>
   );
 }
