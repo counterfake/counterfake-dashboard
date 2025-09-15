@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { XAxis, YAxis, CartesianGrid, Area, AreaChart } from "recharts";
 import { TrendingUp } from "lucide-react";
@@ -67,10 +69,28 @@ export function MonthlyRiskyClosedProducts({
   selectedMonth,
   onMonthChange,
 }: MonthlySimpleChartProps) {
-  if (isLoading) return <MonthlyRiskyClosedProductsSkeleton />;
-  if (isError) return <MonthlyRiskyClosedProductsError />;
+  const uid = React.useId().replace(/:/g, "");
+
+  // Safari can return incorrect values in the first render measurement with ResponsiveContainer in some layout situations.
+  // In this case, animated area charts may produce overflow/triangulation issues.
+  const isSafari =
+    typeof navigator !== "undefined" &&
+    /safari/i.test(navigator.userAgent) &&
+    !/chrome|crios|android/i.test(navigator.userAgent);
+
+  // To prevent ID collisions when multiple charts are on the same page, generate unique IDs for <defs>.
+  const gradientIds = React.useMemo(
+    () => ({
+      risky: `riskyProductsGradient-${uid}`,
+      closed: `closedProductsGradient-${uid}`,
+    }),
+    [uid]
+  );
 
   const isDataExists = monthlyChartData.length > 0;
+
+  if (isLoading) return <MonthlyRiskyClosedProductsSkeleton />;
+  if (isError) return <MonthlyRiskyClosedProductsError />;
 
   const riskyProductsTrendText =
     riskyProductsTrend > 0 ? (
@@ -132,12 +152,15 @@ export function MonthlyRiskyClosedProducts({
           {isDataExists ? (
             <ChartContainer
               config={chartConfig}
-              className="lg:max-h-72 lg:w-full"
+              className="h-72 w-full overflow-hidden"
             >
-              <AreaChart data={monthlyChartData}>
+              <AreaChart
+                data={monthlyChartData}
+                margin={{ top: 10, right: 10, bottom: 0, left: 0 }}
+              >
                 <defs>
                   <linearGradient
-                    id="closedProductsGradient"
+                    id={gradientIds.closed}
                     x1="0"
                     y1="0"
                     x2="0"
@@ -155,7 +178,7 @@ export function MonthlyRiskyClosedProducts({
                     />
                   </linearGradient>
                   <linearGradient
-                    id="riskyProductsGradient"
+                    id={gradientIds.risky}
                     x1="0"
                     y1="0"
                     x2="0"
@@ -174,22 +197,29 @@ export function MonthlyRiskyClosedProducts({
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
+                <XAxis
+                  dataKey="month"
+                  type="category"
+                  allowDuplicatedCategory={false}
+                  tickMargin={8}
+                />
                 <YAxis />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Area
                   type="monotone"
                   dataKey="riskyProducts"
                   stroke={chartConfig.riskyProducts.color}
-                  fill="url(#riskyProductsGradient)"
+                  fill={`url(#${gradientIds.risky})`}
                   strokeWidth={1.5}
+                  isAnimationActive={!isSafari}
                 />
                 <Area
                   type="monotone"
                   dataKey="closedProducts"
                   stroke={chartConfig.closedProducts.color}
-                  fill="url(#closedProductsGradient)"
+                  fill={`url(#${gradientIds.closed})`}
                   strokeWidth={2}
+                  isAnimationActive={!isSafari}
                 />
               </AreaChart>
             </ChartContainer>

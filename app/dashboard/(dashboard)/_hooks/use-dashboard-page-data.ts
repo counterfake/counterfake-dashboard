@@ -27,7 +27,6 @@ export function useDashboardPageData({
   // --------------------------
   const riskyAnalysisResponse = useGetCustomerProductAnalysis({
     statusId: riskyCategory.id,
-    sellerShouldHaveProducts: 5,
     reportStatusIds: productReportStatusService
       .filterByKeys(["REPORTED", "REOPENED", "NOTIFIED", "READY"])
       .map((status) => status.id),

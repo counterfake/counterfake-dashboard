@@ -8,7 +8,7 @@ export default function CustomerBrandCheck({
 }) {
   const { user } = useAuthStore();
 
-  if (user.brand.id === undefined) {
+  if (user?.brand?.id === undefined) {
     return (
       <div className="flex flex-col items-center justify-center h-40">
         <h3 className="text-xl font-semibold">Brand not found</h3>

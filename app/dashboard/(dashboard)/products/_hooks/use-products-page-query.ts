@@ -50,7 +50,7 @@ export function useProductsPageQuery() {
       searchByName: searchParams.get("searchByName") || "",
       searchByURL: searchParams.get("searchByURL") || "",
       status: searchParams.get("status") || String(defaultStatus),
-      platform: searchParams.get("platform") || "",
+      platform: searchParams.get("platform") || "all",
       category: searchParams.get("category") || "",
       reason: searchParams.get("reason") || "",
       reportStatus: searchParams.get("reportStatus") || defaultReportStatuses,

@@ -52,7 +52,9 @@ export class ProductAnalysisService implements ProductAnalysisServiceInterface {
       report: params.reportStatusIds.join(","),
       search: params.productName,
       url: params.productUrl,
-      product_count: String(params.sellerShouldHaveProducts),
+      product_count: params.sellerShouldHaveProducts
+        ? String(params.sellerShouldHaveProducts)
+        : undefined,
       profile: params.sellerProfileId,
     });
 

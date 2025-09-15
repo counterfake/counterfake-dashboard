@@ -31,7 +31,7 @@ export function useProductsPageData({ queries }: UseProductsPageDataProps) {
     url: queries.searchByURL,
     search: queries.searchByName,
     statusId: Number(queries.status) as any,
-    platformId: queries.platform,
+    platformId: queries.platform === "all" ? "" : queries.platform,
     reportStatusIds: queries.reportStatus,
     category: queries.category,
     reasons: queries.reason,
@@ -44,7 +44,6 @@ export function useProductsPageData({ queries }: UseProductsPageDataProps) {
     statusId: Number(queries.status) as any,
     reportStatusIds: queries.reportStatus.split(",").map(Number) as any,
     categoryId: queries.category,
-    sellerShouldHaveProducts: 5,
     reasons: queries.reason,
   });
 
@@ -89,14 +88,19 @@ export function useProductsPageData({ queries }: UseProductsPageDataProps) {
   // --------------------------
   // Filter state options
   // --------------------------
-  const platformOptions = useMemo(
-    () =>
-      platformAnalysis.map((platform) => ({
-        value: String(platform.id),
-        label: `${platform.name} (${platform.value})`,
-      })),
-    [platformAnalysis]
-  );
+  const platformOptions = useMemo(() => {
+    const allOption = {
+      value: "all",
+      label: "All",
+    };
+
+    const platformOptions = platformAnalysis.map((platform) => ({
+      value: String(platform.id),
+      label: `${platform.name} (${platform.value})`,
+    }));
+
+    return [allOption, ...platformOptions];
+  }, [platformAnalysis]);
 
   const categoryOptions = useMemo(
     () =>
