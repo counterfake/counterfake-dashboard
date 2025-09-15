@@ -208,7 +208,7 @@ export function ProductCard({
               </span>
               <Link
                 href={product?.seller?.url}
-                className="text-primary font-medium hover:underline"
+                className="text-primary font-medium hover:underline truncate"
               >
                 {product?.seller?.name}
               </Link>

@@ -116,10 +116,10 @@ export function ProductInfoCard({
                   <a
                     href={product?.seller?.url}
                     target="_blank"
-                    className="font-medium text-primary flex items-center gap-1.5"
+                    className="font-medium text-primary flex items-center gap-1.5 truncate"
                   >
                     {product?.seller?.avatarUrl && (
-                      <div className="overflow-hidden rounded-full">
+                      <div className="overflow-hidden rounded-full flex-shrink-0">
                         <Image
                           src={product?.seller?.avatarUrl}
                           alt={product?.seller?.name}
