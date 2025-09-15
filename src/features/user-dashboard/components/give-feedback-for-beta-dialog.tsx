@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "@/components/ui/primitives/button";
+import { Button } from "@/common/components/ui/primitives/button";
 import {
   Dialog,
   DialogClose,
@@ -9,10 +9,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/primitives/dialog";
-import { Input } from "@/components/ui/primitives/input";
-import { Label } from "@/components/ui/primitives/label";
+} from "@/common/components/ui/primitives/dialog";
+import { Input } from "@/common/components/ui/primitives/input";
+import { Label } from "@/common/components/ui/primitives/label";
 
 interface GiveFeedbackForBetaDialogProps {
   isOpen: boolean;
@@ -37,9 +36,6 @@ export default function GiveFeedbackForBetaDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant="outline">Give Feedback</Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Give Feedback</DialogTitle>

@@ -1,0 +1,101 @@
+import { HttpClient } from "@/common/lib/api/http-client";
+import { baseApiClient } from "@/common/lib/api/api-client";
+
+// API Layer
+import {
+  BpParentClassesApi,
+  type GetParentClassByIdResponse,
+} from "@/common/api/bp-api/parent-classes";
+
+// Internal Types
+import {
+  type ProductCategoriesServiceInterface,
+  type GetProductCategoriesParams,
+  type ProductCategory,
+  GetProductCategoryByIdParams,
+} from "../types/product-categories.types";
+
+/**
+ * Product Categories Service - Business Logic Layer
+ *
+ * @description
+ * This service gets product categories from the API layer and performs necessary transformations.
+ * It contains only business logic, API requests are made in the API layer.
+ */
+
+export class ProductCategoriesService
+  implements ProductCategoriesServiceInterface
+{
+  private readonly parentClassesApi: BpParentClassesApi;
+
+  constructor() {
+    this.parentClassesApi = new BpParentClassesApi(baseApiClient);
+  }
+
+  private getContextKey(methodName: string) {
+    return `${this.constructor.name}.${methodName}`;
+  }
+
+  public async getProductCategories(params: GetProductCategoriesParams) {
+    const response = await this.parentClassesApi.getParentClasses({
+      brand: params.brand,
+      do_analysis: params.doAnalysis,
+    });
+
+    if (!response.success) {
+      return HttpClient.errorResult(
+        response.error,
+        this.getContextKey(this.getProductCategories.name)
+      );
+    }
+
+    const data = response.data;
+    const categories = data?.parent_classes;
+
+    const transformedCategories = categories.map((category) =>
+      this.transformProductCategory(category)
+    );
+
+    if (params.sortByRiskyCount) {
+      transformedCategories.sort((a, b) => b.riskyProducts - a.riskyProducts);
+    }
+
+    return HttpClient.successResult(transformedCategories);
+  }
+
+  public async getProductCategoryById(
+    id: number,
+    params?: GetProductCategoryByIdParams
+  ) {
+    if (!id) {
+      return HttpClient.errorResult(
+        new Error("Product category id is required"),
+        this.getContextKey(this.getProductCategoryById.name)
+      );
+    }
+
+    const response = await this.parentClassesApi.getParentClassById(
+      String(id),
+      {
+        do_analysis: params?.doAnalysis,
+      }
+    );
+
+    const transformedCategory = this.transformProductCategory(response.data);
+
+    return HttpClient.successResult(transformedCategory);
+  }
+
+  public transformProductCategory(
+    category: GetParentClassByIdResponse
+  ): ProductCategory {
+    return {
+      name: category?.name,
+      id: category?.index,
+      riskyProducts: category?.details_for_risky?.risky_count || null,
+      totalProducts: category?.details_for_risky?.total_count || null,
+    };
+  }
+}
+
+export const productCategoriesService = new ProductCategoriesService();

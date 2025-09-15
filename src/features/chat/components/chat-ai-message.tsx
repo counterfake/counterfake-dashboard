@@ -1,11 +1,11 @@
 "use client";
 
-import { cn } from "@/lib/utils/ui";
+import { cn } from "@/common/lib/utils/ui";
 
-import AppLogo from "@/components/ui/data-display/app-logo";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
 
 import { ChatMessage as ChatMessageType } from "../types/chat";
-import { TextReveal } from "@/components/ui/animation/text-reveal";
+import { TextReveal } from "@/common/components/ui/animation/text-reveal";
 
 interface ChatMessageProps {
   message: ChatMessageType;

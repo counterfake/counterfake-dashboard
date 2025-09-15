@@ -7,17 +7,17 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Button } from "@/components/ui/primitives/button";
-import { Label } from "@/components/ui/primitives/label";
-import { Calendar } from "@/components/ui/primitives/calendar";
+} from "@/common/components/ui/primitives/card";
+import { Button } from "@/common/components/ui/primitives/button";
+import { Label } from "@/common/components/ui/primitives/label";
+import { Calendar } from "@/common/components/ui/primitives/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/primitives/popover";
+} from "@/common/components/ui/primitives/popover";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils/ui";
+import { cn } from "@/common/lib/utils/ui";
 import { Calendar as CalendarIcon } from "lucide-react";
 
 export function DatePickerDemo() {

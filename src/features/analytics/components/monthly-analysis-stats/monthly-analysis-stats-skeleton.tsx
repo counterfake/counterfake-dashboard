@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/ui/primitives/skeleton";
+import { Skeleton } from "@/common/components/ui/primitives/skeleton";
 import React from "react";
 
 export default function MonthlyAnalysisStatsSkeleton() {

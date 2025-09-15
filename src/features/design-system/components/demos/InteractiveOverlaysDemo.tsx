@@ -6,8 +6,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Button } from "@/components/ui/primitives/button";
+} from "@/common/components/ui/primitives/card";
+import { Button } from "@/common/components/ui/primitives/button";
 import {
   Dialog,
   DialogContent,
@@ -15,14 +15,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/primitives/dialog";
+} from "@/common/components/ui/primitives/dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/primitives/tooltip";
-import { Input } from "@/components/ui/primitives/input";
+} from "@/common/components/ui/primitives/tooltip";
+import { Input } from "@/common/components/ui/primitives/input";
 
 export function InteractiveOverlaysDemo() {
   return (

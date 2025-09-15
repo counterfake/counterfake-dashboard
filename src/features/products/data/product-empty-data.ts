@@ -1,0 +1,60 @@
+import { Product } from "../types/products.types";
+
+export const productEmptyData: Product = {
+  id: null,
+  name: "",
+  coverImage: "",
+  images: [],
+  subCategory: {
+    name: "",
+    id: null,
+    parentCategoryId: null,
+  },
+  ad: {
+    description: "",
+    url: "",
+    originalPrice: 0,
+    discountedPrice: 0,
+    discountPercentage: 0,
+    currency: "",
+  },
+  analysis: {
+    reportReasons: [],
+    reportStatusId: null,
+    reportStatus: "",
+    isRisky: false,
+    statusId: null,
+    analysisSummaryText: "",
+    fakeScore: 0,
+    rating: 0,
+    isLowRating: false,
+    isPriceOutlier: false,
+    daysSinceListed: null,
+    daysSinceReported: null,
+    reportedAt: "",
+    listedAt: "",
+    fakeScoreProbability: null,
+    status: null,
+    priceCluster: null,
+  },
+  brand: {
+    id: null,
+    name: "",
+  },
+  platform: {
+    id: null,
+    name: "",
+    iconLink: null,
+  },
+  profile: {
+    id: null,
+    name: "",
+    isRisky: null,
+  },
+  seller: {
+    id: null,
+    name: "",
+    url: "",
+    avatarUrl: "",
+  },
+};

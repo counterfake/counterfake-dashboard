@@ -6,8 +6,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Button } from "@/components/ui/primitives/button";
+} from "@/common/components/ui/primitives/card";
+import { Button } from "@/common/components/ui/primitives/button";
 import { Download, Share } from "lucide-react";
 
 export function ButtonsDemo() {

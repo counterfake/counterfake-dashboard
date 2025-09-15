@@ -7,20 +7,20 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Label } from "@/components/ui/primitives/label";
+} from "@/common/components/ui/primitives/card";
+import { Label } from "@/common/components/ui/primitives/label";
 import {
   RadioGroup,
   RadioGroupItem,
-} from "@/components/ui/primitives/radio-group";
-import { Checkbox } from "@/components/ui/primitives/checkbox";
+} from "@/common/components/ui/primitives/radio-group";
+import { Checkbox } from "@/common/components/ui/primitives/checkbox";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/primitives/select";
+} from "@/common/components/ui/primitives/select";
 
 export function SelectionComponentsDemo() {
   const [radioValue, setRadioValue] = useState("option1");

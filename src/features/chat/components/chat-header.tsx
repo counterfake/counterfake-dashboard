@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/primitives/button";
-import AppLogo from "@/components/ui/data-display/app-logo";
+import { Button } from "@/common/components/ui/primitives/button";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
 import { MessageCircle, Minimize2, Maximize2, X } from "lucide-react";
 
 interface ChatHeaderProps {

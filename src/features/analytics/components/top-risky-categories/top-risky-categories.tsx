@@ -10,7 +10,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
+} from "@/common/components/ui/primitives/card";
 import {
   Table,
   TableBody,
@@ -18,17 +18,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/primitives/table";
-import { Button } from "@/components/ui/primitives/button";
+} from "@/common/components/ui/primitives/table";
+import { Button } from "@/common/components/ui/primitives/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/primitives/tooltip";
+} from "@/common/components/ui/primitives/tooltip";
 
 import TopRiskyCategoriesSkeleton from "./top-risky-categories-skeleton";
 import TopRiskyCategoriesError from "./top-risky-categories-error";
-import { ROUTES } from "@/lib/config/routes";
+import { ROUTES } from "@/common/lib/config/routes";
 
 interface TopRiskyCategoriesProps {
   topRiskyCategories: {
@@ -100,7 +100,7 @@ export function TopRiskyCategories({
                               asChild
                             >
                               <Link
-                                href={`${ROUTES.USER_DASHBOARD_PRODUCTS}?productCategory=${category.id}`}
+                                href={`${ROUTES.USER_DASHBOARD_PRODUCTS}?category=${category.id}`}
                               >
                                 <ExternalLink className="h-3 w-3" />
                               </Link>

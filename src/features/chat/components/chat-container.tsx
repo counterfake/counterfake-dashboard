@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { ScrollArea } from "@/components/ui/primitives/scroll-area";
+import { ScrollArea } from "@/common/components/ui/primitives/scroll-area";
 
 import { ThinkingMessage } from "./thinking-message";
 import { ChatMessage as ChatMessageType } from "../types/chat";

@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
+} from "@/common/components/ui/primitives/card";
 import {
   BarChart,
   Bar,
@@ -41,12 +41,12 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/primitives/chart";
+} from "@/common/components/ui/primitives/chart";
 
-import { StatsCard } from "@/components/ui/data-display/cards/stats-card";
-import { SimpleStatsCard } from "@/components/ui/data-display/cards/simple-stats-card";
+import { StatsCard } from "@/common/components/ui/data-display/cards/stats-card";
+import { SimpleStatsCard } from "@/common/components/ui/data-display/cards/simple-stats-card";
 
-import { mockDashboardStats } from "@/lib/mock-data";
+import { mockDashboardStats } from "@/common/lib/mock-data";
 
 // Chart configurations
 const barChartConfig = {

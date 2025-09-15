@@ -6,12 +6,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
+} from "@/common/components/ui/primitives/card";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/primitives/alert";
+} from "@/common/components/ui/primitives/alert";
 import { AlertTriangle, CheckCircle, Info } from "lucide-react";
 
 export function AlertsDemo() {

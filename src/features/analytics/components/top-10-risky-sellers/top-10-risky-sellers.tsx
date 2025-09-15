@@ -7,8 +7,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import { Button } from "@/components/ui/primitives/button";
+} from "@/common/components/ui/primitives/card";
+import { Button } from "@/common/components/ui/primitives/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Top10RiskySellersSkeleton from "./top-10-risky-sellers-skeleton";
 import Top10RiskySellersError from "./top-10-risky-sellers-error";

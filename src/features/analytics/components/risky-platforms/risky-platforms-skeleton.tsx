@@ -1,6 +1,6 @@
 // src/features/user-dashboard/dashboard-analytics/components/risky-platforms/risky-platforms-skeleton.tsx
 import React from "react";
-import { Skeleton } from "@/components/ui/primitives/skeleton";
+import { Skeleton } from "@/common/components/ui/primitives/skeleton";
 
 export function RiskyPlatformsSkeleton() {
   return (

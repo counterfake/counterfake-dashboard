@@ -2,10 +2,10 @@
 
 import React from "react";
 
-import AppLogo from "@/components/ui/data-display/app-logo";
-import Footer from "@/components/ui/layouts/footer";
+import AppLogo from "@/common/components/ui/data-display/app-logo";
+import Footer from "@/common/components/ui/layouts/footer";
 
-import BrandProtectionShowcase from "@/components/ui/data-display/brand-protection-showcase";
+import BrandProtectionShowcase from "@/common/components/ui/data-display/brand-protection-showcase";
 
 export default function UserAuthShowcaseLayout({
   children,

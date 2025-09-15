@@ -1,14 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/primitives/button";
+import { Button } from "@/common/components/ui/primitives/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/primitives/card";
-import useToast from "@/hooks/use-toast";
+} from "@/common/components/ui/primitives/card";
+import useToast from "@/common/hooks/use-toast";
 
 export function ToastDemo() {
   const toast = useToast();

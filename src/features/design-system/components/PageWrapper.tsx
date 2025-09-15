@@ -4,10 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/primitives/tabs";
-import { cn } from "@/lib/utils/ui";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@/common/components/ui/primitives/tabs";
+import { cn } from "@/common/lib/utils/ui";
 import { ArrowLeftIcon } from "lucide-react";
-import { Button } from "@/components/ui/primitives/button";
+import { Button } from "@/common/components/ui/primitives/button";
 
 const tabs = [
   {

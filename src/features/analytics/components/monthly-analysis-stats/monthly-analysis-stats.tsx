@@ -1,9 +1,7 @@
 import React from "react";
 import { Shield, ShieldX, Users, UserX } from "lucide-react";
 
-import { StatsCard } from "@/components/ui/data-display/cards/stats-card";
-
-import { type MonthlyAnalysisStats } from "../../../user-dashboard/utils/monthly-data-utils";
+import { StatsCard } from "@/common/components/ui/data-display/cards/stats-card";
 
 import MonthlyAnalysisStatsSkeleton from "./monthly-analysis-stats-skeleton";
 import MonthlyAnalysisStatsError from "./monthly-analysis-stats-error";

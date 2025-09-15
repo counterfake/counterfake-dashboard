@@ -1,3 +1,162 @@
+# [0.3.0-beta.8](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.7...v0.3.0-beta.8) (2025-09-15)
+
+
+### Bug Fixes
+
+* fix wrong empty data for product-empty-data ([f547137](https://github.com/counterfake/counterfake-dashboard/commit/f547137884beae70e1ced63bf8fb8c44d7fe66de))
+
+# [0.3.0-beta.7](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.6...v0.3.0-beta.7) (2025-09-15)
+
+
+### Bug Fixes
+
+* **products:** fix product card report reason flex issue ([7e3fd86](https://github.com/counterfake/counterfake-dashboard/commit/7e3fd86cd41af80d1d84c7040d81347ebd459304))
+
+# [0.3.0-beta.6](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.5...v0.3.0-beta.6) (2025-09-15)
+
+
+### Bug Fixes
+
+* **products:** fix long seller name overflow issue ([3bf55e0](https://github.com/counterfake/counterfake-dashboard/commit/3bf55e0a545b4851265fe530df5f779e480364d6))
+
+
+### Features
+
+* **products:** replace isOutlier to priceCluster field for product analysis area ([ec4c384](https://github.com/counterfake/counterfake-dashboard/commit/ec4c3847ef26232b3b0088c2a7aea1cf8609145d))
+
+# [0.3.0-beta.5](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.4...v0.3.0-beta.5) (2025-09-15)
+
+
+### Bug Fixes
+
+* **authentication:** fix logout bug ([1b98581](https://github.com/counterfake/counterfake-dashboard/commit/1b98581726c9e51d822469cbf672966ad9e68dab))
+* fix if user brand not found, show brand not found feedback to user ([34acbcc](https://github.com/counterfake/counterfake-dashboard/commit/34acbcc0d571e0cf54f15ba87058cd4885354c78))
+
+# [0.3.0-beta.4](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.3...v0.3.0-beta.4) (2025-09-14)
+
+
+### Bug Fixes
+
+* fix products page bugs ([2c2784b](https://github.com/counterfake/counterfake-dashboard/commit/2c2784bfefed15dfcfad78272c2e2ae1f1dcf493))
+* **products:** fix product grid responsive view issue ([0414fd1](https://github.com/counterfake/counterfake-dashboard/commit/0414fd139e8166d0c7be305d30de0f87b7dbce33))
+
+
+### Code Refactoring
+
+* move next.js app directory from ./src to root directory ([f62820d](https://github.com/counterfake/counterfake-dashboard/commit/f62820d0e146387880feca094bdf81697441bc0b))
+
+
+### Features
+
+* add switch-brand feature for admin customer accounts ([a32e747](https://github.com/counterfake/counterfake-dashboard/commit/a32e74731250d8d7fdd7b066773bc3da95fd9086))
+* add toggle-sidebar feature ([71a2f77](https://github.com/counterfake/counterfake-dashboard/commit/71a2f77890b1f2f6e116f061264aac17f30f9656))
+* create entities/brand slice for new feature-sliced structure migration ([5aeaec7](https://github.com/counterfake/counterfake-dashboard/commit/5aeaec7e14b92ae1a549b066226d649bc0924f5c))
+* create new app layer for new feature-sliced structure migration ([3ca2294](https://github.com/counterfake/counterfake-dashboard/commit/3ca229421b52020247b1f184973155202a6a9c57))
+* create new widgets layer for new feature-sliced structure migration ([8951cf3](https://github.com/counterfake/counterfake-dashboard/commit/8951cf37008ab219307c3505c94628aad9f47ef8))
+* create shared modules for new feature-sliced structure migration ([7a0df7b](https://github.com/counterfake/counterfake-dashboard/commit/7a0df7bf0031737e65ee7c051ac33eb0b7137d9c))
+* migrate new bpApi client and the switch brand feature in the authentication feature ([e05c439](https://github.com/counterfake/counterfake-dashboard/commit/e05c439a5563aec6004b0fd224d9d5a17b40d1ef))
+
+
+### BREAKING CHANGES
+
+* The ./src/app directory will now be used the feature-sliced structure. Do not use it for next.js routing.
+
+# [0.3.0-beta.3](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.2...v0.3.0-beta.3) (2025-09-12)
+
+
+### Features
+
+* update site title and description to reflect Counterfake branding and added favicon ([a8f6b10](https://github.com/counterfake/counterfake-dashboard/commit/a8f6b10006d48062704544ea635b42ebf51bc67d))
+
+# [0.3.0-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.1...v0.3.0-beta.2) (2025-09-12)
+
+
+### Bug Fixes
+
+* fix all type errors ([d467814](https://github.com/counterfake/counterfake-dashboard/commit/d467814d9c10b43e0de29eda5d102a4bd8386a03))
+
+# [0.3.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.2.0...v0.3.0-beta.1) (2025-09-12)
+
+
+### Bug Fixes
+
+* fix BaseApiClient authentication issues; improve BaseApiClient auth handle; remove retries paramater from BaseApiClient class ([3bd472a](https://github.com/counterfake/counterfake-dashboard/commit/3bd472a3ec30b7bece2a362e903b2e07b28d2806))
+* fix customer authentication issues ([84c3d76](https://github.com/counterfake/counterfake-dashboard/commit/84c3d76eec82b5930b55170b4fb4734846cc6a64))
+* fix wrong truncate class usage in the applied-filters component ([2c9ee06](https://github.com/counterfake/counterfake-dashboard/commit/2c9ee06535686b850def7e6f506842effaa208ce))
+* **products:** fix isRisky and isPriceOutlier check ([75555ec](https://github.com/counterfake/counterfake-dashboard/commit/75555ec2a294d99c69d6ac19e73beef760215294))
+* remove unnesessary 'Give Feedback' trigger button ([b61d375](https://github.com/counterfake/counterfake-dashboard/commit/b61d375c606cd5480b71ab06f29df58975d7c062))
+* **user-dashboard:** fix empty brand data bug for user-service; remove unnecassery console.log code lines ([cc271e3](https://github.com/counterfake/counterfake-dashboard/commit/cc271e354b11fcd382797ed93c04e5ea83f1416b))
+* **user-dashboard:** set loading state correctly when refresh token fails ([683ebb4](https://github.com/counterfake/counterfake-dashboard/commit/683ebb4817ac1b5015bc4c018bfb30361a9479ad))
+
+
+### Code Refactoring
+
+* **products:** extract products feature and remove legacy classification ([14e921e](https://github.com/counterfake/counterfake-dashboard/commit/14e921ec1ef848a0f8e75f45951dc52d6a878d8c))
+* **products:** update reportStatusIds param type string to array for product-analysis-service ([56720cf](https://github.com/counterfake/counterfake-dashboard/commit/56720cffe5f11b3c861bf9a96eb5d113d16ab8a9))
+* remove retries feature from HttpClient class ([12014e0](https://github.com/counterfake/counterfake-dashboard/commit/12014e07674f1e17616a7785b32c14e89c7f3950))
+* rename `features/brand-protection/product` to `/products`; move common brand product card component to features file ([0831c3f](https://github.com/counterfake/counterfake-dashboard/commit/0831c3ff7e3cede24c7bbf3ad63780a0db246abc))
+* reorganize product features architecture ([7917b8d](https://github.com/counterfake/counterfake-dashboard/commit/7917b8d012a76b661c8fe45485a3e443f2590aaf))
+
+
+### Features
+
+* add animation speed and opacity properties to beams-background; remove pulse animation from beams-background ([11f4b94](https://github.com/counterfake/counterfake-dashboard/commit/11f4b94a2066980ffda6fcd2221593c50aa7824f))
+* add api layer for brand protection api ([dea9146](https://github.com/counterfake/counterfake-dashboard/commit/dea9146d54a7bb0f3a86a4eb16b5bf53d2cbd73a))
+* add auto scroll to top for products page ([4218f0c](https://github.com/counterfake/counterfake-dashboard/commit/4218f0cc926424b69808488433b6e234796bc649))
+* add do_analysis param to getParentClassById endpoint ([9cda0ff](https://github.com/counterfake/counterfake-dashboard/commit/9cda0ffcf2da1323984596d629c128224c1cb4c1))
+* add empty data feature to useApiQuery hook ([dd8f04b](https://github.com/counterfake/counterfake-dashboard/commit/dd8f04b749c3bb2e2894be8863fcc46ac889db83))
+* add new animate component ([77ee086](https://github.com/counterfake/counterfake-dashboard/commit/77ee0860f96796da90ac4e8cde427b7dfe395ca1))
+* add new soft variants and size property to badge component ([713e574](https://github.com/counterfake/counterfake-dashboard/commit/713e574fe11d6c617b33ae88a28937e085f012b6))
+* add seller profile feature ([1ae1824](https://github.com/counterfake/counterfake-dashboard/commit/1ae1824fdf1558443824a7d43ebe5c958aa2f04b))
+* add view trigger and custom content support for text animation ([32314a4](https://github.com/counterfake/counterfake-dashboard/commit/32314a434478bb12e9d6e5664e9e9705b3b43034))
+* **brand-protection.products:** add product-reasons hook ([ebab771](https://github.com/counterfake/counterfake-dashboard/commit/ebab77168255e2b232c688d85fa27352d144cb65))
+* implement customer authentication system with dedicated components and services ([cecacc3](https://github.com/counterfake/counterfake-dashboard/commit/cecacc3a5c900bb8ef15b0acff53ca518914ee2f))
+* major project restructure and architecture refactoring ([9d567cc](https://github.com/counterfake/counterfake-dashboard/commit/9d567cc6792b13d16c4fd589ea33f3f54d171083))
+* **products:** add new product card ui ([1bc6041](https://github.com/counterfake/counterfake-dashboard/commit/1bc6041cf129ff96c23b9256f556063ee05032b8))
+* **products:** redesign detail page layout; update some data display areas ([860dce1](https://github.com/counterfake/counterfake-dashboard/commit/860dce19f6f1a2e18d305ec654ebaaae79ae80b1))
+* **products:** redesign product detail page interface and add analytics features ([f0b5e3c](https://github.com/counterfake/counterfake-dashboard/commit/f0b5e3c9217b9c180130db38ba5b55d351604128))
+* **products:** restructure product list interface and filtering system ([4208628](https://github.com/counterfake/counterfake-dashboard/commit/42086284b1c6f1bd5f5dd8398e7fae236f10b032))
+* remove TopRiskyCategories from dashboard page because riskyProductCategories data is coming incorrectly ([f263c71](https://github.com/counterfake/counterfake-dashboard/commit/f263c7157fb45be135e4f1c6dae890c2fa1ca891))
+* **seller-profile:** add getSellerProfileById feature and its hooks ([c895314](https://github.com/counterfake/counterfake-dashboard/commit/c8953147ff7d6c655496666f295a76cee438cdc7))
+* update muted-foreground color for global.css ([a0c8288](https://github.com/counterfake/counterfake-dashboard/commit/a0c828823900fb8f5a042d9097a0f9b667035b0d))
+* **user-dashboard:** improve error handling for user-auth-service login method ([fe00671](https://github.com/counterfake/counterfake-dashboard/commit/fe0067193598a5332ceeb501575983671abd20d3))
+
+
+### BREAKING CHANGES
+
+* **products:** - Reorganize product page hooks
+  - Removed use-products-page-filters
+  - Added use-products-page-query
+  - Updated use-products-page-data
+- Enhance UI components
+  - Added new listbox primitive
+  - Updated Select component
+  - Improved SearchInput component
+- Restructure product list interface
+  - Removed search area
+  - Added sidebar
+  - Updated toolbar
+  - Updated product grid
+* **products:** update reportStatusIds string to array
+* retries paramater is no longer used.
+* **products:** - All imports under `features/brand-protection/products/*` moved to `features/products/*` (UI, hooks, services, types, data)
+- Classification domain removed: `features/brand-protection/classification/*`
+- Replaced `use-products` and `use-product-result` with `use-customer-products` and new products APIs
+- Types and schemas renamed/moved (e.g., `product.types` -> `types/products.types`, `product-result.schemas` removed; see `common/api/bp-api/*/schemas.ts`)
+- Paths for product status/report status and reasons services changed
+- Consumers must update import paths and adapt to shape changes introduced by the new schemas
+* Authentication system restructured from user-auth to customer-auth pattern
+* Restructure product-related components and hooks
+- Move product list features from src/features/products/ to dashboard-specific and brand-protection modules
+- Relocate products-page-specific product hooks to src/app/dashboard/(dashboard)/products/_hooks/
+- Reorganize product cards under product-cards/ directory
+- Add new UI components: applied-filters, product-grid, toolbar components
+- Remove deprecated product analysis and list components
+
+This change affects import paths for product-related components and may require updates to existing imports.
+* - `features/brand-protection/product` renamed to `/products`
+- compact-brand-product-card, default-brand-product-card and minimal-brand-product-card was moved to /features/brand-protection/products feature
+
 # [0.2.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.1.1...v0.2.0) (2025-08-31)
 
 
