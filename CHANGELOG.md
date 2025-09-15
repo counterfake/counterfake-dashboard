@@ -1,3 +1,10 @@
+# [0.3.0-beta.8](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.7...v0.3.0-beta.8) (2025-09-15)
+
+
+### Bug Fixes
+
+* fix wrong empty data for product-empty-data ([f547137](https://github.com/counterfake/counterfake-dashboard/commit/f547137884beae70e1ced63bf8fb8c44d7fe66de))
+
 # [0.3.0-beta.7](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.6...v0.3.0-beta.7) (2025-09-15)
 
 
