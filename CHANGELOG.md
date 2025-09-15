@@ -1,3 +1,10 @@
+# [0.3.0-beta.7](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.6...v0.3.0-beta.7) (2025-09-15)
+
+
+### Bug Fixes
+
+* **products:** fix product card report reason flex issue ([7e3fd86](https://github.com/counterfake/counterfake-dashboard/commit/7e3fd86cd41af80d1d84c7040d81347ebd459304))
+
 # [0.3.0-beta.6](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.5...v0.3.0-beta.6) (2025-09-15)
 
 
