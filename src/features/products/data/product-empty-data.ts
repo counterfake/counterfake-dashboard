@@ -35,6 +35,7 @@ export const productEmptyData: Product = {
     listedAt: "",
     fakeScoreProbability: null,
     status: null,
+    priceCluster: null,
   },
   brand: {
     id: null,
