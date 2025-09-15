@@ -66,10 +66,7 @@ export class CustomerService {
     });
 
     if (!userBrandResult?.brandId || !userBrandResult?.brandSlug) {
-      return HttpClient.errorResult(
-        new Error("Brand not found"),
-        this.getContextKey(functionName)
-      );
+      // Todo: Handle this case
     }
 
     const validatedCustomer = userSchema.safeParse({
@@ -78,8 +75,8 @@ export class CustomerService {
       role: currentCustomer?.roles,
       brand: {
         name: currentCustomer?.selectedCompany?.brand_name,
-        id: userBrandResult.brandId,
-        slug: userBrandResult.brandSlug,
+        id: userBrandResult.brandId || undefined, // TODO: Remove undefined
+        slug: userBrandResult.brandSlug || undefined, // TODO: Remove undefined
         isGroupBrand: userBrandResult.isGroupBrand,
         subBrands: userBrandResult.subBrands,
       },
@@ -136,7 +133,7 @@ export class CustomerService {
           item?.brand_name?.toLocaleLowerCase() ===
           userBrandName?.toLocaleLowerCase()
       );
-      currentBrandId = String(userBrandId);
+      currentBrandId = brand ? String(userBrandId) : undefined; // TODO: Fix this handling
       currentBrandSlug = brand?.brand_slug || null;
     }
 

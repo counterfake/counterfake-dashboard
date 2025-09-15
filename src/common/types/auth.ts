@@ -11,9 +11,9 @@ export const userSchema = z.object({
   username: z.string(),
   role: z.array(z.any()),
   brand: z.object({
-    name: z.string(),
-    id: z.string().nullable(),
-    slug: z.string(),
+    name: z.string().nullable().optional(), // TODO: Remove nullable and optional
+    id: z.string().nullable().optional(), // TODO: Remove nullable and optional
+    slug: z.string().nullable().optional(), // TODO: Remove nullable and optional
     isGroupBrand: z.boolean(),
     subBrands: z.array(z.number()).nullable(),
   }),
