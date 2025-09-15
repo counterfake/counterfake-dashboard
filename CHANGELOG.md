@@ -1,3 +1,11 @@
+# [0.3.0-beta.5](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.4...v0.3.0-beta.5) (2025-09-15)
+
+
+### Bug Fixes
+
+* **authentication:** fix logout bug ([1b98581](https://github.com/counterfake/counterfake-dashboard/commit/1b98581726c9e51d822469cbf672966ad9e68dab))
+* fix if user brand not found, show brand not found feedback to user ([34acbcc](https://github.com/counterfake/counterfake-dashboard/commit/34acbcc0d571e0cf54f15ba87058cd4885354c78))
+
 # [0.3.0-beta.4](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.3...v0.3.0-beta.4) (2025-09-14)
 
 
