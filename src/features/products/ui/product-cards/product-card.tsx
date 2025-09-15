@@ -6,6 +6,7 @@ import {
   ArrowRight,
   Info,
   MessageCircleWarning,
+  CircleAlert,
 } from "lucide-react";
 import { PiStarFourFill } from "react-icons/pi";
 
@@ -156,7 +157,7 @@ export function ProductCard({
                     <p className="text-sm text-muted-foreground">
                       This product has been reported for the following reasons:
                     </p>
-                    <div className="flex items-start gap-2 mt-3">
+                    <div className="flex flex-col items-start gap-2 mt-3">
                       {product.analysis.reportReasons.map((reason, index) => (
                         <Badge
                           key={index}
@@ -164,6 +165,7 @@ export function ProductCard({
                           size="lg"
                           className="px-2 py-0.5 bg-amber-50 border-amber-200 text-amber-700"
                         >
+                          <CircleAlert className="w-3 h-3 mr-2" />
                           {reason}
                         </Badge>
                       ))}
