@@ -44,7 +44,6 @@ export function useProductsPageData({ queries }: UseProductsPageDataProps) {
     statusId: Number(queries.status) as any,
     reportStatusIds: queries.reportStatus.split(",").map(Number) as any,
     categoryId: queries.category,
-    sellerShouldHaveProducts: 5,
     reasons: queries.reason,
   });
 

@@ -167,7 +167,9 @@ export class ProductService implements ProductServiceInterface {
       search: params.search,
       url: params.url,
       parent_product: params.category,
-      product_count: "5",
+      product_count: params.sellerShouldHaveProducts
+        ? String(params.sellerShouldHaveProducts)
+        : undefined,
       expand_relations: expandRelations.join(","),
       fields: requiredFields.join(","),
     });

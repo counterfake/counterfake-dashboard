@@ -19,6 +19,7 @@ export type GetProductResultsParams = {
   search?: string;
   url?: string;
   category?: string;
+  sellerShouldHaveProducts?: number;
 };
 
 export type Product = {
