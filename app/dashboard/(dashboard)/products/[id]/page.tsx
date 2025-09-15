@@ -77,7 +77,7 @@ export default function ProductDetailPage() {
             sellerIsRisky: productData?.analysis?.isRisky,
             rating: productData?.analysis?.rating,
             isLowRating: productData?.analysis?.isLowRating,
-            isPriceOutlier: productData?.analysis?.isPriceOutlier,
+            priceCluster: productData?.analysis?.priceCluster,
           }}
           isLoading={productResponse.isLoading}
         />

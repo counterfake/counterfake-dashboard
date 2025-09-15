@@ -79,6 +79,7 @@ export type Product = {
     isPriceOutlier: boolean;
     rating: number;
     isLowRating: boolean;
+    priceCluster: number;
   };
   subCategory: {
     name: string;

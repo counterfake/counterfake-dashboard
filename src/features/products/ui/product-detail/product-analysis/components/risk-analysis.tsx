@@ -22,7 +22,7 @@ interface RiskAnalysisProps {
   sellerIsRisky?: boolean;
   rating?: number | null;
   isLowRating?: boolean;
-  isPriceOutlier?: boolean;
+  priceCluster?: number | null;
 }
 
 export function RiskAnalysis({
@@ -31,13 +31,13 @@ export function RiskAnalysis({
   sellerIsRisky,
   rating,
   isLowRating,
-  isPriceOutlier,
+  priceCluster,
 }: RiskAnalysisProps) {
   const hasAnyRiskData =
     fakeScore !== undefined ||
     sellerIsRisky !== undefined ||
     rating !== undefined ||
-    isPriceOutlier !== undefined;
+    priceCluster !== undefined;
 
   if (!hasAnyRiskData) {
     return null;
@@ -180,10 +180,12 @@ export function RiskAnalysis({
         {/* Price Outlier Analysis */}
         <div className="flex items-center justify-between bg-muted/20 rounded-lg px-4 py-3 border">
           <div className="flex items-center gap-3">
-            {isPriceOutlier === true && (
+            {priceCluster >= 6 && (
               <TrendingUp className="h-6 w-6 text-destructive" />
             )}
-            {!isPriceOutlier && <DollarSign className="h-6 w-6 text-success" />}
+            {priceCluster < 6 && (
+              <DollarSign className="h-6 w-6 text-success" />
+            )}
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground">
                 Price Analysis
@@ -191,12 +193,12 @@ export function RiskAnalysis({
               <span
                 className={cn(
                   "font-semibold text-base",
-                  isPriceOutlier === true && "text-destructive",
-                  !isPriceOutlier && "text-success"
+                  priceCluster >= 6 && "text-destructive",
+                  priceCluster < 6 && "text-success"
                 )}
               >
-                {isPriceOutlier === true && "Abnormal Pricing"}
-                {!isPriceOutlier && "Normal Pricing"}
+                {priceCluster >= 6 && "Abnormal Pricing"}
+                {priceCluster < 6 && "Normal Pricing"}
               </span>
             </div>
           </div>

@@ -39,7 +39,7 @@ interface ProductAnalysisProps {
     sellerIsRisky: boolean;
     rating: number;
     isLowRating: boolean;
-    isPriceOutlier: boolean;
+    priceCluster: number;
   };
   isLoading?: boolean;
 }
@@ -110,7 +110,7 @@ export function ProductAnalysis({
                 sellerIsRisky={analysis?.sellerIsRisky}
                 rating={analysis?.rating}
                 isLowRating={analysis?.isLowRating}
-                isPriceOutlier={analysis?.isPriceOutlier}
+                priceCluster={analysis?.priceCluster}
               />
             </Animate>
           </div>

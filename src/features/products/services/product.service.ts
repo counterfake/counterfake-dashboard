@@ -94,6 +94,7 @@ export class ProductService implements ProductServiceInterface {
       "url",
       "_category",
       "_related_product",
+      "_price_priceCluster",
     ];
 
     const expandRelations = [
@@ -281,6 +282,15 @@ export class ProductService implements ProductServiceInterface {
       isLowRating = rating < 60;
     }
 
+    let priceCluster: number = 1;
+
+    if (
+      typeof product?._price_priceCluster === "number" &&
+      product?._price_priceCluster > 0
+    ) {
+      priceCluster = product?._price_priceCluster;
+    }
+
     return {
       id: product?.id,
       name: product?.title_text,
@@ -312,6 +322,7 @@ export class ProductService implements ProductServiceInterface {
           product?.price_isOutlier === undefined
             ? null
             : product?.price_isOutlier,
+        priceCluster,
         rating,
         isLowRating,
       },
