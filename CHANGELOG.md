@@ -1,3 +1,18 @@
+# [0.4.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0...v0.4.0) (2025-09-15)
+
+
+### Bug Fixes
+
+* Add text trimming for long names in risky seller lists ([ea00877](https://github.com/counterfake/counterfake-dashboard/commit/ea008772b367254d3e3046c0ced20b52c544013d))
+* fix brand not defined bug on the customer-brand-check widget ([bae9067](https://github.com/counterfake/counterfake-dashboard/commit/bae9067811ac3c6c5ec851f1f9a991b6861c7c27))
+* fix chart component overflow and sizing issues in Safari browser ([671c8ae](https://github.com/counterfake/counterfake-dashboard/commit/671c8ae56b4a23f09ed8c438b7a1811311147b70))
+* Make the product count filter optional and remove unnecessary constant values ([17e4a7a](https://github.com/counterfake/counterfake-dashboard/commit/17e4a7a1ca28d6b19d830baf45965ce5df97e659))
+
+
+### Features
+
+* add 'all platform' option on the products page filter ([77f1333](https://github.com/counterfake/counterfake-dashboard/commit/77f1333431e59cb7c5b7f9766a0ac0c128a72db4))
+
 # [0.4.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0...v0.4.0-beta.1) (2025-09-15)
 
 
