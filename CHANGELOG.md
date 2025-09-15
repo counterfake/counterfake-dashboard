@@ -1,3 +1,15 @@
+# [0.3.0-beta.6](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.5...v0.3.0-beta.6) (2025-09-15)
+
+
+### Bug Fixes
+
+* **products:** fix long seller name overflow issue ([3bf55e0](https://github.com/counterfake/counterfake-dashboard/commit/3bf55e0a545b4851265fe530df5f779e480364d6))
+
+
+### Features
+
+* **products:** replace isOutlier to priceCluster field for product analysis area ([ec4c384](https://github.com/counterfake/counterfake-dashboard/commit/ec4c3847ef26232b3b0088c2a7aea1cf8609145d))
+
 # [0.3.0-beta.5](https://github.com/counterfake/counterfake-dashboard/compare/v0.3.0-beta.4...v0.3.0-beta.5) (2025-09-15)
 
 
