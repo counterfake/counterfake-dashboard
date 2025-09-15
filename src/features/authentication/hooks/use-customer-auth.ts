@@ -5,7 +5,10 @@ import { useAuthStore } from "@/common/lib/stores/auth-store";
 import { ROUTES } from "@/common/lib/config/routes";
 
 import { customerAuthService } from "../services/customer-auth.service";
-import { updateSession } from "@/shared/api/brand-protection/bp-api.auth";
+import {
+  removeSession,
+  updateSession,
+} from "@/shared/api/brand-protection/bp-api.auth";
 
 export function useCustomerLogin() {
   const authStore = useAuthStore();
@@ -32,9 +35,16 @@ export function useCustomerLogin() {
 }
 
 export function useCustomerLogout() {
+  const authStore = useAuthStore();
+
   return useMutation({
     mutationFn: () => {
       return customerAuthService.logout();
+    },
+    onSuccess: () => {
+      authStore.clear();
+      // TODO: Remove this logic from here and re-engineer this structure for feature-sliced ​​design.
+      removeSession();
     },
     retry: false,
   });
