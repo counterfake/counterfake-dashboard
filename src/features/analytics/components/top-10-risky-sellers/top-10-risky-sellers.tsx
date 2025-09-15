@@ -87,17 +87,15 @@ export function Top10RiskySellers({
                   href={`/sellers/${seller.id}`}
                   className={`flex hover:bg-accent items-center gap-5 py-2 px-4 rounded-lg transition-all duration-200`}
                 >
-                  <div className="text-sm font-medium w-8 h-8 flex items-center justify-center rounded-full bg-accent text-accent-foreground">
+                  <div className="flex-shrink-0 text-sm font-medium w-8 h-8 flex items-center justify-center rounded-full bg-accent text-accent-foreground">
                     {seller.number}
                   </div>
-                  <div className="flex-1 flex items-center justify-between">
-                    <div>
-                      <h4 className={`text-base font-medium transition-colors`}>
-                        {seller.name}
-                      </h4>
-                      <div className="text-sm font-medium text-primary">
-                        {seller.riskyProducts} risky products
-                      </div>
+                  <div className="truncate flex-1">
+                    <h4 className="text-base font-medium transition-colors">
+                      {seller.name}
+                    </h4>
+                    <div className="text-sm font-medium text-primary">
+                      {seller.riskyProducts} risky products
                     </div>
                   </div>
                 </Link>
