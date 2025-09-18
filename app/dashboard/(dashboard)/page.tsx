@@ -31,7 +31,7 @@ export default function DashboardPage() {
         },
       ]}
     >
-      <MonthlyAnalysisStats
+      {/* <MonthlyAnalysisStats
         stats={dataLogic.monthlyStats.data}
         isLoading={dataLogic.monthlyStats.isLoading}
         isError={dataLogic.monthlyStats.isError}
@@ -46,7 +46,7 @@ export default function DashboardPage() {
         monthOptions={mountsLogic.monthOptions}
         selectedMonth={mountsLogic.selectedMonth}
         onMonthChange={mountsLogic.setSelectedMonth}
-      />
+      /> */}
 
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
         <Top10RiskySellers
