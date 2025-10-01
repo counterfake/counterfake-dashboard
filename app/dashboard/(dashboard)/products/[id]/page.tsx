@@ -12,6 +12,7 @@ import {
   ProductInfoCard,
 } from "@/features/products";
 import { CustomerPageWrapper } from "@/widgets/customer-page-layout/customer-page-layout.ui";
+import { SellerProfileCard } from "@/widgets/seller-profile-card";
 
 // Hooks
 import { useProductDetailPageData } from "./_hooks/use-product-detail-page-data";
@@ -81,6 +82,16 @@ export default function ProductDetailPage() {
           }}
           isLoading={productResponse.isLoading}
         />
+
+        <div>
+          <div className="space-y-1 mb-4">
+            <h2 className="text-xl font-semibold">Seller Details</h2>
+            <p className="text-base text-muted-foreground">
+              Seller information about the seller who sold this product
+            </p>
+          </div>
+          <SellerProfileCard sellerId={productData?.profile?.id} />
+        </div>
       </div>
     </CustomerPageWrapper>
   );

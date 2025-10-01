@@ -1,0 +1,1 @@
+export { SellerProfileDetailPage } from "./ui";

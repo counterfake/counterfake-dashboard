@@ -13,6 +13,7 @@ import {
   Package,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   Card,
@@ -28,6 +29,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/common/components/ui/primitives/tooltip";
+import { ROUTES } from "@/common/lib/config/routes";
 
 import { Product } from "../../types/products.types";
 
@@ -113,9 +115,10 @@ export function ProductInfoCard({
             <div className="flex items-center gap-2">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <a
-                    href={product?.seller?.url}
-                    target="_blank"
+                  <Link
+                    href={
+                      ROUTES.USER_DASHBOARD_SELLERS + "/" + product?.seller?.id
+                    }
                     className="font-medium text-primary flex items-center gap-1.5 truncate"
                   >
                     {product?.seller?.avatarUrl && (
@@ -130,15 +133,11 @@ export function ProductInfoCard({
                       </div>
                     )}
                     {product?.seller?.name}
-                  </a>
+                  </Link>
                 </TooltipTrigger>
                 <TooltipContent className="font-medium">
-                  Visit{" "}
+                  View{" "}
                   <span className="text-primary">{product?.seller?.name}</span>{" "}
-                  on{" "}
-                  <span className="text-primary">
-                    {product?.platform?.name}
-                  </span>
                 </TooltipContent>
               </Tooltip>
             </div>

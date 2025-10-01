@@ -8,6 +8,12 @@ import {
   GroupBrandsResponseDto,
   GroupBrandsQueryDto,
   UpdateSelectedCompanyRequestDto,
+  GetProfileByIdParams,
+  GetProfileByIdResponse,
+  ProductsQueryDto,
+  ProductsResponseDto,
+  ProductDto,
+  UpdateProfileRequestDto,
 } from "./bp-api.types";
 import {
   RefreshTokenRequestDtoSchema,
@@ -17,6 +23,12 @@ import {
   GroupBrandsQueryDtoSchema,
   GroupBrandsResponseDtoSchema,
   UpdateSelectedCompanyRequestDtoSchema,
+  GetProfileByIdParamsSchema,
+  GetProfileByIdResponseSchema,
+  ProductsQueryDtoSchema,
+  ProductsResponseDtoSchema,
+  ProductResponseDtoSchema,
+  UpdateProfileRequestDtoSchema,
 } from "./bp-api.schemas";
 
 // --------------------------
@@ -65,4 +77,81 @@ export const getGroupBrands = (params: GroupBrandsQueryDto) => {
       responseData: GroupBrandsResponseDtoSchema,
     },
   });
+};
+
+// --------------------------
+// Profile Services => /profile
+// --------------------------
+export const getProfileById = async (
+  id: number,
+  params: GetProfileByIdParams
+) => {
+  const response = await bpApi.get<GetProfileByIdResponse>(
+    `${BP_API_ENDPOINTS.profiles}/${id}`,
+    {
+      params,
+      validationSchemas: {
+        params: GetProfileByIdParamsSchema,
+        responseData: GetProfileByIdResponseSchema,
+      },
+    }
+  );
+
+  if (!response.success) throw new Error(response.error.message);
+
+  return response.data;
+};
+
+export const updateProfile = async (
+  id: number,
+  data: UpdateProfileRequestDto
+) => {
+  const response = await bpApi.patch(
+    `${BP_API_ENDPOINTS.profiles}/${id}`,
+    data,
+    {
+      validationSchemas: {
+        data: UpdateProfileRequestDtoSchema,
+      },
+    }
+  );
+
+  if (!response.success) throw new Error(response.error.message);
+
+  return response.data;
+};
+
+// --------------------------
+// Products Services => /products
+// --------------------------
+export const getProductById = async (id: string) => {
+  const response = await bpApi.get<ProductDto>(
+    `${BP_API_ENDPOINTS.products}/${id}`,
+    {
+      validationSchemas: {
+        responseData: ProductResponseDtoSchema,
+      },
+    }
+  );
+
+  if (!response.success) throw new Error(response.error.message);
+
+  return response.data;
+};
+
+export const getProducts = async (params: ProductsQueryDto) => {
+  const response = await bpApi.get<ProductsResponseDto>(
+    BP_API_ENDPOINTS.products,
+    {
+      params,
+      validationSchemas: {
+        params: ProductsQueryDtoSchema,
+        responseData: ProductsResponseDtoSchema,
+      },
+    }
+  );
+
+  if (!response.success) throw new Error(response.error.message);
+
+  return response.data;
 };

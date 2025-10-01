@@ -9,6 +9,14 @@ import {
   BrandsResponseDtoSchema,
   GroupBrandsQueryDtoSchema,
   GroupBrandsResponseDtoSchema,
+  GetProfileByIdParamsSchema,
+  GetProfileByIdResponseSchema,
+  SellerSchema,
+  PlatformSchema,
+  ProductsQueryDtoSchema,
+  ProductsResponseDtoSchema,
+  ProductResponseDtoSchema,
+  UpdateProfileRequestDtoSchema,
 } from "./bp-api.schemas";
 
 // --------------------------
@@ -40,3 +48,32 @@ export type GroupBrandsQueryDto = z.infer<typeof GroupBrandsQueryDtoSchema>;
 export type GroupBrandsResponseDto = z.infer<
   typeof GroupBrandsResponseDtoSchema
 >;
+
+// --------------------------
+// Platform
+// --------------------------
+export type Platform = z.infer<typeof PlatformSchema>;
+
+// --------------------------
+// Seller
+// --------------------------
+export type Seller = z.infer<typeof SellerSchema>;
+
+// --------------------------
+// Profile
+// --------------------------
+export type GetProfileByIdParams = z.infer<typeof GetProfileByIdParamsSchema>;
+export type GetProfileByIdResponse = z.infer<
+  typeof GetProfileByIdResponseSchema
+>;
+
+export type UpdateProfileRequestDto = z.infer<
+  typeof UpdateProfileRequestDtoSchema
+>;
+
+// --------------------------
+// Products
+// --------------------------
+export type ProductDto = z.infer<typeof ProductResponseDtoSchema>;
+export type ProductsQueryDto = z.infer<typeof ProductsQueryDtoSchema>;
+export type ProductsResponseDto = z.infer<typeof ProductsResponseDtoSchema>;
