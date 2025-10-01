@@ -78,7 +78,7 @@ export class CustomerService {
         id: userBrandResult.brandId || undefined, // TODO: Remove undefined
         slug: userBrandResult.brandSlug || undefined, // TODO: Remove undefined
         isGroupBrand: userBrandResult.isGroupBrand,
-        subBrands: userBrandResult.subBrands,
+        ownedBrands: userBrandResult.ownedBrands,
       },
     });
 
@@ -109,7 +109,7 @@ export class CustomerService {
 
     let currentBrandId: string | null = null;
     let currentBrandSlug: string | null = null;
-    let subBrands: number[] | null = null;
+    let ownedBrands: number[] = [];
 
     if (groupBrand) {
       /**
@@ -125,7 +125,7 @@ export class CustomerService {
 
       currentBrandId = childBrandIds.join(",");
       currentBrandSlug = groupBrand?.slug || null;
-      subBrands = childBrandIds;
+      ownedBrands = childBrandIds;
     } else {
       // if the selected brand is not a group brand, set the selected brand directly
       const brand = brands?.find(
@@ -135,13 +135,14 @@ export class CustomerService {
       );
       currentBrandId = brand ? String(userBrandId) : undefined; // TODO: Fix this handling
       currentBrandSlug = brand?.brand_slug || null;
+      ownedBrands = [brand?.id];
     }
 
     return {
       isGroupBrand: !!groupBrand,
       brandId: currentBrandId,
       brandSlug: currentBrandSlug,
-      subBrands,
+      ownedBrands,
     };
   }
 }
