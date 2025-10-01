@@ -1,3 +1,15 @@
+# [0.6.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.5.0...v0.6.0-beta.1) (2025-10-01)
+
+
+### Features
+
+* ownedBrands field added to Customer type ([aa93844](https://github.com/counterfake/counterfake-dashboard/commit/aa93844298865349259061fef65761241dc4ba6e))
+
+
+### BREAKING CHANGES
+
+* subBrands field removed from Customer type
+
 # [0.5.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.4.0...v0.5.0) (2025-09-18)
 
 
