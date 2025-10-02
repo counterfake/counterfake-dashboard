@@ -1,3 +1,30 @@
+# [0.6.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.5.0...v0.6.0) (2025-10-02)
+
+
+### Bug Fixes
+
+* fix next.js pages route conflict error ([30c9d3f](https://github.com/counterfake/counterfake-dashboard/commit/30c9d3f0de3b04e07d4966657990e4df49ca4797))
+* fix profile routes on the product components ([bbd7a14](https://github.com/counterfake/counterfake-dashboard/commit/bbd7a14778402e3252ed46c884555dd03a90d2f6))
+* fix profile type on the product service ([b588eda](https://github.com/counterfake/counterfake-dashboard/commit/b588edaf43e3da57222c420bb8cd53e6c0b83910))
+* fix some validation issues ([047b75d](https://github.com/counterfake/counterfake-dashboard/commit/047b75d81beb122251b392e56365a823646ef14b))
+* fix type errors ([4ce7096](https://github.com/counterfake/counterfake-dashboard/commit/4ce70961155c1ec39534d4bed5bd2d16ae9850fb))
+
+
+### Features
+
+* add error handling for seller profile widget ([cbac462](https://github.com/counterfake/counterfake-dashboard/commit/cbac462dd01241716fe89fb8d0a5cbae9c84e126))
+* add seller profile detail page; add legal process feature ([f2bd35e](https://github.com/counterfake/counterfake-dashboard/commit/f2bd35e6eaca35c370b9f2b416f41c90dc6c5807))
+* **alert-dialog:** remove slide animation from alert-dialog ([d705880](https://github.com/counterfake/counterfake-dashboard/commit/d705880fead1cf36d020ba880477ab8607aa5d09))
+* **app-error-boundary:** add AppError handle support for DefaultErrorFallback component ([08993d2](https://github.com/counterfake/counterfake-dashboard/commit/08993d2ff76d4c97e09a00379981f835c15792a6))
+* ownedBrands field added to Customer type ([aa93844](https://github.com/counterfake/counterfake-dashboard/commit/aa93844298865349259061fef65761241dc4ba6e))
+* redesign seller profile reported category variables and icon ([99b5fbf](https://github.com/counterfake/counterfake-dashboard/commit/99b5fbfb69454676c04265faee398e879e5d9463))
+
+
+### BREAKING CHANGES
+
+* Updated seller profile widget to handle errors and display fallback UI when data fetching fails. sellerId prop was replaced to sellerProfileId on the seller profile card component.
+* subBrands field removed from Customer type
+
 # [0.6.0-beta.5](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0-beta.4...v0.6.0-beta.5) (2025-10-02)
 
 
