@@ -1,3 +1,11 @@
+# [0.6.0-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0-beta.1...v0.6.0-beta.2) (2025-10-01)
+
+
+### Features
+
+* add seller profile detail page; add legal process feature ([f2bd35e](https://github.com/counterfake/counterfake-dashboard/commit/f2bd35e6eaca35c370b9f2b416f41c90dc6c5807))
+* **alert-dialog:** remove slide animation from alert-dialog ([d705880](https://github.com/counterfake/counterfake-dashboard/commit/d705880fead1cf36d020ba880477ab8607aa5d09))
+
 # [0.6.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.5.0...v0.6.0-beta.1) (2025-10-01)
 
 
