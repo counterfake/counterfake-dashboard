@@ -22,8 +22,8 @@ export const getBrandsResponseSchema = z.object({
       brand_slug: z.string(),
       reference_id: z.number(),
       parent_classes: z.number().array(),
-      official_classes: z.number().array(),
-      group: z.number().optional(),
+      official_classes: z.union([z.number().array(), z.undefined().array()]),
+      group: z.number().optional().nullable(),
       in_scope: z.boolean(),
       keywords: z.string(),
     })

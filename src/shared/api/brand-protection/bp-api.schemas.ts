@@ -141,19 +141,20 @@ export const GetProfileByIdParamsSchema = z.object({
 
 export const GetProfileByIdResponseSchema = z.object({
   address: z.string().optional(),
-  brands: z
-    .array(
+  brands: z.array(
+    z.union([
       z.object({
         id: z.number(),
         brand_slug: z.string(),
         brand_name: z.string(),
         reference_id: z.number(),
-        official_classes: z.array(z.any()),
-        group: z.any(),
-        in_scope: z.boolean(),
-      })
-    )
-    .or(z.number().array()),
+        official_classes: z.array(z.any()).optional(),
+        group: z.any().optional(),
+        in_scope: z.boolean().optional(),
+      }),
+      z.number(),
+    ])
+  ),
   category: z.number().optional(),
   created_at: z.string().optional(),
   email: z.string().optional(),
