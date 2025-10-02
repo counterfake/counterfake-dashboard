@@ -90,7 +90,7 @@ export default function ProductDetailPage() {
               Seller information about the seller who sold this product
             </p>
           </div>
-          <SellerProfileCard sellerId={productData?.profile?.id} />
+          <SellerProfileCard sellerProfileId={productData?.profile?.id} />
         </div>
       </div>
     </CustomerPageWrapper>

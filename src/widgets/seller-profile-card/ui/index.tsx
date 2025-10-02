@@ -38,18 +38,19 @@ import { SellerProfileCategory } from "@/entities/brand-protection/seller-profil
 
 import { useSellerProfileData } from "../model";
 import { SellerProfileSkeleton } from "./skeleton";
+import { DefaultErrorFallback } from "@/shared/ui/error-handler/app-error-boundary";
 
 interface SellerProfileCardProps {
-  sellerId: number;
+  sellerProfileId: number;
   showViewSellerButton?: boolean;
 }
 
 export function SellerProfileCard({
-  sellerId,
+  sellerProfileId,
   showViewSellerButton = true,
 }: SellerProfileCardProps) {
-  const { profile, stats, category, isLoading } =
-    useSellerProfileData(sellerId);
+  const { profile, stats, category, isLoading, error } =
+    useSellerProfileData(sellerProfileId);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const startLegalProcessMutation = useStartLegalProcess();
   const toast = useToast();
@@ -60,7 +61,7 @@ export function SellerProfileCard({
 
   const handleConfirmLegalProcess = () => {
     setIsDialogOpen(false);
-    startLegalProcessMutation.mutate(sellerId, {
+    startLegalProcessMutation.mutate(sellerProfileId, {
       onSuccess: () => {
         toast.success(
           "Legal Process Started",
@@ -77,6 +78,8 @@ export function SellerProfileCard({
   };
 
   if (isLoading) return <SellerProfileSkeleton />;
+
+  if (error) return <DefaultErrorFallback error={error} />;
 
   return (
     <Card className="mb-6">
@@ -99,7 +102,7 @@ export function SellerProfileCard({
                     {showViewSellerButton && (
                       <Button variant="outline" size="sm" asChild>
                         <Link
-                          href={`/dashboard/sellers/${sellerId}`}
+                          href={`/dashboard/sellers/${sellerProfileId}`}
                           className="inline-flex items-center gap-2"
                         >
                           <ArrowRight className="w-4 h-4" />
@@ -110,7 +113,7 @@ export function SellerProfileCard({
                     {isLegalProcessStarted ? (
                       <Badge variant="warningSoft" size="lg">
                         <Scale className="w-4 h-4 mr-2" />
-                        Legal Process Started
+                        This seller is under legal process
                       </Badge>
                     ) : (
                       <Button
@@ -147,45 +150,48 @@ export function SellerProfileCard({
                     {stats?.accountCount} Accounts
                   </Badge>
                 </div>
-
-                {/* Brands */}
-                {profile?.brands && profile?.brands.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {profile?.brands.map((brand, idx) => (
-                      <Badge key={idx} variant="secondarySoft" size="default">
-                        {brand.name}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
 
             {/* Product Statistics */}
-            <div className="flex items-center gap-6 pt-4 border-t">
-              <div className="flex items-center gap-2">
-                <Package className="w-4 h-4 text-muted-foreground" />
-                <div>
-                  <p className="text-xs text-muted-foreground">
+            <div className="grid grid-cols-3 gap-3 pt-4 border-t">
+              <div className="flex items-center gap-3 rounded-lg border border-border/50 p-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50">
+                  <Package className="w-5 h-5 text-accent-foreground" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-muted-foreground mb-0.5">
                     Active Product
                   </p>
-                  <p className="text-sm font-semibold">{stats?.total}</p>
+                  <p className="text-lg font-semibold text-foreground">
+                    {stats?.total}
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-muted-foreground" />
-                <div>
-                  <p className="text-xs text-muted-foreground">Risky Product</p>
-                  <p className="text-sm font-semibold">{stats?.risky}</p>
+              <div className="flex items-center gap-3 rounded-lg border border-border/50 p-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50">
+                  <AlertTriangle className="w-5 h-5 text-accent-foreground" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-muted-foreground mb-0.5">
+                    Risky Product
+                  </p>
+                  <p className="text-lg font-semibold text-foreground">
+                    {stats?.risky}
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <PackageX className="w-4 h-4 text-muted-foreground" />
-                <div>
-                  <p className="text-xs text-muted-foreground">
+              <div className="flex items-center gap-3 rounded-lg border border-border/50 p-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50">
+                  <PackageX className="w-5 h-5 text-accent-foreground" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-muted-foreground mb-0.5">
                     Closed Product
                   </p>
-                  <p className="text-sm font-semibold">{stats?.closed}</p>
+                  <p className="text-lg font-semibold text-foreground">
+                    {stats?.closed}
+                  </p>
                 </div>
               </div>
             </div>

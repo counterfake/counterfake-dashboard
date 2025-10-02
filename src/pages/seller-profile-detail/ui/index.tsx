@@ -3,6 +3,11 @@
 import React, { Suspense } from "react";
 import { useParams } from "next/navigation";
 
+import {
+  AppErrorBoundary,
+  DefaultErrorFallback,
+} from "@/shared/ui/error-handler/app-error-boundary";
+
 import { CustomerPageWrapper } from "@/widgets/customer-page-layout/customer-page-layout.ui";
 import { SellerProfileCard } from "@/widgets/seller-profile-card";
 
@@ -18,9 +23,11 @@ import { useSuspenseSellerProfileData } from "../model";
 
 export function SellerProfileDetailPage() {
   return (
-    <Suspense fallback={<PageSkeleton />}>
-      <SellerProfileDetailPageBase />
-    </Suspense>
+    <AppErrorBoundary fallback={DefaultErrorFallback}>
+      <Suspense fallback={<PageSkeleton />}>
+        <SellerProfileDetailPageBase />
+      </Suspense>
+    </AppErrorBoundary>
   );
 }
 
@@ -38,18 +45,16 @@ function SellerProfileDetailPageBase() {
           href: "/dashboard",
         },
         {
-          label: "Sellers",
-          href: "/dashboard/sellers",
+          label: "Product Detail",
         },
         {
-          label: "Details",
-          href: `/dashboard/sellers/${sellerId}`,
+          label: "Seller Profile",
           current: true,
         },
       ]}
     >
       <SellerProfileCard
-        sellerId={Number(sellerId)}
+        sellerProfileId={Number(sellerId)}
         showViewSellerButton={false}
       />
 

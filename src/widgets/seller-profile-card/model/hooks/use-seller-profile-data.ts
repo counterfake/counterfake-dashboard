@@ -13,7 +13,7 @@ export function useSellerProfileData(sellerId: number) {
   const {
     data: profile,
     isLoading,
-    isError,
+    error,
   } = useQuery({
     ...sellerProfileQueries.detail(sellerId, {
       brandId: user?.brand?.id,
@@ -45,6 +45,6 @@ export function useSellerProfileData(sellerId: number) {
       variant: categoryVariant,
     } as const,
     isLoading,
-    isError,
+    error,
   };
 }
