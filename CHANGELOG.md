@@ -1,3 +1,10 @@
+# [0.6.0-beta.4](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0-beta.3...v0.6.0-beta.4) (2025-10-02)
+
+
+### Bug Fixes
+
+* fix next.js pages route conflict error ([30c9d3f](https://github.com/counterfake/counterfake-dashboard/commit/30c9d3f0de3b04e07d4966657990e4df49ca4797))
+
 # [0.6.0-beta.3](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0-beta.2...v0.6.0-beta.3) (2025-10-02)
 
 
