@@ -1,1 +1,1 @@
-export { SellerProfileDetailPage } from "./ui";
+export { SellerProfileDetailPage as default } from "./ui";
