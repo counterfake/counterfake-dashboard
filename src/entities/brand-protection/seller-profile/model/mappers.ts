@@ -74,12 +74,20 @@ export const mapDtoToSellerProfileClosedProductCount = (
 export const mapDtoToSellerProfile = (
   profileDto: GetProfileByIdResponse
 ): SellerProfile => {
+  let brands: SellerProfile["brands"] = [];
+
+  profileDto?.brands?.forEach((brand) => {
+    if (typeof brand === "object") {
+      brands.push({
+        name: brand?.brand_name,
+      });
+    }
+  });
+
   return {
     id: profileDto?.id,
     name: profileDto?.universal_name,
-    brands: profileDto?.brands.map((brand) => ({
-      name: brand?.brand_name,
-    })),
+    brands,
 
     address: profileDto?.address,
     email: profileDto?.email,
