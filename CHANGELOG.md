@@ -1,3 +1,10 @@
+# [0.6.0-beta.3](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0-beta.2...v0.6.0-beta.3) (2025-10-02)
+
+
+### Bug Fixes
+
+* fix profile type on the product service ([b588eda](https://github.com/counterfake/counterfake-dashboard/commit/b588edaf43e3da57222c420bb8cd53e6c0b83910))
+
 # [0.6.0-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0-beta.1...v0.6.0-beta.2) (2025-10-01)
 
 
