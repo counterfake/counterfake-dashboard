@@ -1,3 +1,24 @@
+# [0.6.0-beta.5](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0-beta.4...v0.6.0-beta.5) (2025-10-02)
+
+
+### Bug Fixes
+
+* fix profile routes on the product components ([bbd7a14](https://github.com/counterfake/counterfake-dashboard/commit/bbd7a14778402e3252ed46c884555dd03a90d2f6))
+* fix some validation issues ([047b75d](https://github.com/counterfake/counterfake-dashboard/commit/047b75d81beb122251b392e56365a823646ef14b))
+* fix type errors ([4ce7096](https://github.com/counterfake/counterfake-dashboard/commit/4ce70961155c1ec39534d4bed5bd2d16ae9850fb))
+
+
+### Features
+
+* add error handling for seller profile widget ([cbac462](https://github.com/counterfake/counterfake-dashboard/commit/cbac462dd01241716fe89fb8d0a5cbae9c84e126))
+* **app-error-boundary:** add AppError handle support for DefaultErrorFallback component ([08993d2](https://github.com/counterfake/counterfake-dashboard/commit/08993d2ff76d4c97e09a00379981f835c15792a6))
+* redesign seller profile reported category variables and icon ([99b5fbf](https://github.com/counterfake/counterfake-dashboard/commit/99b5fbfb69454676c04265faee398e879e5d9463))
+
+
+### BREAKING CHANGES
+
+* Updated seller profile widget to handle errors and display fallback UI when data fetching fails. sellerId prop was replaced to sellerProfileId on the seller profile card component.
+
 # [0.6.0-beta.4](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0-beta.3...v0.6.0-beta.4) (2025-10-02)
 
 
