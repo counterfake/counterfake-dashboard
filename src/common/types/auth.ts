@@ -15,7 +15,7 @@ export const userSchema = z.object({
     id: z.string().nullable().optional(), // TODO: Remove nullable and optional
     slug: z.string().nullable().optional(), // TODO: Remove nullable and optional
     isGroupBrand: z.boolean(),
-    subBrands: z.array(z.number()).nullable(),
+    ownedBrands: z.array(z.number()),
   }),
 });
 export type User = z.infer<typeof userSchema>;

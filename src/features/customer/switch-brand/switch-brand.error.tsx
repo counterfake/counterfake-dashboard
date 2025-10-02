@@ -1,9 +1,10 @@
 import React from "react";
 
 import { isDev } from "@/shared/utils/is-dev";
+import { AppError } from "@/shared/lib/error-handler";
 
 type SwitchBrandErrorProps = {
-  error: Error;
+  error: Error | AppError;
 };
 
 export function SwitchBrandError({ error }: SwitchBrandErrorProps) {

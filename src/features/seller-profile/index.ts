@@ -6,3 +6,6 @@ export * from "./services/seller-profile.service";
 
 // Types
 export * from "./types/seller-profile.types";
+
+// Model
+export * from "./model";

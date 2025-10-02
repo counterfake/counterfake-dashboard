@@ -36,6 +36,7 @@ import {
 import { TextReveal } from "@/common/components/ui/animation/text-reveal";
 
 import { Product } from "../../types/products.types";
+import { PAGE_ROUTES } from "@/shared/routes/page-routes";
 
 export interface ProductCardProps {
   product: Product;
@@ -209,7 +210,7 @@ export function ProductCard({
                 Seller
               </span>
               <Link
-                href={product?.seller?.url}
+                href={`${PAGE_ROUTES.USER_DASHBOARD_SELLERS}/${product?.profile?.id}`}
                 className="text-primary font-medium hover:underline truncate"
               >
                 {product?.seller?.name}

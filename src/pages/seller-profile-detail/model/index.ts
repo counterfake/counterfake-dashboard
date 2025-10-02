@@ -1,0 +1,1 @@
+export { useSuspenseSellerProfileData } from "./hooks";
