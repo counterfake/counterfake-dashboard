@@ -117,7 +117,7 @@ export function ProductInfoCard({
                 <TooltipTrigger asChild>
                   <Link
                     href={
-                      ROUTES.USER_DASHBOARD_SELLERS + "/" + product?.seller?.id
+                      ROUTES.USER_DASHBOARD_SELLERS + "/" + product?.profile?.id
                     }
                     className="font-medium text-primary flex items-center gap-1.5 truncate"
                   >

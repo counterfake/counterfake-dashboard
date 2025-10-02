@@ -210,7 +210,7 @@ export function ProductCard({
                 Seller
               </span>
               <Link
-                href={`${PAGE_ROUTES.USER_DASHBOARD_SELLERS}/${product?.seller?.id}`}
+                href={`${PAGE_ROUTES.USER_DASHBOARD_SELLERS}/${product?.profile?.id}`}
                 className="text-primary font-medium hover:underline truncate"
               >
                 {product?.seller?.name}
