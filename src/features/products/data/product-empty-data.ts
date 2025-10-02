@@ -57,4 +57,5 @@ export const productEmptyData: Product = {
     url: "",
     avatarUrl: "",
   },
+  reportStatus: null,
 };

@@ -1,16 +1,23 @@
 import { LayoutDashboard, Package, Settings } from "lucide-react";
 
+export interface NavigationItem {
+  readonly id: string;
+  readonly label: string;
+  readonly icon: React.ElementType;
+  readonly href?: string;
+  readonly items?: readonly {
+    readonly id: string;
+    readonly label: string;
+    readonly href: string;
+  }[];
+}
+
 export interface CustomerLayoutConfig {
   SIDEBAR: {
     WIDTH: string;
     WIDTH_MOBILE: string;
     WIDTH_ICON: string;
-    NAVIGATIONS: readonly {
-      readonly id: string;
-      readonly label: string;
-      readonly icon: React.ElementType;
-      readonly href: string;
-    }[];
+    NAVIGATIONS: readonly NavigationItem[];
   };
 }
 
@@ -32,18 +39,18 @@ export const CUSTOMER_LAYOUT_CONFIG = {
         icon: Package,
         href: "/dashboard/products",
       },
-      // {
-      //   id: "sellers",
-      //   label: "Sellers",
-      //   icon: Users,
-      //   href: "/dashboard/sellers",
-      // },
-      // {
-      //   id: "design-system",
-      //   label: "Design System",
-      //   icon: Settings,
-      //   href: "/design-system",
-      // },
+      {
+        id: "case-management",
+        label: "Case Management",
+        icon: Package,
+        items: [
+          {
+            id: "product-cases",
+            label: "Product Cases",
+            href: "/dashboard/case-management/product-cases",
+          },
+        ],
+      },
       {
         id: "settings",
         label: "Settings",

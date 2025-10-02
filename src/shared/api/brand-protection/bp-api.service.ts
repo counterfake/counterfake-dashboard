@@ -16,6 +16,12 @@ import {
   ProductsResponseDto,
   ProductDto,
   UpdateProfileRequestDto,
+  GetPlatformReportMailQueryDto,
+  PlatformReportMailDto,
+  ListPlatformReportMailQueryDto,
+  ListPlatformReportMailResponseDto,
+  CreatePlatformReportMailRequestDto,
+  UpdateProductRequestDto,
 } from "./bp-api.types";
 import {
   RefreshTokenRequestDtoSchema,
@@ -31,6 +37,12 @@ import {
   ProductsResponseDtoSchema,
   ProductResponseDtoSchema,
   UpdateProfileRequestDtoSchema,
+  PlatformReportMailDtoSchema,
+  GetPlatformReportMailQueryDtoSchema,
+  ListPlatformReportMailQueryDtoSchema,
+  ListPlatformReportMailResponseDtoSchema,
+  CreatePlatformReportMailRequestDtoSchema,
+  UpdateProductRequestDtoSchema,
 } from "./bp-api.schemas";
 
 // --------------------------
@@ -165,4 +177,89 @@ export const getProducts = async (params: ProductsQueryDto) => {
   if (!response.success) throw new AppError(response.error);
 
   return response.data;
+};
+
+export const updateProduct = async (
+  id: number,
+  data: UpdateProductRequestDto
+) => {
+  const response = await bpApi.patch(
+    `${BP_API_ENDPOINTS.products}/${id}`,
+    data,
+    {
+      validationSchemas: {
+        data: UpdateProductRequestDtoSchema,
+      },
+    }
+  );
+
+  if (!response.success) throw new AppError(response.error);
+
+  return response.success;
+};
+
+// --------------------------
+// Platform Report Mail Services => /platform_report_mail
+// --------------------------
+export const getPlatformReportMail = async (
+  id: number,
+  params: GetPlatformReportMailQueryDto
+) => {
+  const response = await bpApi.get<PlatformReportMailDto>(
+    `${BP_API_ENDPOINTS.platformReportMail}/${id}`,
+    {
+      params,
+      validationSchemas: {
+        params: GetPlatformReportMailQueryDtoSchema,
+        responseData: PlatformReportMailDtoSchema,
+      },
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    }
+  );
+
+  if (!response.success) throw new AppError(response.error);
+
+  return response.data;
+};
+
+export const getPlatformReportMails = async (
+  params: ListPlatformReportMailQueryDto
+) => {
+  const response = await bpApi.get<ListPlatformReportMailResponseDto>(
+    `${BP_API_ENDPOINTS.platformReportMail}`,
+    {
+      params,
+      validationSchemas: {
+        params: ListPlatformReportMailQueryDtoSchema,
+        responseData: ListPlatformReportMailResponseDtoSchema,
+      },
+      headers: {
+        "Cache-Control": "no-cache",
+      },
+    }
+  );
+
+  if (!response.success) throw new AppError(response.error);
+
+  return response.data;
+};
+
+export const createPlatformReportMail = async (
+  data: CreatePlatformReportMailRequestDto
+) => {
+  const response = await bpApi.post<ListPlatformReportMailResponseDto>(
+    BP_API_ENDPOINTS.platformReportMail,
+    data,
+    {
+      validationSchemas: {
+        data: CreatePlatformReportMailRequestDtoSchema,
+      },
+    }
+  );
+
+  if (!response.success) throw new AppError(response.error);
+
+  return response.success;
 };

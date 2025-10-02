@@ -16,7 +16,7 @@ import type {
 
 import { productEmptyData } from "../data/product-empty-data";
 
-const NAMESPACE = "customer-products";
+export const CUSTOMER_PRODUCTS_NAMESPACE = "customer-products";
 
 export function useGetCustomerProductResults(
   params: Omit<GetProductResultsParams, "brand">
@@ -29,7 +29,7 @@ export function useGetCustomerProductResults(
   };
 
   return useApiQuery({
-    queryKey: [NAMESPACE, "results", paramsWithBrand],
+    queryKey: [CUSTOMER_PRODUCTS_NAMESPACE, "results", paramsWithBrand],
     queryFn: () => productService.getProductResults(paramsWithBrand),
     enabled: !!user?.brand?.id,
     emptyData: {
@@ -46,7 +46,7 @@ export function useGetCustomerProductById(productId: string) {
   const { user } = useAuthStore();
 
   return useApiQuery({
-    queryKey: [NAMESPACE, productId],
+    queryKey: [CUSTOMER_PRODUCTS_NAMESPACE, productId],
     queryFn: () => productService.getProductById(productId),
     enabled: !!user?.brand?.id || !!productId,
     emptyData: productEmptyData,
@@ -64,7 +64,7 @@ export function useGetCustomerProductCategories(
   };
 
   return useApiQuery({
-    queryKey: [NAMESPACE, "categories", paramsWithBrand],
+    queryKey: [CUSTOMER_PRODUCTS_NAMESPACE, "categories", paramsWithBrand],
     queryFn: () =>
       productCategoriesService.getProductCategories(paramsWithBrand),
     enabled: !!user?.brand?.id,
@@ -86,7 +86,7 @@ export function useGetCustomerProductAnalysis(
   };
 
   return useApiQuery({
-    queryKey: [NAMESPACE, "analysis", paramsWithBrand],
+    queryKey: [CUSTOMER_PRODUCTS_NAMESPACE, "analysis", paramsWithBrand],
     queryFn: () => productAnalysisService.getProductAnalysis(paramsWithBrand),
     enabled: !!user?.brand?.id,
     emptyData: {
@@ -108,7 +108,11 @@ export function useGetCustomerProductAnalysisMonthly(
   };
 
   return useApiQuery({
-    queryKey: [NAMESPACE, "analysis-monthly", paramsWithBrand],
+    queryKey: [
+      CUSTOMER_PRODUCTS_NAMESPACE,
+      "analysis-monthly",
+      paramsWithBrand,
+    ],
     queryFn: () =>
       productAnalysisService.getProductAnalysisMonthly(paramsWithBrand),
     enabled: !!user?.brand?.id,

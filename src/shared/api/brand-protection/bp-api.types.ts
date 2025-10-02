@@ -17,6 +17,12 @@ import {
   ProductsResponseDtoSchema,
   ProductResponseDtoSchema,
   UpdateProfileRequestDtoSchema,
+  ListPlatformReportMailResponseDtoSchema,
+  CreatePlatformReportMailRequestDtoSchema,
+  GetPlatformReportMailQueryDtoSchema,
+  PlatformReportMailDtoSchema,
+  ListPlatformReportMailQueryDtoSchema,
+  UpdateProductRequestDtoSchema,
 } from "./bp-api.schemas";
 
 // --------------------------
@@ -77,3 +83,23 @@ export type UpdateProfileRequestDto = z.infer<
 export type ProductDto = z.infer<typeof ProductResponseDtoSchema>;
 export type ProductsQueryDto = z.infer<typeof ProductsQueryDtoSchema>;
 export type ProductsResponseDto = z.infer<typeof ProductsResponseDtoSchema>;
+export type UpdateProductRequestDto = z.infer<
+  typeof UpdateProductRequestDtoSchema
+>;
+
+// --------------------------
+// Platform Report Mail
+// --------------------------
+export type GetPlatformReportMailQueryDto = z.infer<
+  typeof GetPlatformReportMailQueryDtoSchema
+>;
+export type PlatformReportMailDto = z.infer<typeof PlatformReportMailDtoSchema>;
+export type ListPlatformReportMailQueryDto = z.infer<
+  typeof ListPlatformReportMailQueryDtoSchema
+>;
+export type ListPlatformReportMailResponseDto = z.infer<
+  typeof ListPlatformReportMailResponseDtoSchema
+>;
+export type CreatePlatformReportMailRequestDto = z.infer<
+  typeof CreatePlatformReportMailRequestDtoSchema
+>;

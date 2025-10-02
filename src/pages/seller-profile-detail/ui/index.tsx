@@ -17,6 +17,7 @@ import { CompanyInfoCard } from "./company-info-card";
 import { PlatformsCard } from "./platforms-card";
 import { SellersCard } from "./sellers-card";
 import { PageSkeleton } from "./page-skeleton";
+import { AIAnalysis } from "./ai-analysis";
 
 // Model
 import { useSuspenseSellerProfileData } from "../model";
@@ -68,6 +69,8 @@ function SellerProfileContent({ sellerId }: { sellerId: string }) {
 
   return (
     <div className="grid grid-cols-1 gap-6">
+      <AIAnalysis profile={profile} />
+
       {/* Left Column - Contact & Company Info */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ContactInfoCard profile={profile} />

@@ -207,7 +207,11 @@ export const GetProfileByIdResponseSchema = z.object({
   tax_number: z.string().optional(),
   universal_name: z.string().optional(),
   updated_at: z.string().optional(),
-  ai_results: z.any().optional(),
+  ai_results: z
+    .object({
+      summary: z.string().optional(),
+    })
+    .optional(),
 });
 
 export const UpdateProfileRequestDtoSchema = z.object({
@@ -322,4 +326,95 @@ export const ProductsResponseDtoSchema = z.object({
   page_number: z.number(),
   page_size: z.number(),
   results: z.array(ProductResponseDtoSchema),
+});
+
+export const UpdateProductRequestDtoSchema = z.object({
+  report: z.number(),
+});
+
+// --------------------------
+// Platform Report Mail
+// --------------------------
+export const GetPlatformReportMailQueryDtoSchema = z.object({
+  page_size: z.number().optional(),
+  page_number: z.number().optional(),
+  expand_relations: z.string().optional(),
+  fields: z.string().optional(),
+});
+
+export const PlatformReportMailDtoSchema = z.object({
+  brands: z.string().array(),
+  category: z.number(),
+  created_at: z.string(),
+  id: z.number(),
+  platform: z.string(),
+  products: z.union([
+    z.array(
+      z.object({
+        id: z.number(),
+        report: z.number(),
+        _category: z.number(),
+        description_text: z.string(),
+        images: z.array(
+          z.object({
+            id: z.number(),
+            name: z.string(),
+            path: z.string(),
+          })
+        ),
+        price_actualPrice: z.number(),
+        realPrice: z.number(),
+        _related_product: z.number(),
+        title_text: z.string(),
+        url: z.string(),
+        brand: z.object({
+          id: z.number(),
+          brand_name: z.string(),
+          brand_slug: z.string(),
+          reference_id: z.number(),
+        }),
+        seller: z.any(),
+        currency: z.string(),
+        reported_at: z.string().optional().nullable(),
+        price_isOutlier: z.boolean(),
+      })
+    ),
+    z.string(),
+  ]),
+  report_count: z.number(),
+  sender: z.string(),
+  target: z.string(),
+  marked_as_notified: z.boolean().optional(),
+  generated_at: z.string().optional(),
+  page_count: z.number().optional(),
+  page_number: z.number().optional(),
+  page_size: z.number().optional(),
+  data_count: z.number().optional(),
+});
+
+export const ListPlatformReportMailQueryDtoSchema = z.object({
+  page_size: z.number().optional(),
+  page_number: z.number().optional(),
+  brands: z.string().optional(),
+  platform: z.number().optional(),
+  category: z.number().optional(),
+  time: z.string().optional(),
+  fields: z.string().optional(),
+  expand_relations: z.string().optional(),
+});
+
+export const ListPlatformReportMailResponseDtoSchema = z.object({
+  page_size: z.number(),
+  page_count: z.number(),
+  data_count: z.number(),
+  page_number: z.number(),
+  results: z.array(PlatformReportMailDtoSchema),
+  generated_at: z.string(),
+});
+
+export const CreatePlatformReportMailRequestDtoSchema = z.object({
+  platform: z.number(),
+  brands: z.number().array(),
+  sender: z.string(),
+  products: z.string(),
 });

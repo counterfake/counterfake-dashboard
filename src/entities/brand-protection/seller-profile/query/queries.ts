@@ -36,6 +36,7 @@ export const sellerProfileQueries = {
           "tax_number",
           "universal_name",
           "is_closed",
+          "ai_results",
         ];
         const expandRelations = [
           "sellers.platform",

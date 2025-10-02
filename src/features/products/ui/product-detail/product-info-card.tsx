@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Store,
   Calendar,
@@ -11,6 +11,7 @@ import {
   ShoppingBag,
   FileText,
   Package,
+  Scale,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,13 +26,27 @@ import { Badge } from "@/common/components/ui/primitives/badge";
 import { Button } from "@/common/components/ui/primitives/button";
 import { Skeleton } from "@/common/components/ui/primitives/skeleton";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/common/components/ui/primitives/alert-dialog";
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/common/components/ui/primitives/tooltip";
 import { ROUTES } from "@/common/lib/config/routes";
 
+import { useStartLegalProcessForProduct } from "@/features/product/start-legal-process-for-product";
+import useToast from "@/common/hooks/use-toast";
+
 import { Product } from "../../types/products.types";
+import { productService } from "@/entities/brand-protection/product";
 
 interface ProductInfoCardProps {
   product: Product & {
@@ -44,6 +59,38 @@ export function ProductInfoCard({
   product,
   isLoading = false,
 }: ProductInfoCardProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const startLegalProcessMutation = useStartLegalProcessForProduct();
+  const toast = useToast();
+
+  const handleConfirmLegalProcess = () => {
+    setIsDialogOpen(false);
+    startLegalProcessMutation.mutate(
+      {
+        platformId: product?.platform?.id,
+        productId: product?.id,
+      },
+      {
+        onSuccess: () => {
+          toast.success(
+            "Legal Process Started",
+            "The legal process for this product has been initiated. You can track the process from the 'Product Cases' page."
+          );
+        },
+        onError: () => {
+          toast.error(
+            "Failed to Start Legal Process",
+            "An error occurred while starting the legal process. Please try again."
+          );
+        },
+      }
+    );
+  };
+
+  const canStartLegalProcess = productService.canStartLegalProcess(
+    product?.reportStatus
+  );
+
   if (isLoading) {
     return (
       <Card>
@@ -231,8 +278,41 @@ export function ProductInfoCard({
             View Original Listing
             <ExternalLink className="h-4 w-4 ml-2" />
           </Button>
+          {canStartLegalProcess && (
+            <Button
+              className="w-full"
+              variant="soft"
+              onClick={() => setIsDialogOpen(true)}
+              disabled={startLegalProcessMutation.isPending}
+            >
+              <Scale className="h-4 w-4 mr-2" />
+              {startLegalProcessMutation.isPending
+                ? "Starting..."
+                : "Start Legal Process"}
+            </Button>
+          )}
         </div>
       </CardContent>
+
+      {/* Legal Process Confirmation Dialog */}
+      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Start Legal Process for Product</AlertDialogTitle>
+            <AlertDialogDescription>
+              By requesting a legal process for this product, you will create a
+              report case. The product will be marked as &quot;Notified&quot; and you can track
+              the case process from the &quot;Product Cases&quot; page.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmLegalProcess}>
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 }

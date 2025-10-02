@@ -39,7 +39,10 @@ export class CustomerService {
         this.getContextKey(functionName)
       );
 
-    const currentCustomer = customerResponse.data?.firebase_user;
+    const currentCustomer = {
+      ...customerResponse.data?.firebase_user,
+      email: customerResponse?.data?.user?.username,
+    };
 
     const groupBrandsResponse = await this.bpGroupBrandsApi.getGroupBrands({
       page_size: 150,
@@ -72,6 +75,7 @@ export class CustomerService {
     const validatedCustomer = userSchema.safeParse({
       id: currentCustomer?.uid, // Give firebase uid as id
       username: currentCustomer?.displayName,
+      email: currentCustomer?.email,
       role: currentCustomer?.roles,
       brand: {
         name: currentCustomer?.selectedCompany?.brand_name,

@@ -21,6 +21,8 @@ export interface SellerProfile {
   phoneNumber: string;
   taxNumber: string;
 
+  aiAnalysisSummary: string;
+
   // Insights
   isClosed: boolean;
   category: SellerProfileCategory;
