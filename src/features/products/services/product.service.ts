@@ -293,6 +293,15 @@ export class ProductService implements ProductServiceInterface {
       priceCluster = product?._price_priceCluster;
     }
 
+    let profile = null;
+    if (typeof product?.seller?.profile === "object") {
+      profile = {
+        id: product?.seller?.profile?.id,
+        name: product?.seller?.profile?.universal_name,
+        isRisky: product?.seller?.profile?.category === 1,
+      };
+    }
+
     return {
       id: product?.id,
       name: product?.title_text,
@@ -337,11 +346,7 @@ export class ProductService implements ProductServiceInterface {
         id: product?.platform?.id,
         iconLink: product?.platform?.icon_link,
       },
-      profile: {
-        id: product?.seller?.profile?.id,
-        name: product?.seller?.profile?.universal_name,
-        isRisky: product?.seller?.profile?.category === 1,
-      },
+      profile,
       seller: {
         name: product?.seller?.name,
         url: product?.seller?.url,
