@@ -24,7 +24,7 @@ import { ProductStatusId } from "../types/product-status.types";
 // Internal Services
 import { ProductStatusService } from "./product-status.service";
 import { ProductReportStatusService } from "./product-report-status.service";
-import { ProductReportStatusId } from "../types/product-report-status.type";
+import { ProductReportStatusId } from "@/entities/brand-protection/product/model";
 
 /**
  * Product Service - Business Logic Layer
@@ -307,6 +307,7 @@ export class ProductService implements ProductServiceInterface {
       name: product?.title_text,
       coverImage: absoluteImageUrl(product?.images?.[0]?.path),
       images: product?.images?.map((image) => absoluteImageUrl(image?.path)),
+      reportStatus: product?.report as ProductReportStatusId,
       ad: {
         description: product?.description_text,
         originalPrice,

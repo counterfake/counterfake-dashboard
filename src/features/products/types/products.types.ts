@@ -6,7 +6,7 @@ import {
   ProductStatusName,
   type ProductStatusId,
 } from "./product-status.types";
-import { type ProductReportStatusId } from "./product-report-status.type";
+import { ProductReportStatusId } from "@/entities/brand-protection/product/model";
 
 export type GetProductResultsParams = {
   brand?: string;
@@ -28,6 +28,8 @@ export type Product = {
   name: string;
   coverImage: string;
   images: string[];
+
+  reportStatus: ProductReportStatusId;
 
   // Ad Information
   ad: {
