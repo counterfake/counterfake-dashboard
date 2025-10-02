@@ -9,6 +9,7 @@ export type UserRole = z.infer<typeof userRoleSchema>;
 export const userSchema = z.object({
   id: z.string().or(z.number()),
   username: z.string(),
+  email: z.string(),
   role: z.array(z.any()),
   brand: z.object({
     name: z.string().nullable().optional(), // TODO: Remove nullable and optional
