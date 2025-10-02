@@ -1,4 +1,4 @@
-import { AlertCircle, XCircle, Tag } from "lucide-react";
+import { AlertCircle, XCircle, Tag, Scale } from "lucide-react";
 
 import { SellerProfileCategory, SellerProfile } from "./types";
 
@@ -46,7 +46,7 @@ export const sellerProfileService = {
       case SellerProfileCategory.OFFICIAL:
         return Tag;
       case SellerProfileCategory.REPORTED:
-        return Tag;
+        return Scale;
       default:
         return AlertCircle;
     }
@@ -70,7 +70,7 @@ export const sellerProfileService = {
       case SellerProfileCategory.OFFICIAL:
         return "successSoft";
       case SellerProfileCategory.REPORTED:
-        return "default";
+        return "warningSoft";
       default:
         return "default";
     }
