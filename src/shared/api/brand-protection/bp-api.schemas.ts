@@ -207,7 +207,11 @@ export const GetProfileByIdResponseSchema = z.object({
   tax_number: z.string().optional(),
   universal_name: z.string().optional(),
   updated_at: z.string().optional(),
-  ai_results: z.any().optional(),
+  ai_results: z
+    .object({
+      summary: z.string().optional(),
+    })
+    .optional(),
 });
 
 export const UpdateProfileRequestDtoSchema = z.object({

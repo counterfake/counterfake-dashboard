@@ -95,7 +95,7 @@ export const mapDtoToSellerProfile = (
     phoneNumber: profileDto?.phone_number,
     taxNumber: profileDto?.tax_number,
 
-    aiAnalysisSummary: profileDto?.ai_results,
+    aiAnalysisSummary: profileDto?.ai_results?.summary,
 
     isClosed: profileDto?.is_closed,
     category: profileDto?.category as SellerProfileCategory,
