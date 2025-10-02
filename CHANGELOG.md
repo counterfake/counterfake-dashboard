@@ -1,3 +1,17 @@
+# [0.7.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0...v0.7.0-beta.1) (2025-10-02)
+
+
+### Features
+
+* add case entity ([0343065](https://github.com/counterfake/counterfake-dashboard/commit/03430653df41092e408715ec6e9cc354b1291329))
+* add email field to user schema ([c359c14](https://github.com/counterfake/counterfake-dashboard/commit/c359c1407b9e335d912892c73ce3f2399ac91fdc))
+* add new case management page to sidebar navigation ([578a97f](https://github.com/counterfake/counterfake-dashboard/commit/578a97fbc3f55fa60d862a11165ffeb3a314ef34))
+* add new product case management page ([2a1b208](https://github.com/counterfake/counterfake-dashboard/commit/2a1b208b6347e910f83f4ca0aea1ae7d50525fcd))
+* add platform report mail services; add update product service ([9aaeee3](https://github.com/counterfake/counterfake-dashboard/commit/9aaeee3fe558819ed160491768d21f59cff577d8))
+* **product:** improve and add new service methods ([d127f3f](https://github.com/counterfake/counterfake-dashboard/commit/d127f3ffd3d633747c2a57abb4490434c6476d73))
+* **products:** add legal process action button on the product detail page ([1b80d34](https://github.com/counterfake/counterfake-dashboard/commit/1b80d345fcc9634930c8a85f8c1de6d91546520f))
+* **sidebar:** add Collapsible navigation feature ([65b853e](https://github.com/counterfake/counterfake-dashboard/commit/65b853ea653022205b9de32b4085acb84fa57373))
+
 # [0.6.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.5.0...v0.6.0) (2025-10-02)
 
 
