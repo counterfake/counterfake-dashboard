@@ -1,4 +1,4 @@
-import { ProductStatus } from "./types";
+import { ProductReportStatusId, ProductStatus } from "./types";
 
 export const productService = {
   getStatusLabel: (status: ProductStatus) => {
@@ -22,5 +22,11 @@ export const productService = {
       default:
         return { label: "Unknown", variant: "default" as const };
     }
+  },
+  canStartLegalProcess: (reportStatus: ProductReportStatusId) => {
+    return (
+      reportStatus !== ProductReportStatusId.Notified &&
+      reportStatus !== ProductReportStatusId.Removed
+    );
   },
 };
