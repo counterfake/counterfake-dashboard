@@ -1,3 +1,5 @@
+import { AppError } from "@/shared/lib/error-handler";
+
 import { bpApi } from "./bp-api.instance";
 import { BP_API_ENDPOINTS } from "./bp-api.config";
 import {
@@ -94,10 +96,13 @@ export const getProfileById = async (
         params: GetProfileByIdParamsSchema,
         responseData: GetProfileByIdResponseSchema,
       },
+      headers: {
+        "Cache-Control": "no-cache",
+      },
     }
   );
 
-  if (!response.success) throw new Error(response.error.message);
+  if (!response.success) throw new AppError(response.error);
 
   return response.data;
 };
@@ -116,7 +121,7 @@ export const updateProfile = async (
     }
   );
 
-  if (!response.success) throw new Error(response.error.message);
+  if (!response.success) throw new AppError(response.error);
 
   return response.data;
 };
@@ -131,10 +136,13 @@ export const getProductById = async (id: string) => {
       validationSchemas: {
         responseData: ProductResponseDtoSchema,
       },
+      headers: {
+        "Cache-Control": "no-cache",
+      },
     }
   );
 
-  if (!response.success) throw new Error(response.error.message);
+  if (!response.success) throw new AppError(response.error);
 
   return response.data;
 };
@@ -148,10 +156,13 @@ export const getProducts = async (params: ProductsQueryDto) => {
         params: ProductsQueryDtoSchema,
         responseData: ProductsResponseDtoSchema,
       },
+      headers: {
+        "Cache-Control": "no-cache",
+      },
     }
   );
 
-  if (!response.success) throw new Error(response.error.message);
+  if (!response.success) throw new AppError(response.error);
 
   return response.data;
 };
