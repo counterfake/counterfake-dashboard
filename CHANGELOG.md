@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.8.0...v0.9.0) (2025-10-03)
+
+
+### Features
+
+* add product stats ([b1fdd80](https://github.com/counterfake/counterfake-dashboard/commit/b1fdd801f8c038c1d932ea6cb27b4ee7b588726e))
+
 # [0.9.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.8.0...v0.9.0-beta.1) (2025-10-03)
 
 
