@@ -140,7 +140,7 @@ export class CustomerService {
       currentBrandId = brand ? String(userBrandId) : undefined; // TODO: Fix this handling
       currentBrandSlug = brand?.brand_slug || null;
 
-      brand?.id ? ownedBrands.push(brand?.id) : null;
+      if (brand && "id" in brand) ownedBrands.push(brand.id);
     }
 
     return {
