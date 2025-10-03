@@ -9,3 +9,11 @@ export type ProductListQueryParams = {
   platformId?: number;
   sellerId?: number;
 };
+
+export type ClosedCountQueryParams = {
+  brandId?: string;
+};
+
+export type RiskyCountQueryParams = {
+  brandId?: string;
+};
