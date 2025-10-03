@@ -49,6 +49,11 @@ export const CUSTOMER_LAYOUT_CONFIG = {
             label: "Product Cases",
             href: "/dashboard/case-management/product-cases",
           },
+          {
+            id: "seller-cases",
+            label: "Seller Cases",
+            href: "/dashboard/case-management/seller-cases",
+          },
         ],
       },
       {
