@@ -12,6 +12,7 @@ import { Button } from "@/common/components/ui/primitives/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Top10RiskySellersSkeleton from "./top-10-risky-sellers-skeleton";
 import Top10RiskySellersError from "./top-10-risky-sellers-error";
+import { PAGE_ROUTES } from "@/shared/routes/page-routes";
 
 interface Top10RiskySellersProps {
   topRiskySellers: {
@@ -84,7 +85,7 @@ export function Top10RiskySellers({
               {filteredTopRiskySellers.map((seller) => (
                 <Link
                   key={seller.number}
-                  href={`/sellers/${seller.id}`}
+                  href={`${PAGE_ROUTES.USER_DASHBOARD_SELLERS}/${seller.id}`}
                   className={`flex hover:bg-accent items-center gap-5 py-2 px-4 rounded-lg transition-all duration-200`}
                 >
                   <div className="flex-shrink-0 text-sm font-medium w-8 h-8 flex items-center justify-center rounded-full bg-accent text-accent-foreground">
