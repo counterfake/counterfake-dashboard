@@ -1,3 +1,25 @@
+# [0.7.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0...v0.7.0) (2025-10-02)
+
+
+### Bug Fixes
+
+* fix type error ([ab9fcc1](https://github.com/counterfake/counterfake-dashboard/commit/ab9fcc178ace49c7af1727508ba86ca9f6fe906a))
+
+
+### Features
+
+* add case entity ([0343065](https://github.com/counterfake/counterfake-dashboard/commit/03430653df41092e408715ec6e9cc354b1291329))
+* add email field to user schema ([c359c14](https://github.com/counterfake/counterfake-dashboard/commit/c359c1407b9e335d912892c73ce3f2399ac91fdc))
+* add new ai components ([17bb942](https://github.com/counterfake/counterfake-dashboard/commit/17bb94282dc390631f0d6adfabf79a8c9f068738))
+* add new case management page to sidebar navigation ([578a97f](https://github.com/counterfake/counterfake-dashboard/commit/578a97fbc3f55fa60d862a11165ffeb3a314ef34))
+* add new product case management page ([2a1b208](https://github.com/counterfake/counterfake-dashboard/commit/2a1b208b6347e910f83f4ca0aea1ae7d50525fcd))
+* add platform report mail services; add update product service ([9aaeee3](https://github.com/counterfake/counterfake-dashboard/commit/9aaeee3fe558819ed160491768d21f59cff577d8))
+* **product:** improve and add new service methods ([d127f3f](https://github.com/counterfake/counterfake-dashboard/commit/d127f3ffd3d633747c2a57abb4490434c6476d73))
+* **products:** add legal process action button on the product detail page ([1b80d34](https://github.com/counterfake/counterfake-dashboard/commit/1b80d345fcc9634930c8a85f8c1de6d91546520f))
+* **seller-profile-detail:** add new ai analysis summary area on the seller profile detail page ([5c992c5](https://github.com/counterfake/counterfake-dashboard/commit/5c992c558f43e763643d73f9d6629a646aaae320))
+* **seller-profile:** add aiAnalysisSummary field to seller-profile entity ([a38f5e4](https://github.com/counterfake/counterfake-dashboard/commit/a38f5e4c6b05bd84069bf8fb4c57aa341f5b21f2))
+* **sidebar:** add Collapsible navigation feature ([65b853e](https://github.com/counterfake/counterfake-dashboard/commit/65b853ea653022205b9de32b4085acb84fa57373))
+
 # [0.7.0-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.7.0-beta.1...v0.7.0-beta.2) (2025-10-02)
 
 
