@@ -41,3 +41,10 @@ export const mapDtoToProductList = (dto: GetProductsResponse) => {
     products: dto.results.map(mapDtoToProduct),
   };
 };
+
+export const mapDtoToClosedCount = (dto: GetProductsResponse) => {
+  return dto.data_count;
+};
+export const mapDtoToRiskyCount = (dto: GetProductsResponse) => {
+  return dto.data_count;
+};

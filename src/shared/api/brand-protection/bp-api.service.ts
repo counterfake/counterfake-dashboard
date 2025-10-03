@@ -165,8 +165,8 @@ export const getProducts = async (params: ProductsQueryDto) => {
     {
       params,
       validationSchemas: {
-        params: ProductsQueryDtoSchema,
-        responseData: ProductsResponseDtoSchema,
+        // params: ProductsQueryDtoSchema,
+        // responseData: ProductsResponseDtoSchema,
       },
       headers: {
         "Cache-Control": "no-cache",

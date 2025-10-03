@@ -2,13 +2,32 @@ import { queryOptions } from "@tanstack/react-query";
 
 import { getProducts } from "@/shared/api/brand-protection/bp-api.service";
 
-import { ProductListQueryParams } from "./types";
-import { mapDtoToProductList } from "../model/mappers";
+import {
+  ClosedCountQueryParams,
+  ProductListQueryParams,
+  RiskyCountQueryParams,
+} from "./types";
+import {
+  mapDtoToClosedCount,
+  mapDtoToProductList,
+  mapDtoToRiskyCount,
+} from "../model/mappers";
+import { ProductStatus } from "../model";
 
 export const productKeys = {
   all: ["product"],
-  lists: ["product", "lists"],
-  list: (params: ProductListQueryParams) => [...productKeys.lists, params],
+  lists: () => [...productKeys.all, "lists"],
+  list: (params: ProductListQueryParams) => [...productKeys.lists(), params],
+  closedCounts: () => [...productKeys.all, "closedCounts"],
+  closedCount: (params: ClosedCountQueryParams) => [
+    ...productKeys.closedCounts(),
+    params,
+  ],
+  riskyCounts: () => [...productKeys.all, "riskyCounts"],
+  riskyCount: (params: RiskyCountQueryParams) => [
+    ...productKeys.riskyCounts(),
+    params,
+  ],
 };
 
 export const productQueries = {
@@ -48,6 +67,40 @@ export const productQueries = {
         });
       },
       select: (data) => mapDtoToProductList(data),
+      enabled: !!params.brandId,
+    }),
+  closedCount: (params: ClosedCountQueryParams) =>
+    queryOptions({
+      queryKey: productKeys.closedCount(params),
+
+      queryFn: () => {
+        return getProducts({
+          page_size: 1,
+          page_number: 1,
+          fields: "id",
+          is_closed: true,
+          brand: params.brandId,
+          include_hidden_entities: true,
+        });
+      },
+      select: (data) => mapDtoToClosedCount(data),
+      enabled: !!params.brandId,
+    }),
+  riskyCount: (params: RiskyCountQueryParams) =>
+    queryOptions({
+      queryKey: productKeys.riskyCount(params),
+
+      queryFn: () => {
+        return getProducts({
+          page_size: 1,
+          page_number: 1,
+          fields: "id",
+          category: ProductStatus.Risky,
+          brand: params.brandId,
+          include_hidden_entities: true,
+        });
+      },
+      select: (data) => mapDtoToRiskyCount(data),
       enabled: !!params.brandId,
     }),
 };

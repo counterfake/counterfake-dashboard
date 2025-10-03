@@ -21,6 +21,8 @@ import {
 // Page Internal Logic
 import { useProductsPageQuery } from "./_hooks/use-products-page-query";
 import { useProductsPageData } from "./_hooks/use-products-page-data";
+import { StatsCard } from "@/common/components/ui/data-display/cards/stats-card";
+import { Package } from "lucide-react";
 
 function ProductsPage() {
   const queryLogic = useProductsPageQuery();
@@ -44,6 +46,19 @@ function ProductsPage() {
       ]}
     >
       <div className="space-y-6 fade-in">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <StatsCard
+            title="Risky Products"
+            value={dataLogic.riskyCount}
+            icon={Package}
+          />
+          <StatsCard
+            title="Closed Products"
+            value={dataLogic.closedCount}
+            icon={Package}
+          />
+        </div>
+
         <ProductListToolbar
           onLimitChange={queryLogic.handleLimitChange}
           limit={Number(queryLogic.queries.limit)}

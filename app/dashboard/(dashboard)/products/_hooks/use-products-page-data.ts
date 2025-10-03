@@ -14,15 +14,27 @@ import {
   useGetProductReasons,
 } from "@/features/products";
 import { ProductQueries } from "./use-products-page-query";
+import { useAuthStore } from "@/common/lib/stores/auth-store";
+import { useQuery } from "@tanstack/react-query";
+import { productQueries } from "@/entities/brand-protection/product";
 
 interface UseProductsPageDataProps {
   queries: ProductQueries;
 }
 
 export function useProductsPageData({ queries }: UseProductsPageDataProps) {
+  const { user } = useAuthStore();
+
   // --------------------------
   // Fetch data
   // --------------------------
+
+  const { data: closedCount } = useQuery(
+    productQueries.closedCount({ brandId: user?.brand.id })
+  );
+  const { data: riskyCount } = useQuery(
+    productQueries.riskyCount({ brandId: user?.brand.id })
+  );
 
   // Fetch product data
   const productsResponse = useGetCustomerProductResults({
@@ -264,6 +276,10 @@ export function useProductsPageData({ queries }: UseProductsPageDataProps) {
     products,
     totalPages,
     filterOptions,
+
+    // Stats
+    closedCount,
+    riskyCount,
 
     // Responses
     productsResponse,

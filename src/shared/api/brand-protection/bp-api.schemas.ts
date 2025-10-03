@@ -318,6 +318,8 @@ export const ProductsQueryDtoSchema = z.object({
   hidden_classes: z.boolean().optional(),
   category: z.number().optional(),
   search: z.string().optional(),
+  is_closed: z.boolean().optional(),
+  include_hidden_entities: z.boolean().optional(),
 });
 
 export const ProductsResponseDtoSchema = z.object({
