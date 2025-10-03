@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.7.1...v0.8.0) (2025-10-03)
+
+
+### Features
+
+* add demo sellar case page ([5b0eaf8](https://github.com/counterfake/counterfake-dashboard/commit/5b0eaf886f47a2ef072760e4adba9da584f83dff))
+
 # [0.8.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.7.1...v0.8.0-beta.1) (2025-10-03)
 
 
