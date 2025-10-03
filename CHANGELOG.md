@@ -1,3 +1,11 @@
+## [0.7.1-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.7.0...v0.7.1-beta.1) (2025-10-03)
+
+
+### Bug Fixes
+
+* fix when selected brand not found user cannot sign in ([e1fd9fd](https://github.com/counterfake/counterfake-dashboard/commit/e1fd9fdf764a431074868586da20da36eec07fe9))
+* fix wrong route for top 10 risky seller section ([b642c92](https://github.com/counterfake/counterfake-dashboard/commit/b642c92b2d692579dff32f9fc2bfffe50d05ac87))
+
 # [0.7.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.6.0...v0.7.0) (2025-10-02)
 
 
