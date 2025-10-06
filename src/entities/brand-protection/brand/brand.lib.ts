@@ -1,5 +1,8 @@
-import { BrandsResponseDto } from "@/shared/api/brand-protection/bp-api.types";
-import { Brands } from "./brand.types";
+import {
+  BrandsResponseDto,
+  GroupBrandsResponseDto,
+} from "@/shared/api/brand-protection/bp-api.types";
+import { Brands, GroupBrand } from "./brand.types";
 
 export function transformBrandsDtoToBrands(
   brandsDto: BrandsResponseDto
@@ -17,4 +20,13 @@ export function transformBrandsDtoToBrands(
     totalPages: brandsDto.page_count,
     totalBrands: brandsDto.data_count,
   };
+}
+
+export function transformGroupBrandsDtoToBrands(
+  groupBrandsDto: GroupBrandsResponseDto
+): GroupBrand[] {
+  return groupBrandsDto?.results?.map((brand) => ({
+    id: brand.id,
+    name: brand.name,
+  }));
 }

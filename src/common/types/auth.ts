@@ -13,7 +13,7 @@ export const userSchema = z.object({
   role: z.array(z.any()),
   brand: z.object({
     name: z.string().nullable().optional(), // TODO: Remove nullable and optional
-    id: z.string().nullable().optional(), // TODO: Remove nullable and optional
+    id: z.number().nullable(),
     slug: z.string().nullable().optional(), // TODO: Remove nullable and optional
     isGroupBrand: z.boolean(),
     ownedBrands: z.array(z.number().optional()),

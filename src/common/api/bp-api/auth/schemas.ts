@@ -53,6 +53,7 @@ export const whoamiResponseSchema = z.object({
     selectedCompany: z.object({
       brand_name: z.string(),
       id: z.number(),
+      brand_type: z.enum(["brand", "group_brand"]),
     }),
     roles: z.array(z.custom<UserRole>()),
     companyName: z.string(),

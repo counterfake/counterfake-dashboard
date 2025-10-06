@@ -10,13 +10,15 @@ import {
 export function useSellerProfileData(sellerId: number) {
   const { user } = useAuthStore();
 
+  const brands = user?.brand?.ownedBrands.join(",");
+
   const {
     data: profile,
     isLoading,
     error,
   } = useQuery({
     ...sellerProfileQueries.detail(sellerId, {
-      brandId: user?.brand?.id,
+      brandId: brands || "",
     }),
   });
 
