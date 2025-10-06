@@ -12,6 +12,11 @@ export const BrandSchema = z.object({
   groupBrandId: z.number(),
 });
 
+export const GroupBrandSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
 export const BrandsSchema = z.object({
   brands: z.array(BrandSchema),
   page: z.number(),

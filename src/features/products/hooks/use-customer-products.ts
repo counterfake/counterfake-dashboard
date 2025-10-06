@@ -24,14 +24,14 @@ export function useGetCustomerProductResults(
   const { user } = useAuthStore();
 
   const paramsWithBrand = {
-    brand: user?.brand?.id,
+    brand: user?.brand?.ownedBrands.join(","),
     ...params,
   };
 
   return useApiQuery({
     queryKey: [CUSTOMER_PRODUCTS_NAMESPACE, "results", paramsWithBrand],
     queryFn: () => productService.getProductResults(paramsWithBrand),
-    enabled: !!user?.brand?.id,
+    enabled: !!paramsWithBrand.brand,
     emptyData: {
       limit: 0,
       page: 0,
@@ -43,12 +43,14 @@ export function useGetCustomerProductResults(
 }
 
 export function useGetCustomerProductById(productId: string) {
-  const { user } = useAuthStore();
+  const {
+    user: { brand },
+  } = useAuthStore();
 
   return useApiQuery({
     queryKey: [CUSTOMER_PRODUCTS_NAMESPACE, productId],
     queryFn: () => productService.getProductById(productId),
-    enabled: !!user?.brand?.id || !!productId,
+    enabled: !!brand?.ownedBrands.length && !!productId,
     emptyData: productEmptyData,
   });
 }
@@ -59,7 +61,7 @@ export function useGetCustomerProductCategories(
   const { user } = useAuthStore();
 
   const paramsWithBrand = {
-    brand: user?.brand?.id,
+    brand: user?.brand?.ownedBrands.join(","),
     ...params,
   };
 
@@ -67,7 +69,7 @@ export function useGetCustomerProductCategories(
     queryKey: [CUSTOMER_PRODUCTS_NAMESPACE, "categories", paramsWithBrand],
     queryFn: () =>
       productCategoriesService.getProductCategories(paramsWithBrand),
-    enabled: !!user?.brand?.id,
+    enabled: !!paramsWithBrand.brand,
     emptyData: [],
   });
 }
@@ -81,14 +83,14 @@ export function useGetCustomerProductAnalysis(
   const { user } = useAuthStore();
 
   const paramsWithBrand = {
-    brand: user?.brand?.id,
+    brand: user?.brand?.ownedBrands.join(","),
     ...params,
   };
 
   return useApiQuery({
     queryKey: [CUSTOMER_PRODUCTS_NAMESPACE, "analysis", paramsWithBrand],
     queryFn: () => productAnalysisService.getProductAnalysis(paramsWithBrand),
-    enabled: !!user?.brand?.id,
+    enabled: !!paramsWithBrand.brand,
     emptyData: {
       platforms: [],
       sellers: [],
@@ -103,7 +105,7 @@ export function useGetCustomerProductAnalysisMonthly(
   const { user } = useAuthStore();
 
   const paramsWithBrand = {
-    brand: user?.brand?.id,
+    brand: user?.brand?.ownedBrands.join(","),
     ...params,
   };
 
@@ -115,7 +117,7 @@ export function useGetCustomerProductAnalysisMonthly(
     ],
     queryFn: () =>
       productAnalysisService.getProductAnalysisMonthly(paramsWithBrand),
-    enabled: !!user?.brand?.id,
+    enabled: !!paramsWithBrand.brand,
     emptyData: [],
   });
 }

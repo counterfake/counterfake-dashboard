@@ -25,15 +25,17 @@ interface UseProductsPageDataProps {
 export function useProductsPageData({ queries }: UseProductsPageDataProps) {
   const { user } = useAuthStore();
 
+  const brands = user.brand.ownedBrands.join(",");
+
   // --------------------------
   // Fetch data
   // --------------------------
 
   const { data: closedCount } = useQuery(
-    productQueries.closedCount({ brandId: user?.brand.id })
+    productQueries.closedCount({ brandId: brands })
   );
   const { data: riskyCount } = useQuery(
-    productQueries.riskyCount({ brandId: user?.brand.id })
+    productQueries.riskyCount({ brandId: brands })
   );
 
   // Fetch product data

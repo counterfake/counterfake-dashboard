@@ -23,6 +23,7 @@ export const RefreshTokenResponseDtoSchema = z.object({
 export const UpdateSelectedCompanyRequestDtoSchema = z.object({
   id: z.number(),
   brand_name: z.string(),
+  brand_type: z.enum(["brand", "group_brand"]),
 });
 
 // --------------------------
@@ -62,9 +63,15 @@ export const BrandsResponseDtoSchema = z.object({
 // --------------------------
 export const GroupBrandsQueryDtoSchema = z.object({
   page_size: z.number().optional(),
+  page_number: z.number().optional(),
 });
 
 export const GroupBrandsResponseDtoSchema = z.object({
+  data_count: z.number(),
+  generated_at: z.string(),
+  page_count: z.number(),
+  page_number: z.number(),
+  page_size: z.number(),
   results: z.array(
     z.object({
       id: z.number(),

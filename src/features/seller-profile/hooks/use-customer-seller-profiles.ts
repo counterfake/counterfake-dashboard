@@ -8,14 +8,16 @@ const NAMESPACE = "seller-profile";
 export function useGetSellerProfileById(id: number) {
   const { user } = useAuthStore();
 
+  const brands = user?.brand?.ownedBrands.join(",");
+
   return useApiQuery({
-    queryKey: [NAMESPACE, id, user?.brand?.id],
+    queryKey: [NAMESPACE, id, brands],
     queryFn: () => {
       return sellerProfileService.getSellerProfileById(id, {
-        brand: user?.brand?.id || "",
+        brand: brands || "",
       });
     },
-    enabled: !!user?.brand?.id && !!id,
+    enabled: !!brands && !!id,
     emptyData: {
       address: "",
       category: null,
@@ -40,14 +42,16 @@ export function useGetSellerProfileById(id: number) {
 export function useGetCustomerSellersTopFakes() {
   const { user } = useAuthStore();
 
+  const brands = user?.brand?.ownedBrands.join(",");
+
   return useApiQuery({
-    queryKey: [NAMESPACE, "sellers-top-fakes", user?.brand?.id],
+    queryKey: [NAMESPACE, "sellers-top-fakes", brands],
     queryFn: () => {
       return sellerProfileService.getSellersTopFakes({
-        brand: user?.brand?.id || "",
+        brand: brands || "",
       });
     },
-    enabled: !!user?.brand?.id,
+    enabled: !!brands,
     emptyData: [],
   });
 }

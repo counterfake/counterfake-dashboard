@@ -38,6 +38,8 @@ export function SellerItem({ seller, showSeparator }: SellerItemProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const { user } = useAuthStore();
 
+  const brands = user?.brand?.ownedBrands.join(",");
+
   const ITEMS_PER_PAGE = 10;
 
   // Only fetch products when expanded
@@ -45,10 +47,10 @@ export function SellerItem({ seller, showSeparator }: SellerItemProps) {
     ...productQueries.list({
       page: currentPage,
       limit: ITEMS_PER_PAGE,
-      brandId: user?.brand?.id,
+      brandId: brands || "",
       sellerId: seller.id,
     }),
-    enabled: isExpanded && !!user?.brand?.id,
+    enabled: isExpanded && !!brands,
   });
 
   const products = productsData?.products || [];
