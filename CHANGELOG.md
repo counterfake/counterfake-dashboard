@@ -1,3 +1,16 @@
+# [0.10.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.9.0...v0.10.0) (2025-10-06)
+
+
+### Features
+
+* **switch-brand:** add group brand support in switch brand modal ([0b05151](https://github.com/counterfake/counterfake-dashboard/commit/0b05151a55e84417a130db180323f283c8bd9457))
+
+
+### BREAKING CHANGES
+
+* **switch-brand:** - switch brand modal now supports group brands. The brand list is fetched from the new endpoint which returns both individual and group brands. The UI has been updated to display group brands with a distinct icon.
+- The usage of some fields within user.brand has changed. user.brand.isGroupBrand and user.brand.id are now checked against the "brand_type" field returned by the server. Additionally, fields that request using user.brand.id now use user.brand.ownedBrand.
+
 # [0.10.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.9.0...v0.10.0-beta.1) (2025-10-06)
 
 
