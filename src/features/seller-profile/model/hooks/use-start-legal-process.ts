@@ -18,6 +18,9 @@ export function useStartLegalProcess() {
       queryClient.invalidateQueries({
         queryKey: sellerProfileKeys.detail(sellerId),
       });
+      queryClient.invalidateQueries({
+        queryKey: sellerProfileKeys.legalTakedownCaseLists(),
+      });
     },
   });
 }

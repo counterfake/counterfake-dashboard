@@ -17,57 +17,40 @@ import {
   DollarSign,
   Store,
 } from "lucide-react";
-import { SellerCase, SellerCaseStatus } from "../model";
+import { SellerCase } from "../model";
 import { formatDistance } from "date-fns";
+import { sellerProfileService } from "@/entities/brand-protection/seller-profile/model/services";
 
 interface CaseCardProps {
   sellerCase: SellerCase;
+  highlighted?: boolean;
 }
 
-const statusConfig = {
-  [SellerCaseStatus.INITIATED]: {
-    label: "Action Initiated",
-    variant: "warningSoft" as const,
-    description: "Investigation has started",
-  },
-  [SellerCaseStatus.EXPERT_REVIEW]: {
-    label: "Expert Review",
-    variant: "infoSoft" as const,
-    description: "Under expert evaluation",
-  },
-  [SellerCaseStatus.MEDIATION]: {
-    label: "In Mediation",
-    variant: "primarySoft" as const,
-    description: "Mediation process ongoing",
-  },
-  [SellerCaseStatus.COMPENSATION_RECEIVED]: {
-    label: "Compensation Received",
-    variant: "successSoft" as const,
-    description: "Compensation has been paid",
-  },
-  [SellerCaseStatus.CLOSED]: {
-    label: "Case Closed",
-    variant: "default" as const,
-    description: "Case resolved and closed",
-  },
-};
+function getCaseBadgeInfo(case_: SellerCase) {
+  if (case_.actionType === "online" && case_.softNoticeStatus !== undefined) {
+    return sellerProfileService.getSoftNoticeInfo(case_.softNoticeStatus);
+  }
+  if (case_.actionType === "legal" && case_.legalTakedownStatus !== undefined) {
+    return sellerProfileService.getLegalTakedownInfo(case_.legalTakedownStatus);
+  }
+  return { label: "", variant: "default", icon: AlertTriangle } as const;
+}
 
-const priorityConfig = {
-  low: { variant: "default" as const, color: "text-muted-foreground" },
-  medium: { variant: "warningSoft" as const, color: "text-warning" },
-  high: { variant: "destructiveSoft" as const, color: "text-destructive" },
-};
+export function CaseCard({ sellerCase, highlighted = false }: CaseCardProps) {
+  const statusInfo = getCaseBadgeInfo(sellerCase);
 
-export function CaseCard({ sellerCase }: CaseCardProps) {
-  const statusInfo = statusConfig[sellerCase.status];
-  const priorityInfo = priorityConfig[sellerCase.priority];
+  const StatusIcon = statusInfo.icon;
 
   const reportedDate = new Date(sellerCase.reportDate);
   const lastUpdatedDate = new Date(sellerCase.lastUpdated);
   const timeAgo = formatDistance(reportedDate, new Date(), { addSuffix: true });
 
   return (
-    <Card variant="interactive" className="w-full">
+    <Card
+      id={`case-card-${sellerCase.sellerId}`}
+      variant="interactive"
+      className={`w-full ${highlighted ? "ring-2 ring-primary/60" : ""}`}
+    >
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="space-y-2">
@@ -76,14 +59,24 @@ export function CaseCard({ sellerCase }: CaseCardProps) {
                 <Store className="h-4 w-4 text-muted-foreground" />
                 {sellerCase.sellerName}
               </CardTitle>
-              <Badge variant={statusInfo.variant} size="sm" className="text-xs">
-                {statusInfo.label} ({sellerCase.priority})
-              </Badge>
+              {statusInfo.label && (
+                <Badge
+                  variant={statusInfo.variant as any}
+                  className="flex items-center py-1"
+                >
+                  {sellerCase.actionType === "online"
+                    ? "Soft Notice"
+                    : "Legal Takedown"}
+                  :
+                  <StatusIcon className="h-3 w-3 ml-1 mr-0.5" />
+                  {statusInfo.label}
+                </Badge>
+              )}
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span className="font-mono">{sellerCase.caseNumber}</span>
               <span>•</span>
-              <span>{sellerCase.platform}</span>
+              <span>{sellerCase.platforms.join(", ")}</span>
             </div>
           </div>
         </div>
@@ -162,12 +155,7 @@ export function CaseCard({ sellerCase }: CaseCardProps) {
             </div>
             <div className="flex items-center gap-1">
               <AlertTriangle className="h-3 w-3" />
-              <span>
-                Updated{" "}
-                {formatDistance(lastUpdatedDate, new Date(), {
-                  addSuffix: true,
-                })}
-              </span>
+              <span>Updated {lastUpdatedDate.toLocaleString()}</span>
             </div>
           </div>
 

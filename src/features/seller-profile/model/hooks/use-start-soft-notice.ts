@@ -17,6 +17,9 @@ export function useStartSoftNotice() {
       queryClient.invalidateQueries({
         queryKey: sellerProfileKeys.detail(sellerId),
       });
+      queryClient.invalidateQueries({
+        queryKey: sellerProfileKeys.onlineTakedownCaseLists(),
+      });
     },
   });
 }

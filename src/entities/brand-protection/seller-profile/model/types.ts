@@ -72,3 +72,12 @@ export interface SellerProfile {
   softNoticeStatus: SellerProfileSoftNoticeStatus;
   legalTakedownStatus: SellerProfileLegalTakedownStatus;
 }
+
+export interface SellerCase {
+  id: number;
+  name: string;
+  platforms: string[];
+  brands: string[];
+  softNoticeStatus: SellerProfileSoftNoticeStatus;
+  legalTakedownStatus: SellerProfileLegalTakedownStatus;
+}

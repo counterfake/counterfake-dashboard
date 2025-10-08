@@ -7,6 +7,8 @@ import {
   Store,
   CheckCircle2,
   MessageCircleWarning,
+  Loader,
+  UserSearch,
 } from "lucide-react";
 
 import {
@@ -22,8 +24,8 @@ export const sellerProfileService = {
       case SellerProfileSoftNoticeStatus.INITIATED:
         return {
           label: "Initiated",
-          variant: "warningSoft",
-          icon: AlertCircle,
+          variant: "primarySoft",
+          icon: Loader,
         };
       case SellerProfileSoftNoticeStatus.PRODUCTS_CLOSED:
         return {
@@ -53,18 +55,18 @@ export const sellerProfileService = {
         return {
           label: "Initiated",
           variant: "warningSoft",
-          icon: Scale,
+          icon: Loader,
         };
       case SellerProfileLegalTakedownStatus.EXPERT_REVIEW:
         return {
           label: "Expert Review",
           variant: "infoSoft",
-          icon: Scale,
+          icon: UserSearch,
         };
       case SellerProfileLegalTakedownStatus.IN_MEDIATION:
         return {
           label: "In Mediation",
-          variant: "infoSoft",
+          variant: "primarySoft",
           icon: Scale,
         };
       case SellerProfileLegalTakedownStatus.CASE_CLOSED:

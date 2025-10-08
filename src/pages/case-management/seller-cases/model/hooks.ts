@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { SellerCase, SellerCaseListParams, SellerCaseListResponse, SellerCaseStats } from "./types";
+import { SellerCaseListParams, SellerCaseListResponse } from "./types";
 import { mockSellerCases, mockSellerCaseStats } from "./mock-data";
 
 export function useSellerCaseList(params: SellerCaseListParams = {}) {
@@ -9,18 +9,35 @@ export function useSellerCaseList(params: SellerCaseListParams = {}) {
   const sellerCases = useMemo<SellerCaseListResponse>(() => {
     let filteredCases = mockSellerCases;
 
-    // Filter by status
-    if (params.status) {
-      filteredCases = filteredCases.filter(case_ => case_.status === params.status);
+    // Filter by action type (online/legal)
+    if (params.actionType) {
+      filteredCases = filteredCases.filter(
+        (case_) => case_.actionType === params.actionType
+      );
+    }
+
+    // Filter by soft notice status
+    if (params.softNoticeStatus !== undefined) {
+      filteredCases = filteredCases.filter(
+        (case_) => case_.softNoticeStatus === params.softNoticeStatus
+      );
+    }
+
+    // Filter by legal takedown status
+    if (params.legalTakedownStatus !== undefined) {
+      filteredCases = filteredCases.filter(
+        (case_) => case_.legalTakedownStatus === params.legalTakedownStatus
+      );
     }
 
     // Filter by search term
     if (params.search) {
       const searchTerm = params.search.toLowerCase();
-      filteredCases = filteredCases.filter(case_ => 
-        case_.sellerName.toLowerCase().includes(searchTerm) ||
-        case_.caseNumber.toLowerCase().includes(searchTerm) ||
-        case_.description.toLowerCase().includes(searchTerm)
+      filteredCases = filteredCases.filter(
+        (case_) =>
+          case_.sellerName.toLowerCase().includes(searchTerm) ||
+          case_.caseNumber.toLowerCase().includes(searchTerm) ||
+          case_.description.toLowerCase().includes(searchTerm)
       );
     }
 
@@ -36,14 +53,21 @@ export function useSellerCaseList(params: SellerCaseListParams = {}) {
       items: paginatedCases,
       total: filteredCases.length,
       pages: totalPages,
-      currentPage: page
+      currentPage: page,
     };
-  }, [params.status, params.search, params.page, params.limit]);
+  }, [
+    params.actionType,
+    params.softNoticeStatus,
+    params.legalTakedownStatus,
+    params.search,
+    params.page,
+    params.limit,
+  ]);
 
   return {
     sellerCases,
     isLoading,
-    error
+    error,
   };
 }
 
@@ -54,6 +78,6 @@ export function useSellerCaseStats() {
   return {
     stats: mockSellerCaseStats,
     isLoading,
-    error
+    error,
   };
 }

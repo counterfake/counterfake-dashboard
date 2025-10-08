@@ -1,6 +1,10 @@
-import { GetProfileByIdResponse } from "@/shared/api/brand-protection/bp-api.types";
+import {
+  GetProfileByIdResponse,
+  GetProfilesResponse,
+} from "@/shared/api/brand-protection/bp-api.types";
 
 import {
+  SellerCase,
   SellerProfile,
   SellerProfileCategory,
   SellerProfileLegalTakedownStatus,
@@ -122,5 +126,32 @@ export const mapDtoToSellerProfile = (
       profileDto?.soft_notice as SellerProfileSoftNoticeStatus | null,
     legalTakedownStatus:
       profileDto?.legal_takedown as SellerProfileLegalTakedownStatus | null,
+  };
+};
+
+export const mapDtoToSellerCase = (
+  dto: GetProfilesResponse["results"][number]
+): SellerCase => {
+  return {
+    id: dto.id,
+    name: dto.universal_name,
+    brands: dto.brands.map((brand) =>
+      typeof brand === "object" ? brand.brand_name : ""
+    ),
+    platforms: dto.platforms.map((platform) =>
+      typeof platform === "object" ? platform.name : ""
+    ),
+    softNoticeStatus: dto?.soft_notice,
+    legalTakedownStatus: dto?.legal_takedown,
+  };
+};
+
+export const mapDtoToSellerCaseList = (dto: GetProfilesResponse) => {
+  return {
+    limit: dto.page_size,
+    page: dto.page_number,
+    total: dto.data_count,
+    pages: dto.page_count,
+    data: dto.results.map(mapDtoToSellerCase),
   };
 };

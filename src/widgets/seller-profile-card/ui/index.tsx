@@ -1,5 +1,6 @@
 import React, { Suspense, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import {
   Store,
@@ -38,7 +39,6 @@ import {
   useStartSoftNotice,
 } from "@/features/seller-profile";
 
-import { SellerProfileCategory } from "@/entities/brand-protection/seller-profile/model/types";
 import { sellerProfileService } from "@/entities/brand-protection/seller-profile/model/services";
 
 import { useSellerProfileData } from "../model";
@@ -61,6 +61,7 @@ export function SellerProfileCard({
   const startLegalProcessMutation = useStartLegalProcess();
   const startSoftNoticeMutation = useStartSoftNotice();
   const toast = useToast();
+  const router = useRouter();
 
   const CategoryIcon = category.icon;
   const hasLegalTakedown =
@@ -69,7 +70,6 @@ export function SellerProfileCard({
   const hasSoftNotice =
     profile?.softNoticeStatus !== null &&
     profile?.softNoticeStatus !== undefined;
-  const actionsDisabled = hasLegalTakedown || hasSoftNotice;
 
   const handleConfirmLegalProcess = () => {
     setIsLegalDialogOpen(false);
@@ -78,6 +78,12 @@ export function SellerProfileCard({
         toast.success(
           "Legal Takedown Started",
           "A legal takedown case has been created for this seller’s physical store. Track progress in Case Management → Seller Cases."
+        );
+        // Navigate to Seller Cases and highlight this seller's case
+        router.push(
+          `/dashboard/case-management/seller-cases?highlight=${encodeURIComponent(
+            String(sellerProfileId)
+          )}`
         );
       },
       onError: () => {
@@ -96,6 +102,12 @@ export function SellerProfileCard({
         toast.success(
           "Soft Notice Sent",
           "A soft notice case has been created to request closure of the seller’s online stores and listings. Track progress in Case Management → Seller Cases."
+        );
+        // Navigate to Seller Cases and highlight this seller's case
+        router.push(
+          `/dashboard/case-management/seller-cases?highlight=${encodeURIComponent(
+            String(sellerProfileId)
+          )}`
         );
       },
       onError: () => {
@@ -168,36 +180,36 @@ export function SellerProfileCard({
                         );
                       })()}
                     {/* Action buttons (disabled if any status exists) */}
-                    {!hasSoftNotice && !hasLegalTakedown && (
-                      <>
-                        <Button
-                          size="sm"
-                          onClick={() => setIsLegalDialogOpen(true)}
-                          className="bg-warning/10 text-warning hover:bg-warning/20"
-                          disabled={
-                            actionsDisabled ||
-                            startLegalProcessMutation.isPending
-                          }
-                        >
-                          <Scale className="w-4 h-4 mr-2" />
-                          {startLegalProcessMutation.isPending
-                            ? "Starting..."
-                            : "Start Legal Takedown"}
-                        </Button>
-                        <Button
-                          variant="soft"
-                          size="sm"
-                          onClick={() => setIsSoftDialogOpen(true)}
-                          disabled={
-                            actionsDisabled || startSoftNoticeMutation.isPending
-                          }
-                        >
-                          <Flag className="w-4 h-4 mr-2" />
-                          {startSoftNoticeMutation.isPending
-                            ? "Sending..."
-                            : "Soft Notice"}
-                        </Button>
-                      </>
+                    {!hasLegalTakedown && (
+                      <Button
+                        size="sm"
+                        onClick={() => setIsLegalDialogOpen(true)}
+                        className="bg-warning/10 text-warning hover:bg-warning/20"
+                        disabled={
+                          hasLegalTakedown ||
+                          startLegalProcessMutation.isPending
+                        }
+                      >
+                        <Scale className="w-4 h-4 mr-2" />
+                        {startLegalProcessMutation.isPending
+                          ? "Starting..."
+                          : "Start Legal Takedown"}
+                      </Button>
+                    )}
+                    {!hasSoftNotice && (
+                      <Button
+                        variant="soft"
+                        size="sm"
+                        onClick={() => setIsSoftDialogOpen(true)}
+                        disabled={
+                          hasSoftNotice || startSoftNoticeMutation.isPending
+                        }
+                      >
+                        <Flag className="w-4 h-4 mr-2" />
+                        {startSoftNoticeMutation.isPending
+                          ? "Sending..."
+                          : "Soft Notice"}
+                      </Button>
                     )}
                   </div>
                 </div>

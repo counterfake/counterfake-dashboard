@@ -62,13 +62,6 @@ export function StatsCards({ stats, isLoading = false }: StatsCardsProps) {
       variant: "successSoft" as const,
     },
     {
-      title: "In Mediation",
-      value: stats.inMediationCases,
-      icon: Scale,
-      description: "Ongoing mediation",
-      variant: "infoSoft" as const,
-    },
-    {
       title: "Compensation",
       value: `$${stats.compensationReceived.toLocaleString()}`,
       icon: DollarSign,
@@ -78,7 +71,7 @@ export function StatsCards({ stats, isLoading = false }: StatsCardsProps) {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       {statsData.map((stat) => {
         const IconComponent = stat.icon;
 
