@@ -22,6 +22,8 @@ import {
   ListPlatformReportMailResponseDto,
   CreatePlatformReportMailRequestDto,
   UpdateProductRequestDto,
+  GetProfilesResponse,
+  GetProfilesParams,
 } from "./bp-api.types";
 import {
   RefreshTokenRequestDtoSchema,
@@ -43,6 +45,8 @@ import {
   ListPlatformReportMailResponseDtoSchema,
   CreatePlatformReportMailRequestDtoSchema,
   UpdateProductRequestDtoSchema,
+  GetProfilesResponseSchema,
+  GetProfilesParamsSchema,
 } from "./bp-api.schemas";
 
 // --------------------------
@@ -94,8 +98,21 @@ export const getGroupBrands = (params: GroupBrandsQueryDto) => {
 };
 
 // --------------------------
-// Profile Services => /profile
+// Profile Services => /profiles
 // --------------------------
+export const getProfiles = (params: GetProfilesParams) => {
+  return bpApi.get<GetProfilesResponse>(BP_API_ENDPOINTS.profiles, {
+    params,
+    validationSchemas: {
+      params: GetProfilesParamsSchema,
+      responseData: GetProfilesResponseSchema,
+    },
+    headers: {
+      "Cache-Control": "no-cache",
+    },
+  });
+};
+
 export const getProfileById = async (
   id: number,
   params: GetProfileByIdParams

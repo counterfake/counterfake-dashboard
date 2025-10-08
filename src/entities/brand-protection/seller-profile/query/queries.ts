@@ -1,17 +1,36 @@
 import { queryOptions } from "@tanstack/react-query";
 
-import { getProfileById } from "@/shared/api/brand-protection/bp-api.service";
+import {
+  getProfileById,
+  getProfiles,
+} from "@/shared/api/brand-protection/bp-api.service";
 
-import { mapDtoToSellerProfile } from "../model";
-import { SellerProfileQueryParams } from "./types";
+import { mapDtoToSellerCaseList, mapDtoToSellerProfile } from "../model";
+import {
+  OnlineTakedownCaseListQueryParams,
+  LegalTakedownCaseListQueryParams,
+  SellerProfileQueryParams,
+} from "./types";
 
 // Query Keys
 export const sellerProfileKeys = {
   all: ["seller-profile"],
   details: ["seller-profile", "details"],
-  detail: (id: number, params: SellerProfileQueryParams) => [
-    ...sellerProfileKeys.details,
-    id,
+  detail: (id: number, params?: SellerProfileQueryParams) =>
+    params
+      ? [...sellerProfileKeys.details, id, params]
+      : [...sellerProfileKeys.details, id],
+  onlineTakedownCaseLists: () => [
+    ...sellerProfileKeys.all,
+    "onlineTakedownList",
+  ],
+  onlineTakedownCaseList: (params: OnlineTakedownCaseListQueryParams) => [
+    ...sellerProfileKeys.onlineTakedownCaseLists(),
+    params,
+  ],
+  legalTakedownCaseLists: () => [...sellerProfileKeys.all, "legalTakedownList"],
+  legalTakedownCaseList: (params: LegalTakedownCaseListQueryParams) => [
+    ...sellerProfileKeys.legalTakedownCaseLists(),
     params,
   ],
 };
@@ -37,6 +56,8 @@ export const sellerProfileQueries = {
           "universal_name",
           "is_closed",
           "ai_results",
+          "soft_notice",
+          "legal_takedown",
         ];
         const expandRelations = [
           "sellers.platform",
@@ -53,5 +74,46 @@ export const sellerProfileQueries = {
       },
       select: (response) => mapDtoToSellerProfile(response),
       enabled: !!id && !!params.brandId,
+    }),
+  onlineTakedownList: (params: OnlineTakedownCaseListQueryParams) =>
+    queryOptions({
+      queryKey: sellerProfileKeys.onlineTakedownCaseList(params),
+      queryFn: () => {
+        return getProfiles({
+          page_number: params.page,
+          page_size: params.limit,
+          brands: params.brands.join(","),
+          soft_notice: params.softNoticeStatus,
+          fields: [
+            "id",
+            "universal_name",
+            "soft_notice",
+            "platforms",
+            "brands",
+          ].join(","),
+          expand_relations: ["platforms", "brands"].join(","),
+        });
+      },
+      select: (response) => mapDtoToSellerCaseList(response.data),
+    }),
+  legalTakedownList: (params: LegalTakedownCaseListQueryParams) =>
+    queryOptions({
+      queryKey: sellerProfileKeys.legalTakedownCaseList(params),
+      queryFn: () =>
+        getProfiles({
+          page_number: params.page,
+          page_size: params.limit,
+          brands: params.brands.join(","),
+          legal_takedown: params.legalTakedownStatus,
+          fields: [
+            "id",
+            "universal_name",
+            "legal_takedown",
+            "platforms",
+            "brands",
+          ].join(","),
+          expand_relations: ["platforms", "brands"].join(","),
+        }),
+      select: (response) => mapDtoToSellerCaseList(response.data),
     }),
 };

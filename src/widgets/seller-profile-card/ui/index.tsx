@@ -1,5 +1,6 @@
-import React, { Suspense, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import {
   Store,
@@ -10,6 +11,7 @@ import {
   Users,
   Scale,
   ArrowRight,
+  Flag,
 } from "lucide-react";
 
 import useToast from "@/common/hooks/use-toast";
@@ -32,9 +34,12 @@ import {
   AlertDialogTitle,
 } from "@/common/components/ui/primitives/alert-dialog";
 
-import { useStartLegalProcess } from "@/features/seller-profile";
+import {
+  useStartLegalProcess,
+  useStartSoftNotice,
+} from "@/features/seller-profile";
 
-import { SellerProfileCategory } from "@/entities/brand-protection/seller-profile/model/types";
+import { sellerProfileService } from "@/entities/brand-protection/seller-profile/model/services";
 
 import { useSellerProfileData } from "../model";
 import { SellerProfileSkeleton } from "./skeleton";
@@ -51,27 +56,64 @@ export function SellerProfileCard({
 }: SellerProfileCardProps) {
   const { profile, stats, category, isLoading, error } =
     useSellerProfileData(sellerProfileId);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLegalDialogOpen, setIsLegalDialogOpen] = useState(false);
+  const [isSoftDialogOpen, setIsSoftDialogOpen] = useState(false);
   const startLegalProcessMutation = useStartLegalProcess();
+  const startSoftNoticeMutation = useStartSoftNotice();
   const toast = useToast();
+  const router = useRouter();
 
   const CategoryIcon = category.icon;
-  const isLegalProcessStarted =
-    profile?.category === SellerProfileCategory.REPORTED;
+  const hasLegalTakedown =
+    profile?.legalTakedownStatus !== null &&
+    profile?.legalTakedownStatus !== undefined;
+  const hasSoftNotice =
+    profile?.softNoticeStatus !== null &&
+    profile?.softNoticeStatus !== undefined;
 
   const handleConfirmLegalProcess = () => {
-    setIsDialogOpen(false);
+    setIsLegalDialogOpen(false);
     startLegalProcessMutation.mutate(sellerProfileId, {
       onSuccess: () => {
         toast.success(
-          "Legal Process Started",
-          "The closure process has been initiated. You can track the process from the 'Actions' page."
+          "Legal Takedown Started",
+          "A legal takedown case has been created for this seller’s physical store. Track progress in Case Management → Seller Cases."
+        );
+        // Navigate to Seller Cases and highlight this seller's case
+        router.push(
+          `/dashboard/case-management/seller-cases?highlight=${encodeURIComponent(
+            String(sellerProfileId)
+          )}`
         );
       },
       onError: () => {
         toast.error(
-          "Failed to Start Legal Process",
-          "An error occurred while starting the legal process. Please try again."
+          "Failed to Start Legal Takedown",
+          "An error occurred while starting the legal takedown. Please try again."
+        );
+      },
+    });
+  };
+
+  const handleConfirmSoftNotice = () => {
+    setIsSoftDialogOpen(false);
+    startSoftNoticeMutation.mutate(sellerProfileId, {
+      onSuccess: () => {
+        toast.success(
+          "Soft Notice Sent",
+          "A soft notice case has been created to request closure of the seller’s online stores and listings. Track progress in Case Management → Seller Cases."
+        );
+        // Navigate to Seller Cases and highlight this seller's case
+        router.push(
+          `/dashboard/case-management/seller-cases?highlight=${encodeURIComponent(
+            String(sellerProfileId)
+          )}`
+        );
+      },
+      onError: () => {
+        toast.error(
+          "Failed to Send Soft Notice",
+          "An error occurred while sending the soft notice. Please try again."
         );
       },
     });
@@ -83,54 +125,117 @@ export function SellerProfileCard({
 
   return (
     <Card className="mb-6">
-      <CardContent className="p-6">
-        <div className="flex items-start gap-6">
-          <Avatar className="w-20 h-20">
-            <AvatarFallback className="text-xl font-semibold">
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
+          <Avatar className="w-16 h-16 sm:w-20 sm:h-20">
+            <AvatarFallback className="text-lg sm:text-xl font-semibold">
               {profile?.name.substring(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-4 mb-3">
+          <div className="flex-1 min-w-0 w-full">
+            <div className="flex flex-col gap-3 mb-3">
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-4 mb-2">
-                  <h1 className="text-2xl font-bold text-foreground">
+                <div className="flex flex-col gap-3 mb-2">
+                  <h1 className="text-xl sm:text-2xl font-bold text-foreground break-words">
                     {profile?.name}
                   </h1>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     {showViewSellerButton && (
-                      <Button variant="outline" size="sm" asChild>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        asChild
+                        className="w-full sm:w-auto"
+                      >
                         <Link
                           href={`/dashboard/sellers/${sellerProfileId}`}
-                          className="inline-flex items-center gap-2"
+                          className="inline-flex items-center gap-2 justify-center"
                         >
-                          <ArrowRight className="w-4 h-4" />
                           View Seller
+                          <ArrowRight className="w-4 h-4" />
                         </Link>
                       </Button>
                     )}
-                    {isLegalProcessStarted ? (
-                      <Badge variant="warningSoft" size="lg">
+                    {/* Status badges if any */}
+                    {hasSoftNotice &&
+                      (() => {
+                        const info = sellerProfileService.getSoftNoticeInfo(
+                          profile!.softNoticeStatus as any
+                        );
+                        const Icon = info.icon;
+                        return (
+                          <Badge
+                            variant={info.variant as any}
+                            size="lg"
+                            className="w-full sm:w-auto justify-center"
+                          >
+                            <Icon className="w-4 h-4 mr-2" />
+                            <span className="truncate">
+                              Soft Notice: {info.label}
+                            </span>
+                          </Badge>
+                        );
+                      })()}
+                    {hasLegalTakedown &&
+                      (() => {
+                        const info = sellerProfileService.getLegalTakedownInfo(
+                          profile!.legalTakedownStatus as any
+                        );
+                        const Icon = info.icon;
+                        return (
+                          <Badge
+                            variant={info.variant as any}
+                            size="lg"
+                            className="w-full sm:w-auto justify-center"
+                          >
+                            <Icon className="w-4 h-4 mr-2" />
+                            <span className="truncate">
+                              Legal Takedown: {info.label}
+                            </span>
+                          </Badge>
+                        );
+                      })()}
+                    {/* Action buttons (disabled if any status exists) */}
+                    {!hasLegalTakedown && (
+                      <Button
+                        size="sm"
+                        onClick={() => setIsLegalDialogOpen(true)}
+                        className="bg-warning/10 text-warning hover:bg-warning/20 w-full sm:w-auto"
+                        disabled={
+                          hasLegalTakedown ||
+                          startLegalProcessMutation.isPending
+                        }
+                      >
                         <Scale className="w-4 h-4 mr-2" />
-                        This seller is under legal process
-                      </Badge>
-                    ) : (
+                        <span className="truncate">
+                          {startLegalProcessMutation.isPending
+                            ? "Starting..."
+                            : "Start Legal Takedown"}
+                        </span>
+                      </Button>
+                    )}
+                    {!hasSoftNotice && (
                       <Button
                         variant="soft"
                         size="sm"
-                        onClick={() => setIsDialogOpen(true)}
-                        disabled={startLegalProcessMutation.isPending}
+                        onClick={() => setIsSoftDialogOpen(true)}
+                        disabled={
+                          hasSoftNotice || startSoftNoticeMutation.isPending
+                        }
+                        className="w-full sm:w-auto"
                       >
-                        <Scale className="w-4 h-4 mr-2" />
-                        {startLegalProcessMutation.isPending
-                          ? "Starting..."
-                          : "Start Legal Process"}
+                        <Flag className="w-4 h-4 mr-2" />
+                        <span className="truncate">
+                          {startSoftNoticeMutation.isPending
+                            ? "Sending..."
+                            : "Soft Notice"}
+                        </span>
                       </Button>
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2 flex-wrap mb-3">
+                <div className="flex items-center gap-2 flex-wrap mb-3 mt-4">
                   <Badge variant={category.variant} size="default">
                     <CategoryIcon className="w-3 h-3 mr-1" />
                     {category.label} Seller
@@ -154,42 +259,42 @@ export function SellerProfileCard({
             </div>
 
             {/* Product Statistics */}
-            <div className="grid grid-cols-3 gap-3 pt-4 border-t">
-              <div className="flex items-center gap-3 rounded-lg border border-border/50 p-2">
-                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t">
+              <div className="flex items-center gap-2 sm:gap-3 rounded-lg border border-border/50 p-3 sm:p-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50 shrink-0">
                   <Package className="w-5 h-5 text-accent-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-medium text-muted-foreground mb-0.5">
                     Active Product
                   </p>
-                  <p className="text-lg font-semibold text-foreground">
+                  <p className="text-base sm:text-lg font-semibold text-foreground">
                     {stats?.total}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 rounded-lg border border-border/50 p-2">
-                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50">
+              <div className="flex items-center gap-2 sm:gap-3 rounded-lg border border-border/50 p-3 sm:p-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50 shrink-0">
                   <AlertTriangle className="w-5 h-5 text-accent-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-medium text-muted-foreground mb-0.5">
                     Risky Product
                   </p>
-                  <p className="text-lg font-semibold text-foreground">
+                  <p className="text-base sm:text-lg font-semibold text-foreground">
                     {stats?.risky}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 rounded-lg border border-border/50 p-2">
-                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50">
+              <div className="flex items-center gap-2 sm:gap-3 rounded-lg border border-border/50 p-3 sm:p-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-md bg-muted border border-border/50 shrink-0">
                   <PackageX className="w-5 h-5 text-accent-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-medium text-muted-foreground mb-0.5">
                     Closed Product
                   </p>
-                  <p className="text-lg font-semibold text-foreground">
+                  <p className="text-base sm:text-lg font-semibold text-foreground">
                     {stats?.closed}
                   </p>
                 </div>
@@ -198,20 +303,44 @@ export function SellerProfileCard({
           </div>
         </div>
 
-        {/* Legal Process Confirmation Dialog */}
-        <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        {/* Legal Takedown Confirmation Dialog */}
+        <AlertDialog
+          open={isLegalDialogOpen}
+          onOpenChange={setIsLegalDialogOpen}
+        >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Start Legal Process</AlertDialogTitle>
+              <AlertDialogTitle>Start Legal Takedown Process</AlertDialogTitle>
               <AlertDialogDescription>
-                By requesting a legal process for this seller, you will create a
-                closure request. You can track the closure process from the
-                &quot;Action Status&quot; page.
+                This will initiate a legal takedown for the seller’s physical
+                store. A case will be created under Case Management → Seller
+                Cases where you can track progress. Do you want to proceed?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction onClick={handleConfirmLegalProcess}>
+                Confirm
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Soft Notice Confirmation Dialog */}
+        <AlertDialog open={isSoftDialogOpen} onOpenChange={setIsSoftDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Send Soft Notice</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will notify platforms to request closure of the seller’s
+                online stores and product listings. A case will be created under
+                Case Management → Seller Cases where you can track progress. Do
+                you want to continue?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleConfirmSoftNotice}>
                 Confirm
               </AlertDialogAction>
             </AlertDialogFooter>

@@ -23,6 +23,8 @@ import {
   PlatformReportMailDtoSchema,
   ListPlatformReportMailQueryDtoSchema,
   UpdateProductRequestDtoSchema,
+  GetProfilesParamsSchema,
+  GetProfilesResponseSchema,
 } from "./bp-api.schemas";
 
 // --------------------------
@@ -72,6 +74,9 @@ export type GetProfileByIdParams = z.infer<typeof GetProfileByIdParamsSchema>;
 export type GetProfileByIdResponse = z.infer<
   typeof GetProfileByIdResponseSchema
 >;
+
+export type GetProfilesParams = z.infer<typeof GetProfilesParamsSchema>;
+export type GetProfilesResponse = z.infer<typeof GetProfilesResponseSchema>;
 
 export type UpdateProfileRequestDto = z.infer<
   typeof UpdateProfileRequestDtoSchema

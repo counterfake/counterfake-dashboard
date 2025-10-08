@@ -40,6 +40,7 @@ interface ProductAnalysisProps {
     rating: number;
     isLowRating: boolean;
     priceCluster: number;
+    imageCaption: string;
   };
   isLoading?: boolean;
 }
@@ -80,6 +81,7 @@ export function ProductAnalysis({
             >
               <AnalysisSummary
                 analysisSummaryText={analysis?.analysisSummaryText}
+                imageCaptionText={analysis?.imageCaption}
               />
             </Animate>
 

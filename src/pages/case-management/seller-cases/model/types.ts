@@ -1,18 +1,19 @@
-export enum SellerCaseStatus {
-  INITIATED = "initiated",
-  EXPERT_REVIEW = "expert_review", 
-  MEDIATION = "mediation",
-  COMPENSATION_RECEIVED = "compensation_received",
-  CLOSED = "closed"
-}
+import {
+  SellerProfileSoftNoticeStatus,
+  SellerProfileLegalTakedownStatus,
+} from "@/entities/brand-protection/seller-profile/model/types";
+
+export type SellerCaseActionType = "online" | "legal";
 
 export interface SellerCase {
   id: string;
   sellerId: string;
   sellerName: string;
   sellerEmail: string;
-  platform: string;
-  status: SellerCaseStatus;
+  platforms: string[];
+  actionType: SellerCaseActionType;
+  softNoticeStatus?: SellerProfileSoftNoticeStatus;
+  legalTakedownStatus?: SellerProfileLegalTakedownStatus;
   reportDate: string;
   lastUpdated: string;
   caseNumber: string;
@@ -20,7 +21,6 @@ export interface SellerCase {
   reportedBy: string;
   compensationAmount?: number;
   evidenceCount: number;
-  priority: "low" | "medium" | "high";
   tags: string[];
 }
 
@@ -40,7 +40,9 @@ export interface SellerCaseListResponse {
 }
 
 export interface SellerCaseListParams {
-  status?: SellerCaseStatus;
+  actionType?: SellerCaseActionType;
+  softNoticeStatus?: SellerProfileSoftNoticeStatus;
+  legalTakedownStatus?: SellerProfileLegalTakedownStatus;
   page?: number;
   limit?: number;
   search?: string;

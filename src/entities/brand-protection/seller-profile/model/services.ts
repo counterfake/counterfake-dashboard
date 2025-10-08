@@ -1,8 +1,88 @@
-import { AlertCircle, XCircle, Tag, Scale } from "lucide-react";
+import {
+  AlertCircle,
+  XCircle,
+  Tag,
+  Scale,
+  PackageX,
+  Store,
+  CheckCircle2,
+  MessageCircleWarning,
+  Loader,
+  UserSearch,
+} from "lucide-react";
 
-import { SellerProfileCategory, SellerProfile } from "./types";
+import {
+  SellerProfileCategory,
+  SellerProfile,
+  SellerProfileSoftNoticeStatus,
+  SellerProfileLegalTakedownStatus,
+} from "./types";
 
 export const sellerProfileService = {
+  getSoftNoticeInfo: (softNoticeStatus: SellerProfileSoftNoticeStatus) => {
+    switch (softNoticeStatus) {
+      case SellerProfileSoftNoticeStatus.INITIATED:
+        return {
+          label: "Initiated",
+          variant: "primarySoft",
+          icon: Loader,
+        };
+      case SellerProfileSoftNoticeStatus.PRODUCTS_CLOSED:
+        return {
+          label: "Products Closed",
+          variant: "successSoft",
+          icon: PackageX,
+        };
+      case SellerProfileSoftNoticeStatus.SELLER_CLOSED:
+        return {
+          label: "Seller Closed",
+          variant: "successSoft",
+          icon: Store,
+        };
+      default:
+        return {
+          label: "",
+          variant: "default",
+          icon: AlertCircle,
+        };
+    }
+  },
+  getLegalTakedownInfo: (
+    legalTakedownStatus: SellerProfileLegalTakedownStatus
+  ) => {
+    switch (legalTakedownStatus) {
+      case SellerProfileLegalTakedownStatus.INITIATED:
+        return {
+          label: "Initiated",
+          variant: "warningSoft",
+          icon: Loader,
+        };
+      case SellerProfileLegalTakedownStatus.EXPERT_REVIEW:
+        return {
+          label: "Expert Review",
+          variant: "infoSoft",
+          icon: UserSearch,
+        };
+      case SellerProfileLegalTakedownStatus.IN_MEDIATION:
+        return {
+          label: "In Mediation",
+          variant: "primarySoft",
+          icon: Scale,
+        };
+      case SellerProfileLegalTakedownStatus.CASE_CLOSED:
+        return {
+          label: "Case Closed",
+          variant: "successSoft",
+          icon: CheckCircle2,
+        };
+      default:
+        return {
+          label: "",
+          variant: "default",
+          icon: Scale,
+        };
+    }
+  },
   getCategoryLabel: (category: SellerProfileCategory): string => {
     switch (category) {
       case SellerProfileCategory.RISKY:
@@ -46,7 +126,7 @@ export const sellerProfileService = {
       case SellerProfileCategory.OFFICIAL:
         return Tag;
       case SellerProfileCategory.REPORTED:
-        return Scale;
+        return MessageCircleWarning;
       default:
         return AlertCircle;
     }

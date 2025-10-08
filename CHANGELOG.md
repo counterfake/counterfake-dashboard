@@ -1,3 +1,15 @@
+# [0.11.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.10.0...v0.11.0-beta.1) (2025-10-08)
+
+
+### Features
+
+* add date of creation and day information on Case Cards ([4965168](https://github.com/counterfake/counterfake-dashboard/commit/49651682b24c36062374bb89bfe726c5bc475818))
+* add image capture feature to the product detail analysis section ([9e7296a](https://github.com/counterfake/counterfake-dashboard/commit/9e7296ab69fc6964807d452e42051ef330be438c))
+* improve seller profile card on mobile view ([67a5a2f](https://github.com/counterfake/counterfake-dashboard/commit/67a5a2fd3d61574ae50757afbfd8bf71bede1037))
+* **seller-profile:** add new case actions on seller profile detail page ([ed8bf85](https://github.com/counterfake/counterfake-dashboard/commit/ed8bf853e5d1cc03109e73320fef79d25d8babaf))
+* **seller-profile:** add soft_notice & legal_takedown fields to entity domain model ([6010c67](https://github.com/counterfake/counterfake-dashboard/commit/6010c675871cc45551d837ace358fdcf9d312958))
+* **seller-profile:** added case list and case management for seller profile ([36867c6](https://github.com/counterfake/counterfake-dashboard/commit/36867c669f1b39e32102a6ce4c3272dd36a0c78e))
+
 # [0.10.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.9.0...v0.10.0) (2025-10-06)
 
 

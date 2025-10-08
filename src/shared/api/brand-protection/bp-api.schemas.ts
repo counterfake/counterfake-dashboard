@@ -140,6 +140,7 @@ export const SellerSchema = z.object({
 // --------------------------
 // Profile
 // --------------------------
+
 export const GetProfileByIdParamsSchema = z.object({
   fields: z.string().optional(),
   brand: z.string().or(z.number()).optional(),
@@ -219,10 +220,35 @@ export const GetProfileByIdResponseSchema = z.object({
       summary: z.string().optional(),
     })
     .optional(),
+  soft_notice: z.number().optional().nullable(),
+  legal_takedown: z.number().optional().nullable(),
+});
+
+export const GetProfilesParamsSchema = z.object({
+  brands: z.string(),
+  name: z.string().optional(),
+  category: z.number().optional(),
+  page_size: z.number().optional(),
+  page_number: z.number().optional(),
+  fields: z.string().optional(),
+  expand_relations: z.string().optional(),
+  soft_notice: z.number().optional(),
+  legal_takedown: z.number().optional(),
+});
+
+export const GetProfilesResponseSchema = z.object({
+  data_count: z.number(),
+  generated_at: z.string(),
+  page_count: z.number(),
+  page_number: z.number(),
+  page_size: z.number(),
+  results: z.array(GetProfileByIdResponseSchema),
 });
 
 export const UpdateProfileRequestDtoSchema = z.object({
   category: z.number().optional(),
+  legal_takedown: z.number().optional(),
+  soft_notice: z.number().optional(),
 });
 
 // --------------------------
