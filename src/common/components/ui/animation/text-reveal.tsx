@@ -1,9 +1,7 @@
 "use client";
 
-import { FC, ElementType } from "react";
-import { motion, MotionProps, useInView } from "motion/react";
-import { useRef } from "react";
-import { PiStarFourFill } from "react-icons/pi";
+import { FC, ElementType, memo, useMemo, useRef } from "react";
+import { LazyMotion, domAnimation, m, MotionProps, useInView, type Variants } from "framer-motion";
 
 interface Props extends MotionProps {
   text: string;
@@ -32,7 +30,7 @@ interface Props extends MotionProps {
   afterContent?: React.ReactNode;
 }
 
-export const TextReveal: FC<Props> = ({
+const TextRevealComponent: FC<Props> = ({
   text,
   as = "h2",
   delay = 0.3,
@@ -46,8 +44,8 @@ export const TextReveal: FC<Props> = ({
   afterContent,
   ...props
 }: Props) => {
-  const letters = Array.from(text);
-  const MotionComponent = motion[as as keyof typeof motion] as any;
+  const letters = useMemo(() => Array.from(text), [text]);
+  const MotionComponent = (m as any)[as as keyof typeof m] as any;
   const ref = useRef(null);
   const isInView = useInView(ref, {
     amount: viewThreshold,
@@ -60,45 +58,56 @@ export const TextReveal: FC<Props> = ({
       : "hidden"
     : "visible";
 
+  const containerVariants: Variants = useMemo(
+    () => ({
+      hidden: { opacity: 0 },
+      visible: (i: number = 1) => ({
+        opacity: 1,
+        transition: {
+          staggerChildren: duration,
+          delayChildren: i * delay,
+        },
+      }),
+    }),
+    [duration, delay]
+  );
+
+  const letterVariants: Variants = useMemo(
+    () => ({
+      visible: {
+        opacity: 1,
+        transition: {
+          type: "spring",
+          damping: 12,
+          stiffness: 100,
+        },
+      },
+      hidden: { opacity: 0, y: 10 },
+    }),
+    []
+  );
+
   return (
-    <MotionComponent
-      ref={ref}
-      role="heading"
-      variants={{
-        hidden: { opacity: 0 },
-        visible: (i: number = 1) => ({
-          opacity: 1,
-          transition: {
-            staggerChildren: duration,
-            delayChildren: i * delay,
-          },
-        }),
-      }}
-      initial="hidden"
-      animate={animationState}
-      className={className}
-      {...props}
-    >
-      {letters.map((letter, index) => (
-        <motion.span
-          key={index}
-          variants={{
-            visible: {
-              opacity: 1,
-              transition: {
-                type: "spring",
-                damping: 12,
-                stiffness: 100,
-              },
-            },
-            hidden: { opacity: 0, y: 10 },
-          }}
-        >
-          {index === 0 && beforeContent}
-          {letter === " " ? (convertSpacesToNbsp ? "\u00A0" : " ") : letter}
-          {index === letters.length - 1 && afterContent}
-        </motion.span>
-      ))}
-    </MotionComponent>
+    <LazyMotion features={domAnimation} strict>
+      <MotionComponent
+        ref={ref}
+        role="heading"
+        variants={containerVariants}
+        initial="hidden"
+        animate={animationState}
+        className={className}
+        {...props}
+      >
+        {letters.map((letter, index) => (
+          <m.span key={index} variants={letterVariants}>
+            {index === 0 && beforeContent}
+            {letter === " " ? (convertSpacesToNbsp ? "\u00A0" : " ") : letter}
+            {index === letters.length - 1 && afterContent}
+          </m.span>
+        ))}
+      </MotionComponent>
+    </LazyMotion>
   );
 };
+
+export const TextReveal = memo(TextRevealComponent);
