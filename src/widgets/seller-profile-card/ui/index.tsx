@@ -10,6 +10,7 @@ import {
   Users,
   Scale,
   ArrowRight,
+  Flag,
 } from "lucide-react";
 
 import useToast from "@/common/hooks/use-toast";
@@ -32,9 +33,13 @@ import {
   AlertDialogTitle,
 } from "@/common/components/ui/primitives/alert-dialog";
 
-import { useStartLegalProcess } from "@/features/seller-profile";
+import {
+  useStartLegalProcess,
+  useStartSoftNotice,
+} from "@/features/seller-profile";
 
 import { SellerProfileCategory } from "@/entities/brand-protection/seller-profile/model/types";
+import { sellerProfileService } from "@/entities/brand-protection/seller-profile/model/services";
 
 import { useSellerProfileData } from "../model";
 import { SellerProfileSkeleton } from "./skeleton";
@@ -51,27 +56,52 @@ export function SellerProfileCard({
 }: SellerProfileCardProps) {
   const { profile, stats, category, isLoading, error } =
     useSellerProfileData(sellerProfileId);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLegalDialogOpen, setIsLegalDialogOpen] = useState(false);
+  const [isSoftDialogOpen, setIsSoftDialogOpen] = useState(false);
   const startLegalProcessMutation = useStartLegalProcess();
+  const startSoftNoticeMutation = useStartSoftNotice();
   const toast = useToast();
 
   const CategoryIcon = category.icon;
-  const isLegalProcessStarted =
-    profile?.category === SellerProfileCategory.REPORTED;
+  const hasLegalTakedown =
+    profile?.legalTakedownStatus !== null &&
+    profile?.legalTakedownStatus !== undefined;
+  const hasSoftNotice =
+    profile?.softNoticeStatus !== null &&
+    profile?.softNoticeStatus !== undefined;
+  const actionsDisabled = hasLegalTakedown || hasSoftNotice;
 
   const handleConfirmLegalProcess = () => {
-    setIsDialogOpen(false);
+    setIsLegalDialogOpen(false);
     startLegalProcessMutation.mutate(sellerProfileId, {
       onSuccess: () => {
         toast.success(
-          "Legal Process Started",
-          "The closure process has been initiated. You can track the process from the 'Actions' page."
+          "Legal Takedown Started",
+          "A legal takedown case has been created for this seller’s physical store. Track progress in Case Management → Seller Cases."
         );
       },
       onError: () => {
         toast.error(
-          "Failed to Start Legal Process",
-          "An error occurred while starting the legal process. Please try again."
+          "Failed to Start Legal Takedown",
+          "An error occurred while starting the legal takedown. Please try again."
+        );
+      },
+    });
+  };
+
+  const handleConfirmSoftNotice = () => {
+    setIsSoftDialogOpen(false);
+    startSoftNoticeMutation.mutate(sellerProfileId, {
+      onSuccess: () => {
+        toast.success(
+          "Soft Notice Sent",
+          "A soft notice case has been created to request closure of the seller’s online stores and listings. Track progress in Case Management → Seller Cases."
+        );
+      },
+      onError: () => {
+        toast.error(
+          "Failed to Send Soft Notice",
+          "An error occurred while sending the soft notice. Please try again."
         );
       },
     });
@@ -110,23 +140,64 @@ export function SellerProfileCard({
                         </Link>
                       </Button>
                     )}
-                    {isLegalProcessStarted ? (
-                      <Badge variant="warningSoft" size="lg">
-                        <Scale className="w-4 h-4 mr-2" />
-                        This seller is under legal process
-                      </Badge>
-                    ) : (
-                      <Button
-                        variant="soft"
-                        size="sm"
-                        onClick={() => setIsDialogOpen(true)}
-                        disabled={startLegalProcessMutation.isPending}
-                      >
-                        <Scale className="w-4 h-4 mr-2" />
-                        {startLegalProcessMutation.isPending
-                          ? "Starting..."
-                          : "Start Legal Process"}
-                      </Button>
+                    {/* Status badges if any */}
+                    {hasSoftNotice &&
+                      (() => {
+                        const info = sellerProfileService.getSoftNoticeInfo(
+                          profile!.softNoticeStatus as any
+                        );
+                        const Icon = info.icon;
+                        return (
+                          <Badge variant={info.variant as any} size="lg">
+                            <Icon className="w-4 h-4 mr-2" />
+                            Soft Notice: {info.label}
+                          </Badge>
+                        );
+                      })()}
+                    {hasLegalTakedown &&
+                      (() => {
+                        const info = sellerProfileService.getLegalTakedownInfo(
+                          profile!.legalTakedownStatus as any
+                        );
+                        const Icon = info.icon;
+                        return (
+                          <Badge variant={info.variant as any} size="lg">
+                            <Icon className="w-4 h-4 mr-2" />
+                            Legal Takedown: {info.label}
+                          </Badge>
+                        );
+                      })()}
+                    {/* Action buttons (disabled if any status exists) */}
+                    {!hasSoftNotice && !hasLegalTakedown && (
+                      <>
+                        <Button
+                          size="sm"
+                          onClick={() => setIsLegalDialogOpen(true)}
+                          className="bg-warning/10 text-warning hover:bg-warning/20"
+                          disabled={
+                            actionsDisabled ||
+                            startLegalProcessMutation.isPending
+                          }
+                        >
+                          <Scale className="w-4 h-4 mr-2" />
+                          {startLegalProcessMutation.isPending
+                            ? "Starting..."
+                            : "Start Legal Takedown"}
+                        </Button>
+                        <Button
+                          variant="soft"
+                          size="sm"
+                          onClick={() => setIsSoftDialogOpen(true)}
+                          disabled={
+                            actionsDisabled || startSoftNoticeMutation.isPending
+                          }
+                        >
+                          <Flag className="w-4 h-4 mr-2" />
+                          {startSoftNoticeMutation.isPending
+                            ? "Sending..."
+                            : "Soft Notice"}
+                        </Button>
+                      </>
                     )}
                   </div>
                 </div>
@@ -198,20 +269,44 @@ export function SellerProfileCard({
           </div>
         </div>
 
-        {/* Legal Process Confirmation Dialog */}
-        <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        {/* Legal Takedown Confirmation Dialog */}
+        <AlertDialog
+          open={isLegalDialogOpen}
+          onOpenChange={setIsLegalDialogOpen}
+        >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Start Legal Process</AlertDialogTitle>
+              <AlertDialogTitle>Start Legal Takedown Process</AlertDialogTitle>
               <AlertDialogDescription>
-                By requesting a legal process for this seller, you will create a
-                closure request. You can track the closure process from the
-                &quot;Action Status&quot; page.
+                This will initiate a legal takedown for the seller’s physical
+                store. A case will be created under Case Management → Seller
+                Cases where you can track progress. Do you want to proceed?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction onClick={handleConfirmLegalProcess}>
+                Confirm
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Soft Notice Confirmation Dialog */}
+        <AlertDialog open={isSoftDialogOpen} onOpenChange={setIsSoftDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Send Soft Notice</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will notify platforms to request closure of the seller’s
+                online stores and product listings. A case will be created under
+                Case Management → Seller Cases where you can track progress. Do
+                you want to continue?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleConfirmSoftNotice}>
                 Confirm
               </AlertDialogAction>
             </AlertDialogFooter>
