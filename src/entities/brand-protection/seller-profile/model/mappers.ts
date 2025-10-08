@@ -1,6 +1,11 @@
 import { GetProfileByIdResponse } from "@/shared/api/brand-protection/bp-api.types";
 
-import { SellerProfile, SellerProfileCategory } from "./types";
+import {
+  SellerProfile,
+  SellerProfileCategory,
+  SellerProfileLegalTakedownStatus,
+  SellerProfileSoftNoticeStatus,
+} from "./types";
 
 export const mapDtoToSellerProfilePlatform = (
   platformDto: GetProfileByIdResponse["platforms"][number]
@@ -112,5 +117,10 @@ export const mapDtoToSellerProfile = (
       ),
       productCountPlatformDispersion: profileDto?.stats?.product_counts,
     },
+
+    softNoticeStatus:
+      profileDto?.soft_notice as SellerProfileSoftNoticeStatus | null,
+    legalTakedownStatus:
+      profileDto?.legal_takedown as SellerProfileLegalTakedownStatus | null,
   };
 };

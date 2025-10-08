@@ -10,6 +10,19 @@ export enum SellerProfileCategory {
   REPORTED = 9,
 }
 
+export enum SellerProfileSoftNoticeStatus {
+  INITIATED = 0,
+  PRODUCTS_CLOSED = 1,
+  SELLER_CLOSED = 2,
+}
+
+export enum SellerProfileLegalTakedownStatus {
+  INITIATED = 0,
+  EXPERT_REVIEW = 1,
+  IN_MEDIATION = 2,
+  CASE_CLOSED = 3,
+}
+
 export interface SellerProfile {
   id: number;
   name: string;
@@ -55,4 +68,7 @@ export interface SellerProfile {
       };
     };
   };
+
+  softNoticeStatus: SellerProfileSoftNoticeStatus;
+  legalTakedownStatus: SellerProfileLegalTakedownStatus;
 }

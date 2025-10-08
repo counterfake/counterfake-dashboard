@@ -9,11 +9,10 @@ import { SellerProfileQueryParams } from "./types";
 export const sellerProfileKeys = {
   all: ["seller-profile"],
   details: ["seller-profile", "details"],
-  detail: (id: number, params: SellerProfileQueryParams) => [
-    ...sellerProfileKeys.details,
-    id,
-    params,
-  ],
+  detail: (id: number, params?: SellerProfileQueryParams) =>
+    params
+      ? [...sellerProfileKeys.details, id, params]
+      : [...sellerProfileKeys.details, id],
 };
 
 // Queries
@@ -37,6 +36,8 @@ export const sellerProfileQueries = {
           "universal_name",
           "is_closed",
           "ai_results",
+          "soft_notice",
+          "legal_takedown",
         ];
         const expandRelations = [
           "sellers.platform",

@@ -219,10 +219,14 @@ export const GetProfileByIdResponseSchema = z.object({
       summary: z.string().optional(),
     })
     .optional(),
+  soft_notice: z.number().optional().nullable(),
+  legal_takedown: z.number().optional().nullable(),
 });
 
 export const UpdateProfileRequestDtoSchema = z.object({
   category: z.number().optional(),
+  legal_takedown: z.number().optional(),
+  soft_notice: z.number().optional(),
 });
 
 // --------------------------
