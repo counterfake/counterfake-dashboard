@@ -79,6 +79,7 @@ export default function ProductDetailPage() {
             rating: productData?.analysis?.rating,
             isLowRating: productData?.analysis?.isLowRating,
             priceCluster: productData?.analysis?.priceCluster,
+            imageCaption: productData?.analysis?.imageCaption,
           }}
           isLoading={productResponse.isLoading}
         />

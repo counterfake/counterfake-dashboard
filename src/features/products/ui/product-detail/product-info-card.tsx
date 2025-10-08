@@ -301,8 +301,9 @@ export function ProductInfoCard({
             <AlertDialogTitle>Start Legal Process for Product</AlertDialogTitle>
             <AlertDialogDescription>
               By requesting a legal process for this product, you will create a
-              report case. The product will be marked as &quot;Notified&quot; and you can track
-              the case process from the &quot;Product Cases&quot; page.
+              report case. The product will be marked as &quot;Notified&quot;
+              and you can track the case process from the &quot;Product
+              Cases&quot; page.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

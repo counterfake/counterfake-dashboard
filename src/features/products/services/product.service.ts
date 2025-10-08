@@ -95,6 +95,7 @@ export class ProductService implements ProductServiceInterface {
       "_category",
       "_related_product",
       "_price_priceCluster",
+      "prediction_results",
     ];
 
     const expandRelations = [
@@ -337,6 +338,8 @@ export class ProductService implements ProductServiceInterface {
         priceCluster,
         rating,
         isLowRating,
+        imageCaption:
+          product?.prediction_results?.counterfake_ai?.image_caption || null,
       },
       brand: {
         name: brandName,

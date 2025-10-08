@@ -27,8 +27,56 @@ export const getProductByIdParamsSchema = z.object({
 // --------------------------
 // Response Schemas
 // --------------------------
+
 export const getProductByIdResponseSchema = z.object({
   analyse_summary: z.string(),
+  prediction_results: z
+    .object({
+      label: z.object({
+        result: z.number(),
+      }),
+      brands: z.object({
+        data: z.array(z.string()),
+        result: z.array(z.number()),
+      }),
+      gender: z.object({
+        result: z.number(),
+      }),
+      category: z.object({
+        data: z.object({
+          text: z.object({
+            data: z.object({
+              label: z.string(),
+              probas: z.array(z.number()),
+            }),
+            result: z.number(),
+          }),
+          image: z.object({
+            data: z.object({
+              label: z.string(),
+              probas: z.array(z.number()),
+            }),
+            result: z.number(),
+          }),
+          keyword: z.object({
+            result: z.number(),
+          }),
+        }),
+      }),
+      is_child: z.object({
+        result: z.boolean(),
+      }),
+      counterfake_ai: z
+        .object({
+          brands: z.array(z.string()),
+          gender: z.string(),
+          is_child: z.boolean(),
+          image_caption: z.string().optional(),
+          related_class: z.string(),
+        })
+        .optional(),
+    })
+    .optional(),
   brand: z.union([
     z.number(),
     z.object({

@@ -59,11 +59,6 @@ export function SellerProductCard({ product }: SellerProductCardProps) {
             </div>
             {product?.pricing?.originalPrice ? (
               <span className="text-sm font-semibold">
-                {product?.pricing?.discountedPrice && (
-                  <span className="text-success mr-1">
-                    {product?.pricing?.discountedPrice}
-                  </span>
-                )}
                 <span
                   className={
                     product?.pricing?.discountedPrice
@@ -73,7 +68,18 @@ export function SellerProductCard({ product }: SellerProductCardProps) {
                 >
                   {product?.pricing?.originalPrice}
                 </span>{" "}
-                <span>{product?.pricing?.currency}</span>
+                {product?.pricing?.discountedPrice && (
+                  <span className="text-success mr-1">
+                    {product?.pricing?.discountedPrice}
+                  </span>
+                )}
+                <span
+                  className={
+                    product?.pricing?.discountedPrice ? "text-success" : ""
+                  }
+                >
+                  {product?.pricing?.currency}
+                </span>
               </span>
             ) : (
               <span className="text-muted-foreground font-medium hover:underline">
