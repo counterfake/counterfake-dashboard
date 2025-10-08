@@ -21,7 +21,7 @@ export interface SellerCase {
   reportedBy: string;
   compensationAmount?: number;
   evidenceCount: number;
-  tags: string[];
+  brands: string[];
 }
 
 export interface SellerCaseStats {

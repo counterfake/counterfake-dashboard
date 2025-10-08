@@ -20,6 +20,7 @@ import {
 import { SellerCase } from "../model";
 import { formatDistance } from "date-fns";
 import { sellerProfileService } from "@/entities/brand-protection/seller-profile/model/services";
+import { useAuthStore } from "@/common/lib/stores/auth-store";
 
 interface CaseCardProps {
   sellerCase: SellerCase;
@@ -37,6 +38,11 @@ function getCaseBadgeInfo(case_: SellerCase) {
 }
 
 export function CaseCard({ sellerCase, highlighted = false }: CaseCardProps) {
+  const {
+    user: {
+      brand: { name: defaultBrandName },
+    },
+  } = useAuthStore();
   const statusInfo = getCaseBadgeInfo(sellerCase);
 
   const StatusIcon = statusInfo.icon;
@@ -44,6 +50,9 @@ export function CaseCard({ sellerCase, highlighted = false }: CaseCardProps) {
   const reportedDate = new Date(sellerCase.reportDate);
   const lastUpdatedDate = new Date(sellerCase.lastUpdated);
   const timeAgo = formatDistance(reportedDate, new Date(), { addSuffix: true });
+
+  const brands =
+    sellerCase.brands.length > 0 ? sellerCase.brands : [defaultBrandName];
 
   return (
     <Card
@@ -136,11 +145,11 @@ export function CaseCard({ sellerCase, highlighted = false }: CaseCardProps) {
         </div>
 
         {/* Tags */}
-        {sellerCase.tags.length > 0 && (
+        {brands.length > 0 && (
           <div className="flex flex-wrap gap-1">
-            {sellerCase.tags.map((tag) => (
-              <Badge key={tag} variant="primarySoft" size="sm">
-                {tag}
+            {brands.map((brand) => (
+              <Badge key={brand} variant="primarySoft" size="sm">
+                {brand}
               </Badge>
             ))}
           </div>

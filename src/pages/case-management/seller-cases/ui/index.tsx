@@ -19,8 +19,17 @@ import {
 } from "@/entities/brand-protection/seller-profile/model/types";
 import { sellerProfileService } from "@/entities/brand-protection/seller-profile/model/services";
 import { useSearchParams } from "next/navigation";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/common/components/ui/primitives/tabs";
+import { useAuthStore } from "@/common/lib/stores/auth-store";
 
 export function SellerCasesPage() {
+  const { user } = useAuthStore();
+
   // Online Takedown (Soft Notice) section state
   const [onlineStatus, setOnlineStatus] =
     useState<SellerProfileSoftNoticeStatus>(
@@ -40,7 +49,7 @@ export function SellerCasesPage() {
   const { stats, isLoading: statsLoading } = useSellerCaseStats();
 
   // Demo/prototype: no brand filter context available; use empty array
-  const brands: number[] = [];
+  const brands: number[] = user?.brand?.ownedBrands;
 
   // Queries for server-provided lists
   const onlineQuery = useQuery(
@@ -101,7 +110,7 @@ export function SellerCasesPage() {
       reportedBy: "System",
       compensationAmount: undefined,
       evidenceCount: 0,
-      tags: Array.isArray(item.brands) ? item.brands.filter(Boolean) : [],
+      brands: Array.isArray(item.brands) ? item.brands.filter(Boolean) : [],
     };
   };
 
@@ -126,7 +135,7 @@ export function SellerCasesPage() {
       reportedBy: "System",
       compensationAmount: undefined,
       evidenceCount: 0,
-      tags: Array.isArray(item.brands) ? item.brands.filter(Boolean) : [],
+      brands: Array.isArray(item.brands) ? item.brands.filter(Boolean) : [],
     };
   };
 
@@ -185,183 +194,198 @@ export function SellerCasesPage() {
         <h2 className="text-lg font-semibold mb-4">Overview</h2>
         <StatsCards stats={stats} isLoading={statsLoading} />
       </section>
-
       <div className="space-y-8">
-        {/* Online Takedown Actions */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Online Takedown Actions</h2>
-            <div className="text-sm text-muted-foreground">
-              {onlineQuery.data?.total ?? 0}{" "}
-              {(onlineQuery.data?.total ?? 0) === 1 ? "case" : "cases"} found
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {onlineStatuses.map((st) => {
-              const info = sellerProfileService.getSoftNoticeInfo(st);
-              const Icon = info.icon as any;
-              const isActive = onlineStatus === st;
-              return (
-                <button
-                  key={`soft-${st}`}
-                  onClick={() => {
-                    setOnlineStatus(st);
-                    setOnlinePage(1);
-                  }}
-                  className={`inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm ${
-                    isActive
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-background cursor-pointer"
-                  }`}
-                >
-                  <Icon className="w-4 h-4" /> {info.label}
-                </button>
-              );
-            })}
-          </div>
+        <Tabs defaultValue="online">
+          <TabsList className="w-full">
+            <TabsTrigger value="online">Online Takedown Actions</TabsTrigger>
+            <TabsTrigger value="legal">Legal Takedown Actions</TabsTrigger>
+          </TabsList>
 
-          {onlineQuery.isLoading ? (
-            <CasesLoadingSkeleton />
-          ) : onlineQuery.isError ? (
-            <div className="text-center py-8">
-              <p className="text-destructive">
-                Failed to load online takedown list.
-              </p>
-            </div>
-          ) : onlineQuery.data && onlineQuery.data.data.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 gap-4">
-                {onlineQuery.data.data.map((item: any) => {
-                  const adapted: SellerCase = mapOnlineItemToMockCase(item);
+          <TabsContent value="online">
+            {/* Online Takedown Actions */}
+            <section className="space-y-4 py-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold">
+                  Online Takedown Actions
+                </h2>
+                <div className="text-sm text-muted-foreground">
+                  {onlineQuery.data?.total ?? 0}{" "}
+                  {(onlineQuery.data?.total ?? 0) === 1 ? "case" : "cases"}{" "}
+                  found
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {onlineStatuses.map((st) => {
+                  const info = sellerProfileService.getSoftNoticeInfo(st);
+                  const Icon = info.icon as any;
+                  const isActive = onlineStatus === st;
                   return (
-                    <CaseCard
-                      key={`online-${adapted.id}`}
-                      sellerCase={adapted}
-                      highlighted={highlightId === adapted.sellerId}
-                    />
+                    <button
+                      key={`soft-${st}`}
+                      onClick={() => {
+                        setOnlineStatus(st);
+                        setOnlinePage(1);
+                      }}
+                      className={`inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm ${
+                        isActive
+                          ? "bg-accent text-accent-foreground"
+                          : "bg-background cursor-pointer"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" /> {info.label}
+                    </button>
                   );
                 })}
-                {/* Append mock items for the same filter */}
-                {onlineMock.sellerCases.items.map((mockItem) => (
-                  <CaseCard
-                    key={`online-mock-${mockItem.id}`}
-                    sellerCase={mockItem}
-                    highlighted={highlightId === mockItem.sellerId}
-                  />
-                ))}
               </div>
-              {onlineQuery.data.pages > 1 && (
-                <div className="flex justify-center mt-4">
-                  <CasesPagination
-                    currentPage={onlinePage}
-                    totalPages={onlineQuery.data.pages}
-                    onPageChange={setOnlinePage}
-                  />
+
+              {onlineQuery.isLoading ? (
+                <CasesLoadingSkeleton />
+              ) : onlineQuery.isError ? (
+                <div className="text-center py-8">
+                  <p className="text-destructive">
+                    Failed to load online takedown list.
+                  </p>
                 </div>
-              )}
-            </>
-          ) : // No server data -> show mock list (if any) else empty state
-          onlineMock.sellerCases.items.length > 0 ? (
-            <div className="grid grid-cols-1 gap-4">
-              {onlineMock.sellerCases.items.map((mockItem) => (
-                <CaseCard
-                  key={`online-mock-${mockItem.id}`}
-                  sellerCase={mockItem}
-                />
-              ))}
-            </div>
-          ) : (
-            <CasesEmptyState hasFilters={true} />
-          )}
-        </section>
-
-        {/* Legal Takedown Actions */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Legal Takedown Actions</h2>
-            <div className="text-sm text-muted-foreground">
-              {legalQuery.data?.total ?? 0}{" "}
-              {(legalQuery.data?.total ?? 0) === 1 ? "case" : "cases"} found
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {legalStatuses.map((st) => {
-              const info = sellerProfileService.getLegalTakedownInfo(st);
-              const Icon = info.icon as any;
-              const isActive = legalStatus === st;
-              return (
-                <button
-                  key={`legal-${st}`}
-                  onClick={() => {
-                    setLegalStatus(st);
-                    setLegalPage(1);
-                  }}
-                  className={`inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm ${
-                    isActive
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-background cursor-pointer"
-                  }`}
-                >
-                  <Icon className="w-4 h-4" /> {info.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {legalQuery.isLoading ? (
-            <CasesLoadingSkeleton />
-          ) : legalQuery.isError ? (
-            <div className="text-center py-8">
-              <p className="text-destructive">
-                Failed to load legal takedown list.
-              </p>
-            </div>
-          ) : legalQuery.data && legalQuery.data.data.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 gap-4">
-                {legalQuery.data.data.map((item: any) => {
-                  const adapted: SellerCase = mapLegalItemToMockCase(item);
-                  return (
+              ) : onlineQuery.data && onlineQuery.data.data.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-1 gap-4">
+                    {onlineQuery.data.data.map((item: any) => {
+                      const adapted: SellerCase = mapOnlineItemToMockCase(item);
+                      return (
+                        <CaseCard
+                          key={`online-${adapted.id}`}
+                          sellerCase={adapted}
+                          highlighted={highlightId === adapted.sellerId}
+                        />
+                      );
+                    })}
+                    {/* Append mock items for the same filter */}
+                    {onlineMock.sellerCases.items.map((mockItem) => (
+                      <CaseCard
+                        key={`online-mock-${mockItem.id}`}
+                        sellerCase={mockItem}
+                        highlighted={highlightId === mockItem.sellerId}
+                      />
+                    ))}
+                  </div>
+                  {onlineQuery.data.pages > 1 && (
+                    <div className="flex justify-center mt-4">
+                      <CasesPagination
+                        currentPage={onlinePage}
+                        totalPages={onlineQuery.data.pages}
+                        onPageChange={setOnlinePage}
+                      />
+                    </div>
+                  )}
+                </>
+              ) : // No server data -> show mock list (if any) else empty state
+              onlineMock.sellerCases.items.length > 0 ? (
+                <div className="grid grid-cols-1 gap-4">
+                  {onlineMock.sellerCases.items.map((mockItem) => (
                     <CaseCard
-                      key={`legal-${adapted.id}`}
-                      sellerCase={adapted}
-                      highlighted={highlightId === adapted.sellerId}
+                      key={`online-mock-${mockItem.id}`}
+                      sellerCase={mockItem}
                     />
+                  ))}
+                </div>
+              ) : (
+                <CasesEmptyState hasFilters={true} />
+              )}
+            </section>
+          </TabsContent>
+
+          <TabsContent value="legal">
+            {/* Legal Takedown Actions */}
+            <section className="space-y-4 py-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-semibold">
+                  Legal Takedown Actions
+                </h2>
+                <div className="text-sm text-muted-foreground">
+                  {legalQuery.data?.total ?? 0}{" "}
+                  {(legalQuery.data?.total ?? 0) === 1 ? "case" : "cases"} found
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {legalStatuses.map((st) => {
+                  const info = sellerProfileService.getLegalTakedownInfo(st);
+                  const Icon = info.icon as any;
+                  const isActive = legalStatus === st;
+                  return (
+                    <button
+                      key={`legal-${st}`}
+                      onClick={() => {
+                        setLegalStatus(st);
+                        setLegalPage(1);
+                      }}
+                      className={`inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm ${
+                        isActive
+                          ? "bg-accent text-accent-foreground"
+                          : "bg-background cursor-pointer"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" /> {info.label}
+                    </button>
                   );
                 })}
-                {/* Append mock items for the same filter */}
-                {legalMock.sellerCases.items.map((mockItem) => (
-                  <CaseCard
-                    key={`legal-mock-${mockItem.id}`}
-                    sellerCase={mockItem}
-                    highlighted={highlightId === mockItem.sellerId}
-                  />
-                ))}
               </div>
-              {legalQuery.data.pages > 1 && (
-                <div className="flex justify-center mt-4">
-                  <CasesPagination
-                    currentPage={legalPage}
-                    totalPages={legalQuery.data.pages}
-                    onPageChange={setLegalPage}
-                  />
+
+              {legalQuery.isLoading ? (
+                <CasesLoadingSkeleton />
+              ) : legalQuery.isError ? (
+                <div className="text-center py-8">
+                  <p className="text-destructive">
+                    Failed to load legal takedown list.
+                  </p>
                 </div>
+              ) : legalQuery.data && legalQuery.data.data.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-1 gap-4">
+                    {legalQuery.data.data.map((item: any) => {
+                      const adapted: SellerCase = mapLegalItemToMockCase(item);
+                      return (
+                        <CaseCard
+                          key={`legal-${adapted.id}`}
+                          sellerCase={adapted}
+                          highlighted={highlightId === adapted.sellerId}
+                        />
+                      );
+                    })}
+                    {/* Append mock items for the same filter */}
+                    {legalMock.sellerCases.items.map((mockItem) => (
+                      <CaseCard
+                        key={`legal-mock-${mockItem.id}`}
+                        sellerCase={mockItem}
+                        highlighted={highlightId === mockItem.sellerId}
+                      />
+                    ))}
+                  </div>
+                  {legalQuery.data.pages > 1 && (
+                    <div className="flex justify-center mt-4">
+                      <CasesPagination
+                        currentPage={legalPage}
+                        totalPages={legalQuery.data.pages}
+                        onPageChange={setLegalPage}
+                      />
+                    </div>
+                  )}
+                </>
+              ) : // No server data -> show mock list (if any) else empty state
+              legalMock.sellerCases.items.length > 0 ? (
+                <div className="grid grid-cols-1 gap-4">
+                  {legalMock.sellerCases.items.map((mockItem) => (
+                    <CaseCard
+                      key={`legal-mock-${mockItem.id}`}
+                      sellerCase={mockItem}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <CasesEmptyState hasFilters={true} />
               )}
-            </>
-          ) : // No server data -> show mock list (if any) else empty state
-          legalMock.sellerCases.items.length > 0 ? (
-            <div className="grid grid-cols-1 gap-4">
-              {legalMock.sellerCases.items.map((mockItem) => (
-                <CaseCard
-                  key={`legal-mock-${mockItem.id}`}
-                  sellerCase={mockItem}
-                />
-              ))}
-            </div>
-          ) : (
-            <CasesEmptyState hasFilters={true} />
-          )}
-        </section>
+            </section>
+          </TabsContent>
+        </Tabs>
       </div>
     </CustomerPageWrapper>
   );

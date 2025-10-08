@@ -20,7 +20,7 @@ export const mockSellerCases: SellerCase[] = [
       "Reported for selling counterfeit Apple products with fake authentication certificates",
     reportedBy: "Brand Protection Team",
     evidenceCount: 8,
-    tags: ["counterfeit", "electronics", "apple"],
+    brands: [],
   },
   {
     id: "sc-002",
@@ -37,7 +37,7 @@ export const mockSellerCases: SellerCase[] = [
       "Suspected of selling fake designer handbags with forged authenticity documents",
     reportedBy: "Customer Complaint",
     evidenceCount: 12,
-    tags: ["counterfeit", "fashion", "luxury"],
+    brands: [],
   },
   {
     id: "sc-003",
@@ -53,7 +53,7 @@ export const mockSellerCases: SellerCase[] = [
     description: "Copyright infringement on exclusive home decoration designs",
     reportedBy: "IP Rights Holder",
     evidenceCount: 15,
-    tags: ["copyright", "home-decor", "design"],
+    brands: [],
   },
   {
     id: "sc-004",
@@ -70,7 +70,7 @@ export const mockSellerCases: SellerCase[] = [
     reportedBy: "Brand Protection Team",
     compensationAmount: 15000,
     evidenceCount: 20,
-    tags: ["counterfeit", "sports", "nike"],
+    brands: [],
   },
   {
     id: "sc-005",
@@ -87,7 +87,7 @@ export const mockSellerCases: SellerCase[] = [
     reportedBy: "Regulatory Authority",
     compensationAmount: 8500,
     evidenceCount: 6,
-    tags: ["regulatory", "electronics", "certification"],
+    brands: [],
   },
   {
     id: "sc-006",
@@ -103,7 +103,7 @@ export const mockSellerCases: SellerCase[] = [
     description: "Selling replica watches as authentic luxury timepieces",
     reportedBy: "Customer Complaint",
     evidenceCount: 4,
-    tags: ["counterfeit", "luxury", "watches"],
+    brands: [],
   },
   {
     id: "sc-007",
@@ -119,7 +119,7 @@ export const mockSellerCases: SellerCase[] = [
     description: "Counterfeit cosmetics with potentially harmful ingredients",
     reportedBy: "Health Authority",
     evidenceCount: 9,
-    tags: ["counterfeit", "cosmetics", "health-risk"],
+    brands: [],
   },
   {
     id: "sc-008",
@@ -135,7 +135,7 @@ export const mockSellerCases: SellerCase[] = [
     description: "Counterfeit cosmetics with potentially harmful ingredients",
     reportedBy: "Health Authority",
     evidenceCount: 9,
-    tags: ["counterfeit", "cosmetics", "health-risk"],
+    brands: [],
   },
   {
     id: "sc-009",
@@ -151,7 +151,7 @@ export const mockSellerCases: SellerCase[] = [
     description: "Counterfeit cosmetics with potentially harmful ingredients",
     reportedBy: "Health Authority",
     evidenceCount: 9,
-    tags: ["counterfeit", "cosmetics", "health-risk"],
+    brands: [],
   },
 ];
 
