@@ -8,7 +8,6 @@ import { useSellerCaseList, useSellerCaseStats, SellerCase } from "../model";
 
 // UI Components
 import { StatsCards } from "./stats-cards";
-// import { StatusFilter } from "./status-filter"; // removed in this version
 import { CaseCard } from "./case-card";
 import { CasesPagination } from "./pagination";
 import { CasesEmptyState } from "./empty-state";
@@ -160,7 +159,13 @@ export function SellerCasesPage() {
       }
     }, 150);
     return () => clearTimeout(t);
-  }, [highlightId, onlineQuery.data, legalQuery.data, onlineMock.sellerCases, legalMock.sellerCases]);
+  }, [
+    highlightId,
+    onlineQuery.data,
+    legalQuery.data,
+    onlineMock.sellerCases,
+    legalMock.sellerCases,
+  ]);
 
   return (
     <CustomerPageWrapper
