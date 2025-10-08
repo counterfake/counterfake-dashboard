@@ -25,6 +25,7 @@ import { ReportReasons } from "./components/report-reasons";
 import { ReportCategory } from "./components/report-category";
 import { TimeAnalysis } from "./components/time-analysis";
 import { RiskAnalysis } from "./components/risk-analysis";
+import { ImageAnalysis } from "./components/image-analysis";
 
 interface ProductAnalysisProps {
   analysis: {
@@ -60,7 +61,7 @@ export function ProductAnalysis({
   return (
     <BeamsBackground
       className="bg-transparent h-fit rounded-xl ring-4 ring-primary/10"
-      animationSpeed={2}
+      animationSpeed={1.3}
       animationOpacity={0.7}
     >
       <Card className="bg-transparent w-full">
@@ -81,9 +82,20 @@ export function ProductAnalysis({
             >
               <AnalysisSummary
                 analysisSummaryText={analysis?.analysisSummaryText}
-                imageCaptionText={analysis?.imageCaption}
               />
             </Animate>
+
+            {analysis?.imageCaption ? (
+              <Animate
+                className="pb-6"
+                type="fadeIn"
+                duration={0.5}
+                delay={0.4}
+                triggerOnView
+              >
+                <ImageAnalysis text={analysis?.imageCaption} />
+              </Animate>
+            ) : null}
 
             <div className="grid grid-cols-2 gap-4">
               <Animate type="fadeIn" duration={0.5} delay={0.4} triggerOnView>
