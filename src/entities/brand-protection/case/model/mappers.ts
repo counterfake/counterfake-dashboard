@@ -63,6 +63,7 @@ export const mapDtoToProductCaseListItem = (
     target: dto.target,
     sender: dto.sender,
     reportCount: dto.report_count,
+    createdAt: dto.created_at,
   };
 };
 

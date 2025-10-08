@@ -12,6 +12,10 @@ import { Badge } from "@/common/components/ui/primitives/badge";
 import { Button } from "@/common/components/ui/primitives/button";
 import { Separator } from "@/common/components/ui/primitives/separator";
 import { Pagination } from "@/common/components/ui/navigation/pagination";
+import {
+  calculateDaysSince,
+  formatDateForUserLocale,
+} from "@/shared/utils/date-helpers";
 
 import { ProductCaseListItem } from "@/entities/brand-protection/case";
 import { getCaseStatusInfo } from "../config";
@@ -30,6 +34,10 @@ export function CaseCard({ productCase }: CaseCardProps) {
 
   const statusInfo = getCaseStatusInfo(productCase.status);
   const StatusIcon = statusInfo.icon;
+
+  // Date info for reporting time
+  const reportedDate = formatDateForUserLocale(productCase.createdAt);
+  const daysSince = calculateDaysSince(productCase.createdAt);
 
   // Only fetch products when expanded
   const { products, isLoading } = useProductCaseProducts(productCase.id, {
@@ -66,6 +74,17 @@ export function CaseCard({ productCase }: CaseCardProps) {
           <span className="font-semibold">{productCase.platformName}</span>{" "}
           platform.
         </CardDescription>
+        {(daysSince !== null || reportedDate) && (
+          <div className="text-xs text-muted-foreground">
+            {daysSince !== null ? (
+              <span className="text-primary font-medium">
+                {daysSince} days ago
+              </span>
+            ) : null}
+            {daysSince !== null && reportedDate ? " • " : null}
+            {reportedDate ? `Reported on ${reportedDate}` : null}
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="grid grid-cols-2 gap-3 text-sm">

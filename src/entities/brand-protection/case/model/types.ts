@@ -44,6 +44,7 @@ export interface ProductCaseListItem {
   target: string;
   sender: string;
   reportCount: number;
+  createdAt: string;
 }
 
 export interface ProductCaseList {
