@@ -25,16 +25,16 @@ export function useStartLegalProcessForProduct() {
       platformId: number;
       productId: number;
     }) => {
-      // Update the product report status to notified to find out report
-      await updateProduct(productId, {
-        report: ProductReportStatusId.Notified,
-      });
-
       await createPlatformReportMail({
         brands: user.brand.ownedBrands,
         sender: user.email,
         platform: platformId,
         products: productId.toString(),
+      });
+
+      // Update the product report status to notified to find out report
+      await updateProduct(productId, {
+        report: ProductReportStatusId.Notified,
       });
 
       return true;

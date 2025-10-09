@@ -1,4 +1,15 @@
+## [0.15.1-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.15.0...v0.15.1-beta.1) (2025-10-09)
+
+
+### Bug Fixes
+
+* wrong package.json file ([dce76c5](https://github.com/counterfake/counterfake-dashboard/commit/dce76c5052f2a04f1d529c08d68bbbafb7b54a30))
+
+<<<<<<< HEAD
 # [0.15.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.14.0...v0.15.0) (2025-10-09)
+=======
+# [0.15.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.14.0...v0.15.0-beta.1) (2025-10-09)
+>>>>>>> c691e499a4cd49759aee3bccd6ac008975e0fb7a
 
 
 ### Bug Fixes
