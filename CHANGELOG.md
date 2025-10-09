@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # [0.15.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.14.0...v0.15.0) (2025-10-09)
+=======
+# [0.15.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.14.0...v0.15.0-beta.1) (2025-10-09)
+>>>>>>> c691e499a4cd49759aee3bccd6ac008975e0fb7a
 
 
 ### Bug Fixes
