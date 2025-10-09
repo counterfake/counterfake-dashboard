@@ -69,7 +69,7 @@ function SellerProfileContent({ sellerId }: { sellerId: string }) {
 
   return (
     <div className="grid grid-cols-1 gap-6">
-      <AIAnalysis profile={profile} />
+      {/* <AIAnalysis profile={profile} /> */}
 
       {/* Left Column - Contact & Company Info */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
