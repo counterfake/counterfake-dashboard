@@ -1,3 +1,10 @@
+# [0.14.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.13.0...v0.14.0-beta.1) (2025-10-09)
+
+
+### Features
+
+* filter the number of risky products by report status ([3525d81](https://github.com/counterfake/counterfake-dashboard/commit/3525d818300a549825576379e94b9b48dfb24411))
+
 # [0.13.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.12.0...v0.13.0) (2025-10-09)
 
 
