@@ -180,11 +180,14 @@ export function RiskAnalysis({
         {/* Price Outlier Analysis */}
         <div className="flex items-center justify-between bg-muted/20 rounded-lg px-4 py-3 border">
           <div className="flex items-center gap-3">
+            {priceCluster <= 2 && (
+              <DollarSign className="h-6 w-6 text-destructive" />
+            )}
+            {priceCluster > 2 && priceCluster < 6 && (
+              <DollarSign className="h-6 w-6 text-success" />
+            )}
             {priceCluster >= 6 && (
               <TrendingUp className="h-6 w-6 text-destructive" />
-            )}
-            {priceCluster < 6 && (
-              <DollarSign className="h-6 w-6 text-success" />
             )}
             <div className="flex flex-col">
               <span className="text-sm text-muted-foreground">
@@ -193,12 +196,14 @@ export function RiskAnalysis({
               <span
                 className={cn(
                   "font-semibold text-base",
-                  priceCluster >= 6 && "text-destructive",
-                  priceCluster < 6 && "text-success"
+                  priceCluster <= 2 && "text-destructive",
+                  priceCluster > 2 && priceCluster < 6 && "text-success",
+                  priceCluster >= 6 && "text-destructive"
                 )}
               >
-                {priceCluster >= 6 && "Abnormal Pricing"}
-                {priceCluster < 6 && "Normal Pricing"}
+                {priceCluster <= 2 && "Low Pricing"}
+                {priceCluster > 2 && priceCluster < 6 && "Normal Pricing"}
+                {priceCluster >= 6 && "High Pricing"}
               </span>
             </div>
           </div>
