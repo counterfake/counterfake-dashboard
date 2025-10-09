@@ -68,6 +68,36 @@ export function MonthlyRiskyClosedSellers({
   className = "",
   onMonthChange,
 }: MonthlyRiskyClosedSellersProps) {
+  // Safari/macOS specific date strings (e.g. "YYYY-MM") are converted to "Invalid Date" by Date.
+  // In X environment, the slice(0,3) keeps the value "Inv" in this case. A safe formatter is defined to prevent this.
+  const formatMonthTick = React.useCallback((value: string) => {
+    if (!value) return "";
+    const v = String(value);
+    // 1) "YYYY-MM" kalıbı
+    const m = v.match(/^(\d{4})-(\d{2})(?:-(\d{2}))?/);
+    if (m) {
+      const monthIdx = Math.max(0, Math.min(11, Number(m[2]) - 1));
+      const shortMonths = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      return shortMonths[monthIdx];
+    }
+    // 2) "Invalid Date" gibi hatalı değerler
+    if (/invalid/i.test(v)) return "";
+    // 3) If it's a month name in Turkish or a custom month name, use the first 3 characters
+    return v.slice(0, 3);
+  }, []);
   if (isLoading)
     return (
       <div className={className}>
@@ -188,7 +218,7 @@ export function MonthlyRiskyClosedSellers({
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tickFormatter={(value) => value.slice(0, 3)}
+                tickFormatter={formatMonthTick}
               />
               <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
               <Line
