@@ -353,6 +353,7 @@ export const ProductsQueryDtoSchema = z.object({
   search: z.string().optional(),
   is_closed: z.boolean().optional(),
   include_hidden_entities: z.boolean().optional(),
+  report: z.string().optional(),
 });
 
 export const ProductsResponseDtoSchema = z.object({

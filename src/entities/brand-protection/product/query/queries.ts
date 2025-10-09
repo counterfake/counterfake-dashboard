@@ -12,7 +12,7 @@ import {
   mapDtoToProductList,
   mapDtoToRiskyCount,
 } from "../model/mappers";
-import { ProductStatus } from "../model";
+import { ProductReportStatusId, ProductStatus } from "../model";
 
 export const productKeys = {
   all: ["product"],
@@ -97,7 +97,12 @@ export const productQueries = {
           fields: "id",
           category: ProductStatus.Risky,
           brand: params.brandId,
-          include_hidden_entities: true,
+          report: [
+            ProductReportStatusId.Reported,
+            ProductReportStatusId.Reopened,
+            ProductReportStatusId.Notified,
+            ProductReportStatusId.Ready,
+          ].join(","),
         });
       },
       select: (data) => mapDtoToRiskyCount(data),
