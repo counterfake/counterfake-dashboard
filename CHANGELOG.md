@@ -1,3 +1,10 @@
+# [0.13.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.12.0...v0.13.0) (2025-10-09)
+
+
+### Features
+
+* redesign price analysis on the product detail ([c15dda4](https://github.com/counterfake/counterfake-dashboard/commit/c15dda4bf7130ea2760e7c2333859533df94c8df))
+
 # [0.13.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.12.0...v0.13.0-beta.1) (2025-10-09)
 
 
