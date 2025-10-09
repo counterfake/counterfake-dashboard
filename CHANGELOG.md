@@ -1,3 +1,15 @@
+# [0.15.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.14.0...v0.15.0) (2025-10-09)
+
+
+### Bug Fixes
+
+* fix month display for invalid date format in Safari ([7de681c](https://github.com/counterfake/counterfake-dashboard/commit/7de681c37bd13e48cd5d1e6a4a5670d4956703be))
+
+
+### Features
+
+* hide AIAnalysis on the seller profile ([727e6ca](https://github.com/counterfake/counterfake-dashboard/commit/727e6ca602d73e0c6eb31387e2ed344f7daa5990))
+
 # [0.14.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.13.0...v0.14.0) (2025-10-09)
 
 
