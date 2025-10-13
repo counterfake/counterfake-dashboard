@@ -77,6 +77,7 @@ export const productQueries = {
         return getProducts({
           page_size: 1,
           page_number: 1,
+          category: ProductStatus.Risky,
           fields: "id",
           is_closed: true,
           brand: params.brandId,
