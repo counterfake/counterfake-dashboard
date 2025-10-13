@@ -1,3 +1,10 @@
+# [0.16.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.15.1-beta.1...v0.16.0-beta.1) (2025-10-13)
+
+
+### Features
+
+* **entitiy:product:** add risky category query for the closedCount query ([6e6e875](https://github.com/counterfake/counterfake-dashboard/commit/6e6e875e49ced96a887ded970cf3a8489d6caccf))
+
 ## [0.15.1-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.15.0...v0.15.1-beta.1) (2025-10-09)
 
 
