@@ -2,20 +2,27 @@
 
 import React from "react";
 
-import BeamsBackground from "@/common/components/ui/layouts/beams-background";
+import { GradientBackground } from "@/common/components/ui/layouts/gradient-background";
+
+import { cn } from "@/shared/lib/cn";
 
 interface AIAnalysisCardProps {
   children: React.ReactNode;
+  className?: string;
+  childrenClassName?: string;
 }
 
-export function AICard({ children }: AIAnalysisCardProps) {
+export function AICard({
+  children,
+  className,
+  childrenClassName,
+}: AIAnalysisCardProps) {
   return (
-    <BeamsBackground
-      className="bg-transparent h-fit rounded-xl ring-4 ring-primary/10"
-      animationSpeed={2}
-      animationOpacity={0.7}
+    <GradientBackground
+      className={cn("h-fit rounded-xl ring-4 ring-primary/10 p-6", className)}
+      childrenClassName={childrenClassName}
     >
-      <div className="p-6">{children}</div>
-    </BeamsBackground>
+      {children}
+    </GradientBackground>
   );
 }

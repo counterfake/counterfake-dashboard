@@ -37,7 +37,7 @@ export function ChatContainer({
         viewport.scrollTop = viewport.scrollHeight;
       }
     }
-  }, [messages, autoScroll]);
+  }, [messages, autoScroll, isThinking]);
 
   return (
     <ScrollArea ref={scrollAreaRef} className={className}>

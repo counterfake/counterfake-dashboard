@@ -9,6 +9,7 @@ export interface ChatMessage {
   imageUrl?: string;
   fileName?: string;
   fileSize?: number;
+  shouldAnimate?: boolean;
 }
 
 export interface ChatProps {
