@@ -7,13 +7,22 @@ import { ChatInput } from "@/features/chat/components/chat-input";
 import { Button } from "@/common/components/ui/primitives/button";
 import { AICard } from "@/shared/ui/ai/ai-card";
 import { useSendMessage } from "../model/use-send-message";
+import useToast from "@/shared/ui/toast/use-toast";
 
 export function ChatPage() {
   const { sendUserMessage, clearChat, messages, isThinking, isLoading } =
     useSendMessage();
+  const toast = useToast();
 
   const handleSendMessage = async (content: string) => {
-    await sendUserMessage(content);
+    try {
+      await sendUserMessage(content);
+    } catch (error) {
+      toast.error(
+        "Error while data processing",
+        error?.message || "An error occurred while sending the message."
+      );
+    }
   };
 
   return (

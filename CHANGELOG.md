@@ -1,3 +1,10 @@
+# [0.18.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.17.0...v0.18.0-beta.1) (2025-11-04)
+
+
+### Features
+
+* add error handling for chat ([8e804ee](https://github.com/counterfake/counterfake-dashboard/commit/8e804eec6bc2b38f645aa0bc2ea9b91ed050074e))
+
 # [0.17.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.16.0...v0.17.0) (2025-11-04)
 
 
