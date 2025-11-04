@@ -19,6 +19,7 @@ export function useChat(initialMessages: ChatMessage[] = []) {
   const addMessage = useCallback(
     (message: Omit<ChatMessage, "id" | "timestamp">) => {
       const newMessage: ChatMessage = {
+        shouldAnimate: true,
         ...message,
         id: crypto.randomUUID(),
         timestamp: new Date(),
@@ -98,8 +99,9 @@ export function useChat(initialMessages: ChatMessage[] = []) {
     messages,
     isLoading,
     isThinking,
-    setIsThinking,
     messagesEndRef,
+    setIsLoading,
+    setIsThinking,
     testSendMessage,
     addMessage,
     clearMessages,

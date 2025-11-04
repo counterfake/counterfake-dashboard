@@ -30,11 +30,7 @@ interface ChatInputProps {
   className?: string;
 }
 
-const AI_MODELS = [
-  "Counterfake Agent Bot",
-  "Counterfake Chat Bot",
-  "Counterfake Image Analysis",
-];
+const AI_MODELS = ["Counterfake Agent Bot"];
 
 export function ChatInput({
   onSendMessage,

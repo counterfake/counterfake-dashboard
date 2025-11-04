@@ -1,11 +1,12 @@
 "use client";
 
 import { cn } from "@/common/lib/utils/ui";
+import { m, LazyMotion, domAnimation } from "framer-motion";
 
 import AppLogo from "@/common/components/ui/data-display/app-logo";
+import { MarkdownContent } from "@/common/components/ui/data-display/markdown-content";
 
 import { ChatMessage as ChatMessageType } from "../types/chat";
-import { TextReveal } from "@/common/components/ui/animation/text-reveal";
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -42,18 +43,32 @@ export function ChatAiMessage({
       </div>
 
       <div className="flex-1 space-y-2">
-        <div className="flex items-start gap-2">
+        <div className="flex items-start gap-2 w-full">
           {message.type === "jsx" && message.content && (
             <div className="mb-2">{message.content}</div>
           )}
 
           {message.type === "text" && message.content && (
-            <TextReveal
-              text={message.content as string}
-              className="text-base leading-relaxed whitespace-pre-wrap"
-              duration={0.02}
-              as="p"
-            />
+            <LazyMotion features={domAnimation} strict>
+              <m.div
+                initial={
+                  message.shouldAnimate !== false
+                    ? { opacity: 0, y: 10 }
+                    : false
+                }
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: message.shouldAnimate !== false ? 0.5 : 0,
+                  ease: "easeOut",
+                }}
+                className="w-full"
+              >
+                <MarkdownContent
+                  content={message.content as string}
+                  className="text-base leading-relaxed"
+                />
+              </m.div>
+            </LazyMotion>
           )}
         </div>
 

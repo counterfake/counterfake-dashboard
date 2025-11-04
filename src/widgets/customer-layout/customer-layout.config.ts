@@ -1,4 +1,9 @@
-import { LayoutDashboard, Package, Settings } from "lucide-react";
+import {
+  LayoutDashboard,
+  MessageCircle,
+  Package,
+  Settings,
+} from "lucide-react";
 
 export interface NavigationItem {
   readonly id: string;
@@ -55,6 +60,12 @@ export const CUSTOMER_LAYOUT_CONFIG = {
             href: "/dashboard/case-management/seller-cases",
           },
         ],
+      },
+      {
+        id: "ai-chat",
+        label: "AI Chat",
+        icon: MessageCircle,
+        href: "/dashboard/chat",
       },
       {
         id: "settings",
