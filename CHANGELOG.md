@@ -1,3 +1,17 @@
+# [0.17.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.16.0...v0.17.0) (2025-11-04)
+
+
+### Features
+
+* add image size limit for markdown content ([7297400](https://github.com/counterfake/counterfake-dashboard/commit/7297400cd0552d826d764ff05089b12535e1285a))
+
+# [0.17.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.16.0...v0.17.0-beta.1) (2025-11-04)
+
+
+### Features
+
+* add image size limit for markdown content ([7297400](https://github.com/counterfake/counterfake-dashboard/commit/7297400cd0552d826d764ff05089b12535e1285a))
+
 # [0.16.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.15.0...v0.16.0) (2025-11-04)
 
 
