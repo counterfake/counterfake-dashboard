@@ -1,3 +1,16 @@
+# [0.16.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.15.0...v0.16.0) (2025-11-04)
+
+
+### Bug Fixes
+
+* wrong package.json file ([dce76c5](https://github.com/counterfake/counterfake-dashboard/commit/dce76c5052f2a04f1d529c08d68bbbafb7b54a30))
+
+
+### Features
+
+* add ai chat ([5e275c2](https://github.com/counterfake/counterfake-dashboard/commit/5e275c2971d9e60d5de4d8750b62ed2a6d720ddc))
+* **entitiy:product:** add risky category query for the closedCount query ([6e6e875](https://github.com/counterfake/counterfake-dashboard/commit/6e6e875e49ced96a887ded970cf3a8489d6caccf))
+
 # [0.16.0-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.16.0-beta.1...v0.16.0-beta.2) (2025-11-04)
 
 
