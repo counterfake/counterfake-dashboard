@@ -1,5 +1,11 @@
-import { getSession } from "../brand-protection/bp-api.auth";
+import { AxiosError, AxiosRequestConfig } from "axios";
+import {
+  getSession,
+  refreshTokens,
+  removeSession,
+} from "../brand-protection/bp-api.auth";
 import { HttpClient } from "../http-client";
+import { PAGE_ROUTES } from "@/shared/routes/page-routes";
 
 export const agentApi = new HttpClient({
   baseURL: "https://apigw.counterfake.ai/counterfake-agent",
@@ -38,4 +44,43 @@ agentApi.client.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+agentApi.client.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError) => {
+    const originalRequest = error.config as AxiosRequestConfig & {
+      _retry?: boolean;
+    };
+
+    if (
+      error.response?.status === 401 ||
+      (error.response?.status === 403 && !originalRequest._retry)
+    ) {
+      originalRequest._retry = true;
+
+      // Try to refresh token
+      const newToken = await refreshTokens();
+
+      if (!newToken.success && !originalRequest.headers) {
+        // Clear auth store
+        removeSession();
+
+        if (typeof window !== "undefined") {
+          window.location.href = `${PAGE_ROUTES.UNAUTHORIZED}?reason=refresh-token-failed`;
+        }
+
+        return Promise.reject(newToken);
+      }
+
+      const authorization = `Bearer ${newToken}`;
+
+      originalRequest.headers.Authorization = authorization;
+      agentApi.client.defaults.headers.common.Authorization = authorization;
+
+      return agentApi.client(originalRequest);
+    }
+
+    return Promise.reject(error);
+  }
 );
