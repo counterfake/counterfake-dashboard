@@ -1,3 +1,10 @@
+# [0.19.0-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.18.0...v0.19.0-beta.1) (2025-11-04)
+
+
+### Features
+
+* Add token renewal and 401/403 error handling to the agent API ([f213a8d](https://github.com/counterfake/counterfake-dashboard/commit/f213a8dffaaa7d5b6ffcb99c95269e189c4ac65a))
+
 # [0.18.0](https://github.com/counterfake/counterfake-dashboard/compare/v0.17.0...v0.18.0) (2025-11-04)
 
 
