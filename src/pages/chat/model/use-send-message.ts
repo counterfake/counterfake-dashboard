@@ -20,7 +20,7 @@ export const useSendMessage = () => {
   const setMessageHistory = useAgentStore(
     (state) => state.setConversationHistory
   );
-  
+
   const isInitialized = useRef(false);
 
   const sendUserMessage = async (content: string) => {
@@ -34,7 +34,10 @@ export const useSendMessage = () => {
     });
 
     // User mesajını history'ye ekle
-    const updatedHistoryWithUser = [...messageHistory, { role: "user" as const, content }];
+    const updatedHistoryWithUser = [
+      ...messageHistory,
+      { role: "user" as const, content },
+    ];
     setMessageHistory(updatedHistoryWithUser);
 
     setIsLoading(true);
@@ -45,6 +48,14 @@ export const useSendMessage = () => {
         message: content,
         conversation_history: messageHistory,
       });
+
+      if (!response.success) {
+        throw new Error(response.error.message);
+      }
+
+      if (!response.data?.response) {
+        throw new Error("Empty response");
+      }
 
       addMessage({
         content: response.data.response,
@@ -58,7 +69,7 @@ export const useSendMessage = () => {
         { role: "assistant" as const, content: response.data.response },
       ]);
     } catch (error) {
-      console.log(error);
+      throw error;
     } finally {
       setIsLoading(false);
       setIsThinking(false);
