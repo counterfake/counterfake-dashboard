@@ -85,6 +85,15 @@ export function MarkdownContent({ content, className }: MarkdownContentProps) {
           />
         ),
 
+        // Images
+        img: ({ node, ...props }) => (
+          <img
+            className="max-w-[350px] h-auto rounded-lg my-4"
+            loading="lazy"
+            {...props}
+          />
+        ),
+
         // Tables
         table: ({ node, ...props }) => (
           <div className="overflow-x-auto my-4">
