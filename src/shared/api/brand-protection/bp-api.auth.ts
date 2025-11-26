@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 import { bpApiAuthStorage } from "./bp-api.storage";
-import { BP_API_ENDPOINTS } from "./bp-api.config";
+import { BP_API_BASE_URL, BP_API_ENDPOINTS } from "./bp-api.config";
 import {
   RefreshTokenRequestDto,
   RefreshTokenResponseDto,
@@ -51,7 +51,10 @@ export async function refreshTokens() {
     token: session?.refreshToken,
   };
 
-  const responsePromise = axios.post(BP_API_ENDPOINTS.refresh, payload);
+  const responsePromise = axios.post(
+    BP_API_BASE_URL + BP_API_ENDPOINTS.refresh,
+    payload
+  );
 
   const response =
     (await responsePromise) as AxiosResponse<RefreshTokenResponseDto>;
