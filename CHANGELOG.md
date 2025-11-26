@@ -1,3 +1,10 @@
+## [0.19.2-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.19.1...v0.19.2-beta.1) (2025-11-26)
+
+
+### Bug Fixes
+
+* Update refreshTokens to use full API URL for token refresh ([c93e4e8](https://github.com/counterfake/counterfake-dashboard/commit/c93e4e8d1927c22cc373f196f973a6f8e2ea383a))
+
 ## [0.19.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.19.0...v0.19.1) (2025-11-26)
 
 
