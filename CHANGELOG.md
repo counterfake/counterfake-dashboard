@@ -1,3 +1,10 @@
+## [0.19.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.19.0...v0.19.1) (2025-11-26)
+
+
+### Bug Fixes
+
+* Ensure userBrandId is always a number in getCustomerBrandResult ([5e43ac5](https://github.com/counterfake/counterfake-dashboard/commit/5e43ac5aa8b1065ba73cea3b967a7636b0ecd9af))
+
 ## [0.19.1-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.19.0...v0.19.1-beta.1) (2025-11-26)
 
 
