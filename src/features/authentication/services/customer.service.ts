@@ -63,7 +63,10 @@ export class CustomerService {
 
     const userBrandResult = this.getCustomerBrandResult({
       userBrandType: currentCustomer?.selectedCompany?.brand_type,
-      userBrandId: currentCustomer?.selectedCompany?.id,
+      userBrandId:
+        typeof currentCustomer?.selectedCompany?.id === "number"
+          ? currentCustomer?.selectedCompany?.id
+          : Number(currentCustomer?.selectedCompany?.id),
       groupBrands,
       brands,
     });
