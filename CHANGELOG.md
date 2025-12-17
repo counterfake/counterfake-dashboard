@@ -1,3 +1,10 @@
+## [0.19.3-beta.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.19.3-beta.1...v0.19.3-beta.2) (2025-12-17)
+
+
+### Bug Fixes
+
+* add type annotation for context in useApiMutationWithSettled onSettled callback ([54d3001](https://github.com/counterfake/counterfake-dashboard/commit/54d300120ac9c4f14c6d8294c421b5c1b4cdc786))
+
 ## [0.19.3-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.19.2...v0.19.3-beta.1) (2025-12-17)
 
 
