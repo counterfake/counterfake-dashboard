@@ -1,3 +1,10 @@
+## [0.19.3-beta.1](https://github.com/counterfake/counterfake-dashboard/compare/v0.19.2...v0.19.3-beta.1) (2025-12-17)
+
+
+### Bug Fixes
+
+* handle undefined userBrandType in getCustomerBrandResult ([0d5c2bb](https://github.com/counterfake/counterfake-dashboard/commit/0d5c2bb79d9658e35efdf5a889bcb14499a6d7b2))
+
 ## [0.19.2](https://github.com/counterfake/counterfake-dashboard/compare/v0.19.1...v0.19.2) (2025-11-26)
 
 
