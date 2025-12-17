@@ -124,7 +124,7 @@ export class CustomerService {
       brandId = groupBrand?.id;
     }
 
-    if (userBrandType === "brand") {
+    if (userBrandType === "brand" || !userBrandType) {
       ownedBrands.push(userBrandId);
       brandId = userBrandId;
     }
