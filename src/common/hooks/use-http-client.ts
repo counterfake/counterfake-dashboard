@@ -3,6 +3,7 @@ import {
   useQuery,
   type UseQueryOptions,
   type UseMutationOptions,
+  MutationFunctionContext,
 } from "@tanstack/react-query";
 
 import { type ApiResponse } from "@/common/types/api";
@@ -166,7 +167,12 @@ export function useApiMutationWithSettled<
   return useMutation<ApiResponse<TData>, TError, TVariables>({
     ...mutationOptions,
     mutationFn,
-    onSettled: (response, error, variables, context) => {
+    onSettled: (
+      response,
+      error,
+      variables,
+      context: MutationFunctionContext
+    ) => {
       if (response) {
         if (response.success && response.data) {
           onApiSuccess?.(response.data, variables);
@@ -176,7 +182,7 @@ export function useApiMutationWithSettled<
       }
 
       // Call original onSettled callback
-      onSettled?.(response, error, variables, context);
+      onSettled?.(response, error, variables, undefined, context);
     },
   });
 }
